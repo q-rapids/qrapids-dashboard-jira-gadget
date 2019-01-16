@@ -1,0 +1,44 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <!-- add our i18n resource -->
+    <resource type="i18n" name="i18n" location="jira-gadget-qrapids-plugin"/>
+    
+    <!-- add our web resources -->
+    <web-resource key="jira-gadget-qrapids-plugin-resources" name="jira-gadget-qrapids-plugin Web Resources">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        
+        <resource type="download" name="jira-gadget-qrapids-plugin.css" location="/css/jira-gadget-qrapids-plugin.css"/>
+        <resource type="download" name="jira-gadget-qrapids-plugin.js" location="/js/jira-gadget-qrapids-plugin.js"/>
+        <resource type="download" name="images/" location="/images"/>
+
+        <context>jira-gadget-qrapids-plugin</context>
+    </web-resource>
+
+    <!--
+        Registers the gadget spec as a plugin module. This allows the gadget to
+        appear in the gadget directory and also allows administrators to
+        disable/enable the gadget.
+     -->
+    <gadget key="qrapids-gadget" name="Q-Rapids JIRA Gadget" location="gadget.xml"/>
+
+    <!-- Makes the gadget Locale messages available for the gadget's use. -->
+    <resource type="download" name="i18n/ALL_ALL.xml" location="i18n/ALL_ALL.xml">
+        <param name="content-type" value="text/xml; charset=UTF-8"/>
+    </resource>
+
+    <!--
+        Automatically finds all JAX-RS resource classes in the plugin and
+        publishes them.
+     -->
+    <rest key="qrapids-gadget-rest-resources" path="/qrapids-gadget" version="1.0">
+        <description>Provides the REST resource for the project list.</description>
+    </rest>
+    
+</atlassian-plugin>

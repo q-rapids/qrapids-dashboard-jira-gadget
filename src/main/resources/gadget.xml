@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module>
+
+    <!-- Especifiaciones del Gadget (nombre, autor, ) -->
+    <!-- screenshot: direccion de la imagen que un container o directory pueden usar para ilustrar el gadget -->
+    <!-- thumbnail: direccion de la imagen en miniatura (120x60 px) que un container o directory pueden usar para ilustrar el gadget-->
+
+    <ModulePrefs title="__MSG_gadget.title__" directory_title="__MSG_gadget.title__" description="__MSG_gadget.description__">
+
+        <!-- El elemento indica al container que el gadget puede utilizar una función específica -->
+        <Optional feature="gadget-directory">
+            <!-- Permite suministrar parametros para las funciones solicitadas a traves de los elementos -->
+            <Param name="categories">
+                JIRA
+            </Param>
+        </Optional>
+        <Optional feature="atlassian.util" />
+        <Optional feature="auth-refresh" />
+
+        <!-- El elemento indica al container que el gadget necesita un caracteristica especifica -->
+        <Require feature="views" />
+        <Require feature="settitle"/>
+        <Require feature="oauthpopup" />
+        #oauth
+        <Locale messages="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/i18n/ALL_ALL.xml"/>
+    </ModulePrefs>
+
+    <!--
+    Esta sección le permite a los usuarios una forma de proporcionar sus preferencias "preferencias del usuario".
+    Estos campos de entrada del usuario se convierten en controles de interfaz de usuario cuando se ejecuta el gadget.
+    Cuando se muestra el gadget en iGoogle, se puede acceder a las preferencias del usuario desde el menú desplegable "Editar".
+
+    El contenedor maneja la generación de la IU de configuración, guarda la configuración y proporciona una API para acceder a la configuración en JavaScript.
+    -->
+    <UserPref name="show_date" display_name="Show Dates?" datatype="bool" default_value="true"/>
+    <UserPref name="show_summ" display_name="Show Summaries?" datatype="bool" default_value="true"/>
+    <UserPref name="num_entries" display_name="Number of Entries:" default_value="5"/>
+
+    <!--
+    En esta sección, definirá el tipo de contenido, e incluirá el contenido en sí mismo o proporcionará una URL para extraer el contenido de una fuente externa.
+    Combinará los atributos y las preferencias del usuario y la información.
+
+    Hay dos tipos principales de contenido de gadget, que se distinguen por el atributo type del elemento <Content>.
+
+    - URL: incluyen contenido de un sitio remoto, pero no tienen acceso completo a las características del contenedor.
+           Este tipo de gadget es compatible con la compatibilidad con los gadgets de iGoogle heredados existentes,
+           pero se considera obsoleto y debe evitarse al crear nuevos gadgets.
+
+    - HTML: incluyen el contenido directamente dentro del elemento <Content>. Esto incluye el codigo HTML, CSS y JavaScript que el contenedor representará en el iframe del gadget.
+     Este contenido debe incluirse en una sección CDATA para evitar que el analizador de especificaciones del gadget interprete el marcado HTML incrustado como XML.
+
+    Los gadgets pueden definir múltiples secciones de contenido, cada una con una vista diferente.
+    Las vistas admitidas por los contenedores de Atlassian son predeterminadas para la vista estándar de un gadget en una página junto con otros gadgets y contenido,
+    y canvas para la vista maximizada de un solo gadget en una página por sí solo. Otros contenedores pueden admitir tipos de vista adicionales.
+    Si la misma sección de contenido debe mostrarse en más de una vista, puede especificar varias vistas, separadas por comas.
+    -->
+
+    <Content type="html" view="profile">
+        <![CDATA[
+        #requireResource("com.atlassian.jira.gadgets:common")
+        #requireResource("com.atlassian.gadgets.publisher:ajs-gadgets")
+        #includeResources()
+        
+        <h1>Q-Rapids JIRA Gadget</h1>
+
+        <script type="text/javascript">
+            (function () {
+                var gadget = AJS.Gadget({
+                    baseUrl: "__ATLASSIAN_BASE_URL__",
+                    useOauth: "/rest/gadget/1.0/currentUser",
+                    view: {
+                        template: function(args) {
+                            var gadget = this;
+
+                            /*var projectList = AJS.$("<ul/>");
+
+
+
+                            AJS.$(args.projectData.projects).each(function() {
+                                projectList.append(
+                                    AJS.$("<li/>").append(
+                                        AJS.$("<a/>").attr({
+                                            target: "_parent",
+                                            title: gadgets.util.escapeString(this.key),
+                                            href: "__ATLASSIAN_BASE_URL__" + "/browse/" + this.key
+                                        }).text(this.name)
+                                    )
+                                );
+                            });
+
+                            gadget.getView().html(projectList);*/
+
+                            var messageResponse = args.keyValue["key"];
+
+                            /*AJS.$(args.message).each(function() {
+                                projectList.append(
+                                    AJS.$("<li/>").append(
+                                        AJS.$("<p/>").attr({
+                                            title: gadgets.util.escapeString(this.value)
+                                        }).text(this.value)
+                                    )
+                                );
+                            });*/
+
+                            console.log("*************************************************");
+                            console.log(args.keyValue["key"]);
+
+
+                            gadget.getView().html(messageResponse);
+                        },
+                        args: [{
+                            key: "keyValue",
+                            ajaxOptions: function() {
+                                return {
+                                    url: "/rest/qrapids-gadget/1.0/message/MESSAGE.json"
+                                };
+                            }
+                        }]
+                    }
+                });
+            })();
+        </script>
+        
+        ]]>
+    </Content>
+</Module>
