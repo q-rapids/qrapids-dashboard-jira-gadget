@@ -1,0 +1,34 @@
+Here are the SDK commands you'll use immediately:
+
+* atlas-run   -- installs this plugin into the product and starts it on localhost
+* atlas-debug -- same as atlas-run, but allows a debugger to attach at port 5005
+* atlas-cli   -- after atlas-run or atlas-debug, opens a Maven command line window:
+                 - 'pi' reinstalls the plugin into the running product instance
+* atlas-help  -- prints description for all commands in the SDK
+
+Full documentation is always available at:
+
+https://developer.atlassian.com/display/DOCS/Introduction+to+the+Atlassian+Plugin+SDK
+
+
+## Q-Rapids:
+- [QRapids-Dashboard](http://gessi3.cs.upc.edu/QRapids-Dashboard/)
+- [Llamada API: Current Evaluation](http://gessi3.cs.upc.edu/QRapids-Dashboard/api/StrategicIndicators/CurrentEvaluation)
+
+
+## Jira Tutorials:
+- [Set up the Atlassian Plugin SDK and build a project](https://developer.atlassian.com/server/framework/atlassian-sdk/set-up-the-atlassian-plugin-sdk-and-build-a-project/)
+- [Oracle Java SE Development Kit 8 (JDK) installed on your system](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [Install the Atlassian SDK](https://developer.atlassian.com/server/framework/atlassian-sdk/install-the-atlassian-sdk-on-a-windows-system/)
+- [Crear un plugin](https://developer.atlassian.com/server/framework/atlassian-sdk/create-a-helloworld-plugin-project/)
+- [Crear un Gadget](https://developer.atlassian.com/server/jira/platform/writing-gadgets-for-jira/)
+- [Developing a REST service plugin](https://developer.atlassian.com/server/framework/atlassian-sdk/developing-a-rest-service-plugin/)
+- [Writing Gadgets](https://developers.google.com/gadgets/docs/gs) 
+
+## Otras paginas de interes:
+- [J-Tricks. Little JIRA Tricks](https://www.j-tricks.com/tutorials/invoking-rest-services-from-gadgets)
+- [Ejemplo Widget](https://github.com/jbossorg/jira-jenkins-gadget/blob/master/src/main/resources/gadget.xml)
+- [Google Charts](https://google-developers.appspot.com/chart/)
+
+## Book
+- [JIRA Development cookbook](http://file.allitebooks.com/20180506/JIRA%20Development%20Cookbook%20-%20Third%20Edition.pdf)
