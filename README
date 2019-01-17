@@ -17,11 +17,10 @@ atlas-help  -- prints description for all commands in the SDK
 ```
 - [Full documentation](https://developer.atlassian.com/display/DOCS/Introduction+to+the+Atlassian+Plugin+SDK)
 
-
 ## Q-Rapids:
 - [QRapids-Dashboard](http://gessi3.cs.upc.edu/QRapids-Dashboard/)
 - [Llamada API: Current Evaluation](http://gessi3.cs.upc.edu/QRapids-Dashboard/api/StrategicIndicators/CurrentEvaluation)
-
+- [GitLab](http://193.142.112.102/)
 
 ## Jira Tutorials:
 - [Set up the Atlassian Plugin SDK and build a project](https://developer.atlassian.com/server/framework/atlassian-sdk/set-up-the-atlassian-plugin-sdk-and-build-a-project/)
@@ -39,6 +38,8 @@ atlas-help  -- prints description for all commands in the SDK
 - [Google Charts](https://google-developers.appspot.com/chart/)
 - [jQuery Ajax options](http://api.jquery.com/jQuery.ajax/#options)
 - [Google gadgets](https://developers.google.com/gadgets/)
+- [D3 Data-Driven Documents](https://d3js.org/)
+- [Charts.js](https://www.chartjs.org/)
 
 ## Book
 - [JIRA Development cookbook](http://file.allitebooks.com/20180506/JIRA%20Development%20Cookbook%20-%20Third%20Edition.pdf)
