@@ -19,6 +19,7 @@ atlas-help  -- prints description for all commands in the SDK
 
 ## Q-Rapids:
 - [QRapids-Dashboard](http://gessi3.cs.upc.edu/QRapids-Dashboard/)
+- [Q-Rapids Quality-aware rapid software development](http://www.q-rapids.eu/)
 - [Llamada API: Current Evaluation](http://gessi3.cs.upc.edu/QRapids-Dashboard/api/StrategicIndicators/CurrentEvaluation)
 - [GitLab](http://193.142.112.102/)
 
@@ -43,3 +44,6 @@ atlas-help  -- prints description for all commands in the SDK
 
 ## Book
 - [JIRA Development cookbook](http://file.allitebooks.com/20180506/JIRA%20Development%20Cookbook%20-%20Third%20Edition.pdf)
+
+## Debug Web Browser
+- Images: Sources/localhost:2990/jira/download/resources/...

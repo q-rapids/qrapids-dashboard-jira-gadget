@@ -28,6 +28,9 @@
      -->
     <gadget key="qrapids-gadget" name="Q-Rapids JIRA Gadget" location="gadget.xml"/>
 
+    <resource name="screenshot.png" location="images/qrapids_logo.PNG"/>
+    <resource name="thumbnail.png" location="images/qrapids_logo.PNG"/>
+
     <!-- Makes the gadget Locale messages available for the gadget's use. -->
     <resource type="download" name="i18n/ALL_ALL.xml" location="i18n/ALL_ALL.xml">
         <param name="content-type" value="text/xml; charset=UTF-8"/>

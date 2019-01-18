@@ -5,13 +5,23 @@
     <!-- screenshot: direccion de la imagen que un container o directory pueden usar para ilustrar el gadget -->
     <!-- thumbnail: direccion de la imagen en miniatura (120x60 px) que un container o directory pueden usar para ilustrar el gadget-->
 
-    <ModulePrefs title="__MSG_gadget.title__" directory_title="__MSG_gadget.title__" description="__MSG_gadget.description__">
+    <ModulePrefs
+            title="__MSG_gadget.title__"
+            title_url="__MSG_gadget.title.url__"
+            directory_title="__MSG_gadget.title__"
+            description="__MSG_gadget.description__"
+            author="Surname Name"
+            author_email="author@email.com"
+            screenshot='#staticResourceUrl("com.atlassian.plugins.qrapids", "qrapids_logo.PNG")'
+            thumbnail='#staticResourceUrl("com.atlassian.plugins.qrapids", "qrapids_logo.PNG")' height="150">
 
         <!-- El elemento indica al container que el gadget puede utilizar una función específica -->
         <Optional feature="gadget-directory">
             <!-- Permite suministrar parametros para las funciones solicitadas a traves de los elementos -->
             <Param name="categories">
                 JIRA
+                Charts
+                QRapids
             </Param>
         </Optional>
         <Optional feature="atlassian.util" />
@@ -63,18 +73,54 @@
         
         <h1>Q-Rapids JIRA Gadget</h1>
 
+        <div id=id_message style="background: red">1</div>
+        <div id=id_projects style="background: blue">2</div>
+
+        <div id="debug_div" style="font-size:9pt; padding:5px; color: red;"></div>
+
         <script type="text/javascript">
+            // DEBUG: is the function getting called?
+            //print("TEST PRINT<br>");
+
             (function () {
-                var gadget = AJS.Gadget({
+                var gadget_message = AJS.Gadget({
                     baseUrl: "__ATLASSIAN_BASE_URL__",
                     useOauth: "/rest/gadget/1.0/currentUser",
                     view: {
                         template: function(args) {
                             var gadget = this;
 
-                            /*var projectList = AJS.$("<ul/>");
+                            var messageResponse = args.keyValue["key"];
 
+                            console.log("**********************MESSAGE***************************");
+                            console.log(args.keyValue["key"]);
 
+                            var html = "";
+                            html += "<p>" + args.keyValue["key"] + "</p>";
+                            document.getElementById('id_message').innerHTML = html;
+
+                            //gadget.getView().html(messageResponse);
+                        },
+                        args: [{
+                            key: "keyValue",
+                            ajaxOptions: function() {
+                                return {
+                                    url: "/rest/qrapids-gadget/1.0/message/MESSAGE.json"
+                                };
+                            }
+                        }]
+                    }
+                });
+
+                var projects = AJS.Gadget({
+
+                    baseUrl: "__ATLASSIAN_BASE_URL__",
+                    useOauth: "/rest/gadget/1.0/currentUser",
+                    view: {
+                        template: function(args) {
+                            var gadget = this;
+
+                            var projectList = AJS.$("<ul/>");
 
                             AJS.$(args.projectData.projects).each(function() {
                                 projectList.append(
@@ -88,31 +134,19 @@
                                 );
                             });
 
-                            gadget.getView().html(projectList);*/
+                            //gadget.getView().html(projectList);
 
-                            var messageResponse = args.keyValue["key"];
+                            document.getElementById('id_projects').innerHTML = projectList.text();
 
-                            /*AJS.$(args.message).each(function() {
-                                projectList.append(
-                                    AJS.$("<li/>").append(
-                                        AJS.$("<p/>").attr({
-                                            title: gadgets.util.escapeString(this.value)
-                                        }).text(this.value)
-                                    )
-                                );
-                            });*/
+                            console.log("*********************PROJECTS****************************");
+                            console.log(args.projectData);
 
-                            console.log("*************************************************");
-                            console.log(args.keyValue["key"]);
-
-
-                            gadget.getView().html(messageResponse);
                         },
                         args: [{
-                            key: "keyValue",
+                            key: "projectData",
                             ajaxOptions: function() {
                                 return {
-                                    url: "/rest/qrapids-gadget/1.0/message/MESSAGE.json"
+                                    url: "/rest/qrapids-gadget/1.0/projects.json"
                                 };
                             }
                         }]
@@ -120,6 +154,7 @@
                 });
             })();
         </script>
+
         
         ]]>
     </Content>

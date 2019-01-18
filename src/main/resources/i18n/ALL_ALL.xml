@@ -1,4 +1,5 @@
 <messagebundle>
     <msg name="gadget.title">Q-Rapids JIRA Gadget</msg>
+    <msg name="gadget.title.url">http://www.q-rapids.eu/</msg>
     <msg name="gadget.description">Q-Rapids Gadget to install into JIRA.</msg>
 </messagebundle>
