@@ -10,8 +10,8 @@
                  description="__MSG_gadget.description__"
                  author="Surname Name"
                  author_email="author@email.com"
-                 screenshot="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/qrapids_logo.PNG"
-                 thumbnail="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/qrapids_logo.PNG">
+                 screenshot="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/qrapids_logo.png"
+                 thumbnail="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/qrapids_logo.png">
 
         <!-- El elemento indica al container que el gadget puede utilizar una función específica -->
         <Optional feature="gadget-directory">
