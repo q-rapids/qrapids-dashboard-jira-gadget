@@ -5,15 +5,13 @@
     <!-- screenshot: direccion de la imagen que un container o directory pueden usar para ilustrar el gadget -->
     <!-- thumbnail: direccion de la imagen en miniatura (120x60 px) que un container o directory pueden usar para ilustrar el gadget-->
 
-    <ModulePrefs
-            title="__MSG_gadget.title__"
-            title_url="__MSG_gadget.title.url__"
-            directory_title="__MSG_gadget.title__"
-            description="__MSG_gadget.description__"
-            author="Surname Name"
-            author_email="author@email.com"
-            screenshot='#staticResourceUrl("com.atlassian.plugins.qrapids", "qrapids_logo.PNG")'
-            thumbnail='#staticResourceUrl("com.atlassian.plugins.qrapids", "qrapids_logo.PNG")' height="150">
+    <ModulePrefs title="__MSG_gadget.title__"
+                 directory_title="__MSG_gadget.title__"
+                 description="__MSG_gadget.description__"
+                 author="Surname Name"
+                 author_email="author@email.com"
+                 screenshot="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/qrapids_logo.PNG"
+                 thumbnail="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/qrapids_logo.PNG">
 
         <!-- El elemento indica al container que el gadget puede utilizar una función específica -->
         <Optional feature="gadget-directory">
