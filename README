@@ -47,3 +47,14 @@ atlas-help  -- prints description for all commands in the SDK
 
 ## Debug Web Browser
 - Images: Sources/localhost:2990/jira/download/resources/...
+
+## Q-Rapids Dashboard Code
+- Path file to print charts: \q-rapids-dashboard\src\main\resources\static\js\gaugeChart.js
+- Path file Request: \q-rapids-dashboard\src\main\java\com\upc\gessi\qrapids\app\domain\services\StrategicIndicators.java
+```java
+@RequestMapping("/api/StrategicIndicators/CurrentEvaluation")
+    public List<DTOStrategicIndicatorEvaluation> getStrategicIndicatorsEvaluation(@RequestParam(value = "prj", required=false) String prj, HttpServletRequest request, HttpServletResponse response) {
+...
+}
+```
+- DTO paht file: \q-rapids-dashboard\src\main\java\com\upc\gessi\qrapids\app\dto\DTOStrategicIndicatorEvaluation.java
