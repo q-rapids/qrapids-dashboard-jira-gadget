@@ -71,7 +71,7 @@
         
         <h1>Q-Rapids JIRA Gadget</h1>
 
-        <div id=id_message style="background: red">1</div>
+        <div id=id_message style="background: green">1</div>
         <div id=id_projects style="background: blue">2</div>
 
         <div id="debug_div" style="font-size:9pt; padding:5px; color: red;"></div>
@@ -88,22 +88,22 @@
                         template: function(args) {
                             var gadget = this;
 
-                            var messageResponse = args.keyValue["key"];
+                            var messageResponse = args.value["ip"];
 
                             console.log("**********************MESSAGE***************************");
-                            console.log(args.keyValue["key"]);
+                            console.log(args.value["ip"]);
 
                             var html = "";
-                            html += "<p>" + args.keyValue["key"] + "</p>";
+                            html += "<p>" + args.value["ip"] + "</p>";
                             document.getElementById('id_message').innerHTML = html;
 
                             //gadget.getView().html(messageResponse);
                         },
                         args: [{
-                            key: "keyValue",
+                            key: "value",
                             ajaxOptions: function() {
                                 return {
-                                    url: "/rest/qrapids-gadget/1.0/message/MESSAGE.json"
+                                    url: "/rest/qrapids-gadget/1.0/message.json"
                                 };
                             }
                         }]
@@ -150,6 +150,36 @@
                         }]
                     }
                 });
+
+                var gadget_strategic_indicators = AJS.Gadget({
+                    baseUrl: "__ATLASSIAN_BASE_URL__",
+                    useOauth: "/rest/gadget/1.0/currentUser",
+                    view: {
+                        template: function(args) {
+                            var gadget = this;
+
+                            var dtoSIE = args.dtoSIE;
+
+                            console.log("**********************DTOSIE***************************");
+                            console.log(args.keyValue["dtoSIE"]);
+
+                            var html = "";
+                            html += "<p>" + args.dtoSIE + "</p>";
+                            document.getElementById('debug_div').innerHTML = html;
+
+                            //gadget.getView().html(messageResponse);
+                        },
+                        args: [{
+                            key: "dtoSIE",
+                            ajaxOptions: function() {
+                                return {
+                                    url: "/rest/qrapids-gadget/1.0/strategicindicators/currentevaluation.json"
+                                };
+                            }
+                        }]
+                    }
+                });
+
             })();
         </script>
 
