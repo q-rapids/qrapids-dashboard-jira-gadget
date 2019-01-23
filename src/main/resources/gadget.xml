@@ -25,10 +25,12 @@
         <Optional feature="atlassian.util" />
         <Optional feature="auth-refresh" />
 
-        <!-- El elemento indica al container que el gadget necesita un caracteristica especifica -->
+        <!-- El elemento indica al container que el gadget necesita un caracteristica especifica (librerias) -->
         <Require feature="views" />
         <Require feature="settitle"/>
         <Require feature="oauthpopup" />
+        <Require feature="opensocial-0.8" />
+        <Require feature="tabs" />
         #oauth
         <Locale messages="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/i18n/ALL_ALL.xml"/>
     </ModulePrefs>
@@ -43,6 +45,7 @@
     <UserPref name="show_date" display_name="Show Dates?" datatype="bool" default_value="true"/>
     <UserPref name="show_summ" display_name="Show Summaries?" datatype="bool" default_value="true"/>
     <UserPref name="num_entries" display_name="Number of Entries:" default_value="5"/>
+    <UserPref name="selectedTab" datatype="hidden"/>
 
     <!--
     En esta sección, definirá el tipo de contenido, e incluirá el contenido en sí mismo o proporcionará una URL para extraer el contenido de una fuente externa.
@@ -63,38 +66,89 @@
     Si la misma sección de contenido debe mostrarse en más de una vista, puede especificar varias vistas, separadas por comas.
     -->
 
-    <Content type="html" view="profile">
+    <Content type="html" view="canvas,profile">
         <![CDATA[
         #requireResource("com.atlassian.jira.gadgets:common")
         #requireResource("com.atlassian.gadgets.publisher:ajs-gadgets")
         #includeResources()
-        
-        <h1>Q-Rapids JIRA Gadget</h1>
 
-        <div id=id_message style="background: green">1</div>
-        <div id=id_projects style="background: blue">2</div>
+        <style type="text/css">
+            .tablib_table {
+                width: 100%;
+                border-spacing: 0px;
+                empty-cells: show;
+                text-align: center;
+            }
+            .tablib_emptyTab {
+                border-bottom: 1px solid #0177a6;
+                background-color: #0177a6;
+                padding: 0px 1px;
+                border: none;
+            }
+            .tablib_spacerTab {
+                border-bottom: 1px solid #0177a6;
+                background-color: #0177a6;
+                padding: 0px 1px;
+                width: 1px;
+                border: none;
+            }
+            .tablib_selected {
+                background-color: #eeeeee;
+                border-bottom-width: 0px;
+                color: black;
+                font-weight: bold;
+                width: 80px;
+                cursor: default;
+                border: none;
+            }
+            .tablib_unselected {
+                padding: 2px 0px;
+                background-color: #0177a6;
+                border-bottom-color: #0177a6;
+                color: #ffffff;
+                width: 80px;
+                cursor: pointer;
+                border: none;
+            }
+            .tablib_navContainer {
+                width: 10px;
+                vertical-align: middle;
+                border: none;
+            }
+            .tablib_navContainer a:link, .tablib_navContainer a:visited, .tablib_navContainer a:hover {
+                color: #3366aa;
+                text-decoration: none;
+            }
+        </style>
 
         <div id="debug_div" style="font-size:9pt; padding:5px; color: red;"></div>
 
-        <script type="text/javascript">
-            // DEBUG: is the function getting called?
-            //print("TEST PRINT<br>");
+        <div id=id_message></div>
 
-            (function () {
+        <script type="text/javascript">
+        (function () {
+            // Initialize tabs, designate the tab named "StrategicIndicators" as
+            // the tab selected by default.
+            var tabs = new gadgets.TabSet(__MODULE_ID__, "Strategic Indicators");
+            init();
+
+
+            function getMessage(){
                 var gadget_message = AJS.Gadget({
+
                     baseUrl: "__ATLASSIAN_BASE_URL__",
                     useOauth: "/rest/gadget/1.0/currentUser",
                     view: {
                         template: function(args) {
                             var gadget = this;
 
-                            var messageResponse = args.value["ip"];
+                            var messageResponse = args;
 
                             console.log("**********************MESSAGE***************************");
-                            console.log(args.value["ip"]);
+                            console.log(args.value);
 
                             var html = "";
-                            html += "<p>" + args.value["ip"] + "</p>";
+                            html += "<p>" + args.value + "</p>";
                             document.getElementById('id_message').innerHTML = html;
 
                             //gadget.getView().html(messageResponse);
@@ -109,7 +163,9 @@
                         }]
                     }
                 });
+            }
 
+            function getProjectData(){
                 var projects = AJS.Gadget({
 
                     baseUrl: "__ATLASSIAN_BASE_URL__",
@@ -134,7 +190,7 @@
 
                             //gadget.getView().html(projectList);
 
-                            document.getElementById('id_projects').innerHTML = projectList.text();
+                            document.getElementById('id_message').innerHTML = projectList.text();
 
                             console.log("*********************PROJECTS****************************");
                             console.log(args.projectData);
@@ -150,6 +206,9 @@
                         }]
                     }
                 });
+            }
+
+            function getStrategicIndicators(){
 
                 var gadget_strategic_indicators = AJS.Gadget({
                     baseUrl: "__ATLASSIAN_BASE_URL__",
@@ -157,15 +216,16 @@
                     view: {
                         template: function(args) {
                             var gadget = this;
+                            console.log(args);
 
                             var dtoSIE = args.dtoSIE;
 
                             console.log("**********************DTOSIE***************************");
-                            console.log(args.keyValue["dtoSIE"]);
+                            console.log(args.dtoSIE);
 
                             var html = "";
                             html += "<p>" + args.dtoSIE + "</p>";
-                            document.getElementById('debug_div').innerHTML = html;
+                            document.getElementById('id_message').innerHTML = html;
 
                             //gadget.getView().html(messageResponse);
                         },
@@ -179,11 +239,26 @@
                         }]
                     }
                 });
+            }
 
-            })();
+            function init() {
+                // Tab Strategic Indicators
+                tabs.addTab("Strategic Indicators", {contentContainer: document.getElementById('id_message'), callback: getStrategicIndicators});
+                // Tab Detailed Strategic Indicators
+                tabs.addTab("Detailed Strategic Indicators", {contentContainer: document.getElementById('id_message'), callback: getMessage});
+                // Tab Quality Factors
+                tabs.addTab("Quality Factors", {contentContainer: document.getElementById('id_message'), callback: getMessage});
+                // Tab Metrics
+                tabs.addTab("Metrics", {contentContainer: document.getElementById('id_message'), callback: getProjectData});
+            }
+
+            // Call init function to initialize and display tabs.
+            //gadgets.util.registerOnLoadHandler(init);
+
+        })();
         </script>
 
-        
+
         ]]>
     </Content>
 </Module>
