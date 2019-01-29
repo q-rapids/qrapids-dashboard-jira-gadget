@@ -30,7 +30,7 @@
         <Require feature="settitle"/>
         <Require feature="oauthpopup" />
         <Require feature="opensocial-0.8" />
-        <Require feature="tabs" />
+
         #oauth
         <Locale messages="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/i18n/ALL_ALL.xml"/>
     </ModulePrefs>
@@ -70,66 +70,55 @@
         <![CDATA[
         #requireResource("com.atlassian.jira.gadgets:common")
         #requireResource("com.atlassian.gadgets.publisher:ajs-gadgets")
+        #requireResource("com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin:jira-gadget-qrapids-plugin")
         #includeResources()
 
+
+        <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/jira-gadget-qrapids-plugin.js" type="text/javascript" charset="utf-8"></script>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
         <style type="text/css">
-            .tablib_table {
-                width: 100%;
-                border-spacing: 0px;
-                empty-cells: show;
+            .navbar {
+                overflow: hidden;
+                background-color: #0177a6;
+                top: 0;
+                margin: 5px;
+                border-radius: 4px 4px 4px 4px ;
+                min-height: 0px
+             }
+
+            .navbar a {
+                float: left;
+                display: block;
+                color: #f2f2f2;
                 text-align: center;
-            }
-            .tablib_emptyTab {
-                border-bottom: 1px solid #0177a6;
-                background-color: #0177a6;
-                padding: 0px 1px;
-                border: none;
-            }
-            .tablib_spacerTab {
-                border-bottom: 1px solid #0177a6;
-                background-color: #0177a6;
-                padding: 0px 1px;
-                width: 1px;
-                border: none;
-            }
-            .tablib_selected {
-                background-color: #eeeeee;
-                border-bottom-width: 0px;
-                color: black;
-                font-weight: bold;
-                width: 80px;
-                cursor: default;
-                border: none;
-            }
-            .tablib_unselected {
-                padding: 2px 0px;
-                background-color: #0177a6;
-                border-bottom-color: #0177a6;
-                color: #ffffff;
-                width: 80px;
-                cursor: pointer;
-                border: none;
-            }
-            .tablib_navContainer {
-                width: 10px;
-                vertical-align: middle;
-                border: none;
-            }
-            .tablib_navContainer a:link, .tablib_navContainer a:visited, .tablib_navContainer a:hover {
-                color: #3366aa;
+                padding: 10px;
                 text-decoration: none;
+                font-size: 12px;
             }
+
+            .navbar a:hover {
+                background: #ddd;
+                color: black;
+            }
+
+
+            .tab-content {
+                padding: 5px;
+                height: 1500px; /* Used in this example to enable scrolling */
+            }
+
+
         </style>
-
-        <div id="debug_div" style="font-size:9pt; padding:5px; color: red;"></div>
-
-        <div id=id_message></div>
 
         <script type="text/javascript">
         (function () {
             // Initialize tabs, designate the tab named "StrategicIndicators" as
             // the tab selected by default.
-            var tabs = new gadgets.TabSet(__MODULE_ID__, "Strategic Indicators");
+            //var tabs = new gadgets.TabSet(__MODULE_ID__, "Strategic Indicators");
             init();
 
 
@@ -243,13 +232,13 @@
 
             function init() {
                 // Tab Strategic Indicators
-                tabs.addTab("Strategic Indicators", {contentContainer: document.getElementById('id_message'), callback: getStrategicIndicators});
+                //tabs.addTab("Strategic Indicators", {contentContainer: document.getElementById('id_message'), callback: getStrategicIndicators});
                 // Tab Detailed Strategic Indicators
-                tabs.addTab("Detailed Strategic Indicators", {contentContainer: document.getElementById('id_message'), callback: getMessage});
+                //tabs.addTab("Detailed Strategic Indicators", {contentContainer: document.getElementById('id_message'), callback: getMessage});
                 // Tab Quality Factors
-                tabs.addTab("Quality Factors", {contentContainer: document.getElementById('id_message'), callback: getMessage});
+                //tabs.addTab("Quality Factors", {contentContainer: document.getElementById('id_message'), callback: getMessage});
                 // Tab Metrics
-                tabs.addTab("Metrics", {contentContainer: document.getElementById('id_message'), callback: getProjectData});
+                //tabs.addTab("Metrics", {contentContainer: document.getElementById('id_message'), callback: getProjectData});
             }
 
             // Call init function to initialize and display tabs.
@@ -258,6 +247,35 @@
         })();
         </script>
 
+        <div class="navbar">
+
+                    <a href="#si" data-toggle="tab">Strategic Indicators</a>
+
+                    <a href="#dsi" data-toggle="tab">Detailed Strategic Indicators</a>
+
+                    <a href="#qf" data-toggle="tab">Quality Factors</a>
+
+                    <a href="#m" data-toggle="tab">Metrics</a>
+
+        </div>
+
+
+        <div class="tab-content clearfix">
+            <div class="tab-pane active" id="si">
+                <h3>Strategic Indicators</h3>
+            </div>
+            <div class="tab-pane" id="dsi">
+                 <h3>Detailed Strategic Indicators</h3>
+            </div>
+            <div class="tab-pane" id="qf">
+                <h3>Quality Factors</h3>
+			</div>
+            <div class="tab-pane" id="m">
+                <h3>Metrics</h3>
+			</div>
+        </div>
+
+        <div id="debug_div" style="font-size:9pt; padding:5px; color: red;"></div>
 
         ]]>
     </Content>
