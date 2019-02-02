@@ -30,6 +30,7 @@
         <Require feature="settitle"/>
         <Require feature="oauthpopup" />
         <Require feature="opensocial-0.8" />
+        <Require feature="dynamic-height"/>
 
         #oauth
         <Locale messages="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/i18n/ALL_ALL.xml"/>
@@ -73,9 +74,6 @@
         #requireResource("com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin:jira-gadget-qrapids-plugin")
         #includeResources()
 
-
-        <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/jira-gadget-qrapids-plugin.js" type="text/javascript" charset="utf-8"></script>
-
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -105,22 +103,87 @@
                 color: black;
             }
 
+            .navbar > a.active {
+                background: #ddd;
+                color: black;
+            }
 
             .tab-content {
                 padding: 5px;
-                height: 1500px; /* Used in this example to enable scrolling */
+                height: 500px; /* Used in this example to enable scrolling */
             }
 
 
         </style>
 
         <script type="text/javascript">
-        (function () {
-            // Initialize tabs, designate the tab named "StrategicIndicators" as
-            // the tab selected by default.
-            //var tabs = new gadgets.TabSet(__MODULE_ID__, "Strategic Indicators");
-            init();
 
+            AJS.$(document).ready(function () {
+                getStrategicIndicators();
+
+                AJS.$("#id_tab_si").click(function(event) {
+                    getStrategicIndicators();
+                    AJS.$("#id_tab_si").find("active").removeClass('active');
+                    //AJS.$("#id_tab_si").addClass('active');
+                    //alert("si");
+                });
+
+                AJS.$("#id_tab_dsi").click(function(event) {
+                    //getStrategicIndicators();
+                    AJS.$("#id_tab_dsi").find("active").removeClass('active');
+                    //AJS.$("#id_tab_dsi").addClass('active');
+                    //alert("dsi");
+                });
+
+                AJS.$("#id_tab_qf").click(function(event) {
+                    //getStrategicIndicators();
+                    AJS.$("#id_tab_qf").find("active").removeClass('active');
+                    //AJS.$("#id_tab_qf").addClass('active');
+                    //alert("qf");
+                });
+
+                AJS.$("#id_tab_m").click(function(event) {
+                    //getStrategicIndicators();
+                    AJS.$("#id_tab_m").find("active").removeClass('active');
+                    //AJS.$("#id_tab_m").addClass('active');
+                    //alert("m");
+                });
+
+            });
+
+            function getStrategicIndicators(){
+
+                var gadget_strategic_indicators = AJS.Gadget({
+                    baseUrl: "__ATLASSIAN_BASE_URL__",
+                    useOauth: "/rest/gadget/1.0/currentUser",
+                    view: {
+                        template: function(args) {
+                            console.log("**********************dtoSIE***************************");
+                            console.log(args.dtoSIE);
+
+                            var gadget = this;
+
+                            var dtoSIE = args.dtoSIE;
+
+                            var html = "";
+                            html += "<p>" + "strategic Indicator Name:" + "</p>";
+                            html += "<br>"
+                            html += "<p>" + args.dtoSIE[0]["strategicIndicatorName"] + "</p>";
+                            document.getElementById('si').innerHTML = html;
+
+                            //gadget.getView().html(messageResponse);
+                        },
+                        args: [{
+                            key: "dtoSIE",
+                            ajaxOptions: function() {
+                                return {
+                                    url: "/rest/qrapids-gadget/1.0/strategicindicators/currentevaluation.json"
+                                };
+                            }
+                        }]
+                    }
+                });
+            }
 
             function getMessage(){
                 var gadget_message = AJS.Gadget({
@@ -138,7 +201,7 @@
 
                             var html = "";
                             html += "<p>" + args.value + "</p>";
-                            document.getElementById('id_message').innerHTML = html;
+                            document.getElementById('dsi').innerHTML = html;
 
                             //gadget.getView().html(messageResponse);
                         },
@@ -179,7 +242,7 @@
 
                             //gadget.getView().html(projectList);
 
-                            document.getElementById('id_message').innerHTML = projectList.text();
+                            document.getElementById('m').innerHTML = projectList.text();
 
                             console.log("*********************PROJECTS****************************");
                             console.log(args.projectData);
@@ -196,63 +259,15 @@
                     }
                 });
             }
-
-            function getStrategicIndicators(){
-
-                var gadget_strategic_indicators = AJS.Gadget({
-                    baseUrl: "__ATLASSIAN_BASE_URL__",
-                    useOauth: "/rest/gadget/1.0/currentUser",
-                    view: {
-                        template: function(args) {
-                            var gadget = this;
-                            console.log(args);
-
-                            var dtoSIE = args.dtoSIE;
-
-                            console.log("**********************DTOSIE***************************");
-                            console.log(args.dtoSIE);
-
-                            var html = "";
-                            html += "<p>" + args.dtoSIE + "</p>";
-                            document.getElementById('id_message').innerHTML = html;
-
-                            //gadget.getView().html(messageResponse);
-                        },
-                        args: [{
-                            key: "dtoSIE",
-                            ajaxOptions: function() {
-                                return {
-                                    url: "/rest/qrapids-gadget/1.0/strategicindicators/currentevaluation.json"
-                                };
-                            }
-                        }]
-                    }
-                });
-            }
-
-            function init() {
-                // Tab Strategic Indicators
-                //tabs.addTab("Strategic Indicators", {contentContainer: document.getElementById('id_message'), callback: getStrategicIndicators});
-                // Tab Detailed Strategic Indicators
-                //tabs.addTab("Detailed Strategic Indicators", {contentContainer: document.getElementById('id_message'), callback: getMessage});
-                // Tab Quality Factors
-                //tabs.addTab("Quality Factors", {contentContainer: document.getElementById('id_message'), callback: getMessage});
-                // Tab Metrics
-                //tabs.addTab("Metrics", {contentContainer: document.getElementById('id_message'), callback: getProjectData});
-            }
-
-            // Call init function to initialize and display tabs.
-            //gadgets.util.registerOnLoadHandler(init);
-
-        })();
         </script>
 
-        <div class="navbar">
-            <a href="#si" data-toggle="tab">Strategic Indicators</a>
-            <a href="#dsi" data-toggle="tab">Detailed Strategic Indicators</a>
-            <a href="#qf" data-toggle="tab">Quality Factors</a>
-            <a href="#m" data-toggle="tab">Metrics</a>
-        </div>
+        <nav class="navbar" role="tablist">
+            <a id="id_tab_si" class="nav-item" data-toggle="tab" href="#si">Strategic Indicators</a>
+            <a id="id_tab_dsi" class="nav-item" data-toggle="tab" href="#dsi">Detailed Strategic Indicators</a>
+            <a id="id_tab_qf" class="nav-item" data-toggle="tab" href="#qf">Quality Factors</a>
+            <a id="id_tab_m" class="nav-item" data-toggle="tab" href="#m">Metrics</a>
+        </nav>
+
 
         <div class="tab-content clearfix">
             <div class="tab-pane active" id="si">
@@ -270,6 +285,7 @@
         </div>
 
         <div id="debug_div" style="font-size:9pt; padding:5px; color: red;"></div>
+
 
         ]]>
     </Content>
