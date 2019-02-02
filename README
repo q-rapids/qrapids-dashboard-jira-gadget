@@ -42,6 +42,7 @@ atlas-help  -- prints description for all commands in the SDK
 - [D3 Data-Driven Documents](https://d3js.org/)
 - [Charts.js](https://www.chartjs.org/)
 - [MavenRepository](https://mvnrepository.com/)
+- [Ejemplo Chart.js Jira Gadget](https://github.com/andnyb/chartjs-multifilter-jira-plugin)
 
 ## Book
 - [JIRA Development cookbook](http://file.allitebooks.com/20180506/JIRA%20Development%20Cookbook%20-%20Third%20Edition.pdf)
