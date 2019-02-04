@@ -79,17 +79,17 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
         <style type="text/css">
-            .navbar {
+            .topnav {
                 overflow: hidden;
                 background-color: #0177a6;
                 top: 0;
                 margin: 5px;
                 border-radius: 4px 4px 4px 4px ;
                 min-height: 0px
-             }
+            }
 
-            .navbar a {
-                float: left;
+            .topnav a {
+              float: left;
                 display: block;
                 color: #f2f2f2;
                 text-align: center;
@@ -98,12 +98,12 @@
                 font-size: 12px;
             }
 
-            .navbar a:hover {
+            .topnav a:hover {
                 background: #ddd;
                 color: black;
             }
 
-            .navbar > a.active {
+            .topnav a.active {
                 background: #ddd;
                 color: black;
             }
@@ -112,8 +112,6 @@
                 padding: 5px;
                 height: 500px; /* Used in this example to enable scrolling */
             }
-
-
         </style>
 
         <script type="text/javascript">
@@ -121,35 +119,29 @@
             AJS.$(document).ready(function () {
                 getStrategicIndicators();
 
-                AJS.$("#id_tab_si").click(function(event) {
+                AJS.$('#id_tab_si').on('click', function(){
+                    AJS.$("#myTopnav .tab-nav").removeClass('active')
+                    AJS.$('#id_tab_si').addClass('active');
                     getStrategicIndicators();
-                    AJS.$("#id_tab_si").find("active").removeClass('active');
-                    //AJS.$("#id_tab_si").addClass('active');
-                    //alert("si");
                 });
 
-                AJS.$("#id_tab_dsi").click(function(event) {
-                    //getStrategicIndicators();
-                    AJS.$("#id_tab_dsi").find("active").removeClass('active');
-                    //AJS.$("#id_tab_dsi").addClass('active');
-                    //alert("dsi");
+                AJS.$('#id_tab_dsi').on('click', function(){
+                    AJS.$("#myTopnav .tab-nav").removeClass('active')
+                    AJS.$('#id_tab_dsi').addClass('active');
                 });
 
-                AJS.$("#id_tab_qf").click(function(event) {
-                    //getStrategicIndicators();
-                    AJS.$("#id_tab_qf").find("active").removeClass('active');
-                    //AJS.$("#id_tab_qf").addClass('active');
-                    //alert("qf");
+                AJS.$('#id_tab_qf').on('click', function(){
+                    AJS.$("#myTopnav .tab-nav").removeClass('active')
+                    AJS.$('#id_tab_qf').addClass('active');
                 });
 
-                AJS.$("#id_tab_m").click(function(event) {
-                    //getStrategicIndicators();
-                    AJS.$("#id_tab_m").find("active").removeClass('active');
-                    //AJS.$("#id_tab_m").addClass('active');
-                    //alert("m");
+                AJS.$('#id_tab_m').on('click', function(){
+                    AJS.$("#myTopnav .tab-nav").removeClass('active')
+                    AJS.$('#id_tab_m').addClass('active');
                 });
-
             });
+
+
 
             function getStrategicIndicators(){
 
@@ -261,12 +253,12 @@
             }
         </script>
 
-        <nav class="navbar" role="tablist">
-            <a id="id_tab_si" class="nav-item" data-toggle="tab" href="#si">Strategic Indicators</a>
-            <a id="id_tab_dsi" class="nav-item" data-toggle="tab" href="#dsi">Detailed Strategic Indicators</a>
-            <a id="id_tab_qf" class="nav-item" data-toggle="tab" href="#qf">Quality Factors</a>
-            <a id="id_tab_m" class="nav-item" data-toggle="tab" href="#m">Metrics</a>
-        </nav>
+        <div class="topnav" id="myTopnav">
+            <a id="id_tab_si" class="tab-nav active" data-toggle="tab" href="#si">Strategic Indicators</a>
+            <a id="id_tab_dsi" class="tab-nav" data-toggle="tab" href="#dsi">Detailed Strategic Indicators</a>
+            <a id="id_tab_qf" class="tab-nav" data-toggle="tab" href="#qf">Quality Factors</a>
+            <a id="id_tab_m" class="tab-nav" data-toggle="tab" href="#m">Metrics</a>
+        </div>
 
 
         <div class="tab-content clearfix">
