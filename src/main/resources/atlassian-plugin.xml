@@ -13,11 +13,8 @@
     <!-- add our web resources -->
     <web-resource key="jira-gadget-qrapids-plugin-resources" name="jira-gadget-qrapids-plugin Web Resources">
         <dependency>com.atlassian.auiplugin:ajs</dependency>
-        
         <resource type="download" name="jira-gadget-qrapids-plugin.css" location="/css/jira-gadget-qrapids-plugin.css"/>
         <resource type="download" name="jira-gadget-qrapids-plugin.js" location="/js/jira-gadget-qrapids-plugin.js"/>
-        <resource type="download" name="images/" location="/images"/>
-
         <context>jira-gadget-qrapids-plugin</context>
     </web-resource>
 
@@ -27,7 +24,9 @@
         disable/enable the gadget.
      -->
     <gadget key="qrapids-gadget" name="Q-Rapids JIRA Gadget" location="gadget.xml"/>
-    <resource type="download" namePattern="images/" location="images/"/>
+    <resource type="download" name="images/" location="/images"/>
+    <resource type="download" name="js/" location="/js" />
+    <resource type="download" name="css/" location="/css" />
 
     <!-- Makes the gadget Locale messages available for the gadget's use. -->
     <resource type="download" name="i18n/ALL_ALL.xml" location="i18n/ALL_ALL.xml">
