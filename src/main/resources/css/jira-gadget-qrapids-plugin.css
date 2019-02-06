@@ -55,6 +55,7 @@
     width: -webkit-fill-available !important;
     height: 30px !important;
     text-align: left !important;
+    width: 158px !important;
 }
 
 .dropdown-menu>li>a:hover {
@@ -65,6 +66,5 @@
     float: left;
     display: block;
     height: 100%;
-    width: 180px;
-    margin-top: 5px;
+    width: -webkit-fill-available;
 }

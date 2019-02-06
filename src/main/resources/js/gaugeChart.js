@@ -13,7 +13,7 @@ function drawChart(data, container, width, height, showButtons, chartHyperlinked
     console.log("**********************gaugeChart.js:drawChart()***************************");
 
 
-    sortDataAlphabetically(data);
+    //sortDataAlphabetically(data);
     var someSIhasBN = false;
     for (i = 0; i < data.length; ++i) {
         var div = document.createElement('div');
@@ -23,8 +23,8 @@ function drawChart(data, container, width, height, showButtons, chartHyperlinked
         document.getElementById(container).appendChild(div);
 
         //0 to 1 values to angular values
-        console.log(data[i]);
-        console.log("0 to 1 values to angular values");
+        //console.log(data[i]);
+        //console.log("0 to 1 values to angular values");
 
         angle = data[i].evaluationValue * 180 + 90;
         upperThresh = data[i].kpiupperThreshold * Math.PI - Math.PI / 2;
@@ -58,7 +58,7 @@ function drawChart(data, container, width, height, showButtons, chartHyperlinked
             }*/
 
             // --> all the chart is hyperlinked
-            console.log('#'+div.id);
+            //console.log('#'+div.id);
             var svg = d3.select('#'+div.id).append("svg")
                 .attr("width", width)
                 .attr("height", height)
