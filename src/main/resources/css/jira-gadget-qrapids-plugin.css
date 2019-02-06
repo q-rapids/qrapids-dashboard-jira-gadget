@@ -10,7 +10,7 @@
 .topnav a {
     float: left;
     display: block;
-    color: #f2f2f2;
+    color: white;
     text-align: center;
     padding: 10px;
     text-decoration: none;
@@ -29,6 +29,42 @@
 
 .tab-content {
     padding: 5px;
-    height: 500px; /* Used in this example to enable scrolling */
+    height: auto; /* Used in this example to enable scrolling */
     text-align: center;
+}
+
+.dropdown{
+    position: absolute;
+    z-index: 1;
+}
+
+.dropdown-menu-item {
+    color: black;
+}
+
+.span-position {
+    position: absolute;
+}
+
+.dropdown-toggle {
+    width: max-content;
+}
+
+.dropdown-menu>li>a {
+    color: black !important;
+    width: -webkit-fill-available !important;
+    height: 30px !important;
+    text-align: left !important;
+}
+
+.dropdown-menu>li>a:hover {
+    background: #ddd;
+}
+
+.dropdown > ul > li{
+    float: left;
+    display: block;
+    height: 100%;
+    width: 180px;
+    margin-top: 5px;
 }

@@ -80,13 +80,15 @@
             #includeResources()
 
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
             <script src="https://d3js.org/d3.v5.js"></script>
 
-
             <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/gaugeChart.js" type="text/javascript"></script>
+            <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/jira-gadget-qrapids-plugin.js" type="text/javascript"></script>
             <link href="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/css/jira-gadget-qrapids-plugin.css" type="text/css" rel="stylesheet">
 
             <script type="text/javascript">
@@ -222,6 +224,25 @@
                 <a id="id_tab_dsi" class="tab-nav" data-toggle="tab" href="#dsi">Detailed Strategic Indicators</a>
                 <a id="id_tab_qf" class="tab-nav" data-toggle="tab" href="#qf">Quality Factors</a>
                 <a id="id_tab_m" class="tab-nav" data-toggle="tab" href="#m">Metrics</a>
+                <span class="span-position">
+                    <div class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle">View mode <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="#"> <i class="fa fa-area-chart" style="font-size:15px; padding: 5px;"></i> Graphical</a>
+                            </li>
+                            <li>
+                                <a href="#"> <i class="fa fa-navicon" style="font-size:15px; padding: 5px;"></i> Table</a>
+                            </li>
+                            <li>
+                                <a href="#"> <i class="fa fa-dashboard" style="font-size:15px; padding: 5px;"></i> Radar</a>
+                            </li>
+                            <li>
+                                <a href="#"> <i class="fa fa-history" style="font-size:15px; padding: 5px;"></i> Histo</a>
+                            </li>
+                        </ul>
+                    </div>
+                </span>
             </div>
 
 
