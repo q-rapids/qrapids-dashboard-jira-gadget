@@ -19,7 +19,8 @@ function printCurrentTabTable(data) {
     var body = document.getElementById('si');
 
     // create elements <table> and a <tbody>
-    var tbl = document.createElement("table");
+    var tbl = document.createElement('table');
+    tbl.setAttribute("class","table table-hover");
 
     var tblhead = document.createElement("thead");
     var rowHead = document.createElement("tr");
@@ -59,6 +60,7 @@ function printCurrentTabTable(data) {
     for (var i = 0; i < dataSI.length; ++i) {
         // table row creation
         var row = document.createElement("tr");
+        row.setAttribute("class","th-name-si");
 
         var cell = document.createElement("td");
         var cellText = document.createTextNode(dataSI[i].strategicIndicatorName);
@@ -66,22 +68,22 @@ function printCurrentTabTable(data) {
         row.appendChild(cell);
 
         cell = document.createElement("td");
-        cellText = document.createTextNode(dataSI[i].evaluationValue);
+        cellText = document.createTextNode(dataSI[i].evaluationValue.toFixed(2));
         cell.appendChild(cellText);
         row.appendChild(cell);
 
         cell = document.createElement("td");
-        cellText = document.createTextNode(dataSI[i].kpitarget);
+        cellText = document.createTextNode(dataSI[i].kpitarget.toFixed(2));
         cell.appendChild(cellText);
         row.appendChild(cell);
 
         cell = document.createElement("td");
-        cellText = document.createTextNode(dataSI[i].kpilowerThreshold);
+        cellText = document.createTextNode(dataSI[i].kpilowerThreshold.toFixed(2));
         cell.appendChild(cellText);
         row.appendChild(cell);
 
         cell = document.createElement("td");
-        cellText = document.createTextNode(dataSI[i].kpiupperThreshold);
+        cellText = document.createTextNode(dataSI[i].kpiupperThreshold.toFixed(2));
         cell.appendChild(cellText);
         row.appendChild(cell);
 
@@ -93,6 +95,4 @@ function printCurrentTabTable(data) {
     tbl.appendChild(tblBody);
     // put <table> in the <body>
     body.appendChild(tbl);
-    // tbl border attribute to
-    tbl.setAttribute("border", "2");
 }

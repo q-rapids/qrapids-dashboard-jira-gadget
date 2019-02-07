@@ -122,7 +122,7 @@
 
                         // Menus Items
                         AJS.$('#id_graphical_menu_item').on('click', function(){
-                            printCurrentTabChart();
+                            alert("1");
                         });
 
                         AJS.$('#id_table_menu_item').on('click', function(){
@@ -130,7 +130,7 @@
                         });
 
                         AJS.$('#id_radar_menu_item').on('click', function(){
-                            alert("3");
+                            printCurrentTabChart();
                         });
 
                         AJS.$('#id_histo_menu_item').on('click', function(){
