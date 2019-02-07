@@ -102,6 +102,7 @@
                         AJS.$('#id_tab_si').on('click', function(){
                             AJS.$("#myTopnav .tab-nav").removeClass('active')
                             AJS.$('#id_tab_si').addClass('active');
+                            getDataStrategicIndicators();
                         });
 
                         AJS.$('#id_tab_dsi').on('click', function(){

@@ -20,26 +20,73 @@ function printCurrentTabTable(data) {
 
     // create elements <table> and a <tbody>
     var tbl = document.createElement("table");
+
+    var tblhead = document.createElement("thead");
+    var rowHead = document.createElement("tr");
+
+    var cell = document.createElement("th");
+    var cellText = document.createTextNode("Strategic Indicator");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Current Value");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Target Value");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Lower Threshold");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Upper Threshold");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    tblhead.appendChild(rowHead);
+    tbl.appendChild(tblhead);
+
     var tblBody = document.createElement("tbody");
 
+
     // cells creation
-    for (var j = 0; j <= 2; j++) {
-    // table row creation
-    var row = document.createElement("tr");
+    for (var i = 0; i < dataSI.length; ++i) {
+        // table row creation
+        var row = document.createElement("tr");
 
-    for (var i = 0; i < 2; i++) {
-      // create element <td> and text node
-      //Make text node the contents of <td> element
-      // put <td> at end of the table row
-      var cell = document.createElement("td");
-      var cellText = document.createTextNode("cell is row " + j + ", column " + i);
+        var cell = document.createElement("td");
+        var cellText = document.createTextNode(dataSI[i].strategicIndicatorName);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
 
-      cell.appendChild(cellText);
-      row.appendChild(cell);
-    }
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataSI[i].evaluationValue);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
 
-    //row added to end of table body
-    tblBody.appendChild(row);
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataSI[i].kpitarget);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataSI[i].kpilowerThreshold);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataSI[i].kpiupperThreshold);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        //row added to end of table body
+        tblBody.appendChild(row);
     }
 
     // append the <tbody> inside the <table>
