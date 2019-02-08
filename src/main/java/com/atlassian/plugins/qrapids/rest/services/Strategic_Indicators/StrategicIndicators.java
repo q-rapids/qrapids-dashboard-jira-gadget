@@ -1,4 +1,4 @@
-package com.atlassian.plugins.qrapids.rest.services;
+package com.atlassian.plugins.qrapids.rest.services.Strategic_Indicators;
 
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 import javax.ws.rs.*;
@@ -13,10 +13,10 @@ import java.net.URL;
 /**
  * A resource of message.
  */
-@Path("/strategicindicators")
+@Path("/StrategicIndicators")
 public class StrategicIndicators {
 
-    @Path("/currentevaluation")
+    @Path("/CurrentEvaluation")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
@@ -41,3 +41,4 @@ public class StrategicIndicators {
         return Response.ok(mainJSON).build();
     }
 }
+

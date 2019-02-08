@@ -115,11 +115,13 @@
                         AJS.$('#id_tab_dsi').on('click', function(){
                             AJS.$("#myTopnav .tab-nav").removeClass('active')
                             AJS.$('#id_tab_dsi').addClass('active');
+                            getDataDetailedStrategicIndicators();
                         });
 
                         AJS.$('#id_tab_qf').on('click', function(){
                             AJS.$("#myTopnav .tab-nav").removeClass('active')
                             AJS.$('#id_tab_qf').addClass('active');
+                            getDataQualityFactors();
                         });
 
                         AJS.$('#id_tab_m').on('click', function(){
@@ -170,7 +172,55 @@
                                     key: "dtoSIE",
                                     ajaxOptions: function() {
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/strategicindicators/currentevaluation.json"
+                                            url: "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation.json"
+                                        };
+                                    }
+                                }]
+                            }
+                        });
+                    }
+
+                    function getDataDetailedStrategicIndicators(){
+                        var gadget_strategic_indicators = AJS.Gadget({
+                            baseUrl: "__ATLASSIAN_BASE_URL__",
+                            useOauth: "/rest/gadget/1.0/currentUser",
+                            view: {
+                                template: function(args) {
+                                    var gadget = this;
+                                    var data = args.dtoDSIE;
+                                    console.log("**********************gadget.getDataDetailedStrategicIndicators()***************************");
+                                    console.log(data);
+                                    //printCurrentChart(data);
+                                },
+                                args: [{
+                                    key: "dtoDSIE",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/CurrentEvaluation.json"
+                                        };
+                                    }
+                                }]
+                            }
+                        });
+                    }
+
+                    function getDataQualityFactors(){
+                        var gadget_strategic_indicators = AJS.Gadget({
+                            baseUrl: "__ATLASSIAN_BASE_URL__",
+                            useOauth: "/rest/gadget/1.0/currentUser",
+                            view: {
+                                template: function(args) {
+                                    var gadget = this;
+                                    var data = args.dtoQF;
+                                    console.log("**********************gadget.getDataQualityFactors()***************************");
+                                    console.log(data);
+                                    //printCurrentChart(data);
+                                },
+                                args: [{
+                                    key: "dtoQF",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/QualityFactors/CurrentEvaluation.json"
                                         };
                                     }
                                 }]
