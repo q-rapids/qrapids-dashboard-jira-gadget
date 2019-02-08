@@ -103,27 +103,41 @@
                     AJS.$(document).ready(function () {
 
                         // Tabs
+                        // Strategic Indicators
+
                         AJS.$('#id_tab_si').on('click', function(){
                             AJS.$("#myTopnav .tab-nav").removeClass('active')
                             AJS.$('#id_tab_si').addClass('active');
                             if (AJS.$('#id_graphical_menu_item').hasClass('background-active-view'))
                                 getDataStrategicIndicators();
                             else
-                                printCurrentTable();
+                                printCurrentTableSI();
                         });
+
+                        // Detailed Strategic Indicators
 
                         AJS.$('#id_tab_dsi').on('click', function(){
                             AJS.$("#myTopnav .tab-nav").removeClass('active')
                             AJS.$('#id_tab_dsi').addClass('active');
                             getDataDetailedStrategicIndicators();
+                            if (AJS.$('#id_graphical_menu_item').hasClass('background-active-view'))
+                                printCurrentChartDSI();
+                            else
+                                printCurrentTableDSI();
                         });
 
+                        // Quality Factors
                         AJS.$('#id_tab_qf').on('click', function(){
                             AJS.$("#myTopnav .tab-nav").removeClass('active')
                             AJS.$('#id_tab_qf').addClass('active');
                             getDataQualityFactors();
+                            if (AJS.$('#id_graphical_menu_item').hasClass('background-active-view'))
+                                printCurrentChartQF();
+                            else
+                                printCurrentTableQF();
                         });
 
+                        // Metrics
                         AJS.$('#id_tab_m').on('click', function(){
                             AJS.$("#myTopnav .tab-nav").removeClass('active')
                             AJS.$('#id_tab_m').addClass('active');
@@ -134,13 +148,13 @@
                         AJS.$('#id_graphical_menu_item').on('click', function(){
                             AJS.$("#id_table_menu_item").removeClass('background-active-view')
                             AJS.$('#id_graphical_menu_item').addClass('background-active-view');
-                            printCurrentChart();
+                            printCurrentChartSI();
                         });
 
                         AJS.$('#id_table_menu_item').on('click', function(){
                             AJS.$("#id_graphical_menu_item").removeClass('background-active-view')
                             AJS.$('#id_table_menu_item').addClass('background-active-view');
-                            printCurrentTable();
+                            printCurrentTableSI();
                         });
 
                         AJS.$('#id_radar_menu_item').on('click', function(){
@@ -151,7 +165,7 @@
 
                         });
 
-                        //Draw SI Chart
+                        //GET AND SAVE DATA
                         getDataStrategicIndicators();
                     });
 
@@ -166,7 +180,7 @@
                                     var data = args.dtoSIE;
                                     console.log("**********************gadget.getStrategicIndicators()***************************");
                                     console.log(data);
-                                    printCurrentChart(data);
+                                    printCurrentChartSI(data);
                                 },
                                 args: [{
                                     key: "dtoSIE",
@@ -188,9 +202,9 @@
                                 template: function(args) {
                                     var gadget = this;
                                     var data = args.dtoDSIE;
-                                    console.log("**********************gadget.getDataDetailedStrategicIndicators()***************************");
+                                    console.log("**********************1gadget.getDataDetailedStrategicIndicators()***************************");
                                     console.log(data);
-                                    //printCurrentChart(data);
+                                    saveDataDetailedStrategicIndicators(data);
                                 },
                                 args: [{
                                     key: "dtoDSIE",
@@ -214,7 +228,7 @@
                                     var data = args.dtoQF;
                                     console.log("**********************gadget.getDataQualityFactors()***************************");
                                     console.log(data);
-                                    //printCurrentChart(data);
+                                    saveDataQualityFactors(data);
                                 },
                                 args: [{
                                     key: "dtoQF",
@@ -343,12 +357,8 @@
 
                 <div class="tab-content clearfix">
                     <div class="tab-pane active" id="si"></div>
-                    <div class="tab-pane" id="dsi">
-                         <h3>Detailed Strategic Indicators</h3>
-                    </div>
-                    <div class="tab-pane" id="qf">
-                        <h3>Quality Factors</h3>
-                    </div>
+                    <div class="tab-pane" id="dsi"></div>
+                    <div class="tab-pane" id="qf"></div>
                     <div class="tab-pane" id="m">
                         <h3>Metrics</h3>
                     </div>
