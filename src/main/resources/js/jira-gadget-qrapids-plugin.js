@@ -3,14 +3,14 @@ var dataDSI = [];
 var dataQF = [];
 var dataM = [];
 
-function printCurrentTabChart(data) {
+function printCurrentChart(data) {
     if (data != null && dataSI == "") dataSI = data;
     console.log("**********************print_Chart***************************");
     $("#si").empty();
     drawChart(dataSI, 'si', 150, 150, false, true);
 }
 
-function printCurrentTabTable(data) {
+function printCurrentTable() {
     console.log("**********************print_Table***************************");
 
     $("#si").empty();

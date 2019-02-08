@@ -53,9 +53,10 @@
 .dropdown-menu>li>a {
     color: black !important;
     width: -webkit-fill-available !important;
-    height: 30px !important;
+    height: 39px !important;
     text-align: left !important;
     width: 158px !important;
+    padding-top: 10px;
 }
 
 .dropdown-menu>li>a:hover {
@@ -85,4 +86,14 @@ th, td {
 
 .th-name-si:hover{
    background-color:#f5f5f5; !important;
+}
+
+.background-active-view{
+    background-color: #ffc380;
+}
+
+.icons-view-mode {
+    height: 80%;
+    width: 30%;
+    vertical-align: bottom;
 }
