@@ -100,75 +100,10 @@
 
                 <script type="text/javascript">
 
-                    AJS.$(document).ready(function () {
-
-                        // Tabs
-                        // Strategic Indicators
-
-                        AJS.$('#id_tab_si').on('click', function(){
-                            AJS.$("#myTopnav .tab-nav").removeClass('active')
-                            AJS.$('#id_tab_si').addClass('active');
-                            if (AJS.$('#id_graphical_menu_item').hasClass('background-active-view'))
-                                getDataStrategicIndicators();
-                            else
-                                printCurrentTableSI();
-                        });
-
-                        // Detailed Strategic Indicators
-
-                        AJS.$('#id_tab_dsi').on('click', function(){
-                            AJS.$("#myTopnav .tab-nav").removeClass('active')
-                            AJS.$('#id_tab_dsi').addClass('active');
-                            getDataDetailedStrategicIndicators();
-                            if (AJS.$('#id_graphical_menu_item').hasClass('background-active-view'))
-                                printCurrentChartDSI();
-                            else
-                                printCurrentTableDSI();
-                        });
-
-                        // Quality Factors
-                        AJS.$('#id_tab_qf').on('click', function(){
-                            AJS.$("#myTopnav .tab-nav").removeClass('active')
-                            AJS.$('#id_tab_qf').addClass('active');
-                            getDataQualityFactors();
-                            if (AJS.$('#id_graphical_menu_item').hasClass('background-active-view'))
-                                printCurrentChartQF();
-                            else
-                                printCurrentTableQF();
-                        });
-
-                        // Metrics
-                        AJS.$('#id_tab_m').on('click', function(){
-                            AJS.$("#myTopnav .tab-nav").removeClass('active')
-                            AJS.$('#id_tab_m').addClass('active');
-                        });
-
-                        // Menus Items Dropdown
-
-                        AJS.$('#id_graphical_menu_item').on('click', function(){
-                            AJS.$("#id_table_menu_item").removeClass('background-active-view')
-                            AJS.$('#id_graphical_menu_item').addClass('background-active-view');
-                            printCurrentChartSI();
-                        });
-
-                        AJS.$('#id_table_menu_item').on('click', function(){
-                            AJS.$("#id_graphical_menu_item").removeClass('background-active-view')
-                            AJS.$('#id_table_menu_item').addClass('background-active-view');
-                            printCurrentTableSI();
-                        });
-
-                        AJS.$('#id_radar_menu_item').on('click', function(){
-
-                        });
-
-                        AJS.$('#id_histo_menu_item').on('click', function(){
-
-                        });
-
-                        //GET AND SAVE DATA
-                        getDataStrategicIndicators();
-                    });
-
+                    var dataSI = [];
+                    var dataDSI = [];
+                    var dataQF = [];
+                    var dataM = [];
 
                     function getDataStrategicIndicators(){
                         var gadget_strategic_indicators = AJS.Gadget({
@@ -177,13 +112,13 @@
                             view: {
                                 template: function(args) {
                                     var gadget = this;
-                                    var data = args.dtoSIE;
+                                    dataSI = args.dtoSI;
                                     console.log("**********************gadget.getStrategicIndicators()***************************");
-                                    console.log(data);
-                                    printCurrentChartSI(data);
+                                    console.log(dataSI);
+                                    printCurrentChartSI(dataSI);
                                 },
                                 args: [{
-                                    key: "dtoSIE",
+                                    key: "dtoSI",
                                     ajaxOptions: function() {
                                         return {
                                             url: "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation.json"
@@ -201,13 +136,12 @@
                             view: {
                                 template: function(args) {
                                     var gadget = this;
-                                    var data = args.dtoDSIE;
-                                    console.log("**********************1gadget.getDataDetailedStrategicIndicators()***************************");
-                                    console.log(data);
-                                    saveDataDetailedStrategicIndicators(data);
+                                    dataDSI = args.dtoDSI;
+                                    console.log("**********************gadget.getDataDetailedStrategicIndicators()***************************");
+                                    console.log(dataDSI);
                                 },
                                 args: [{
-                                    key: "dtoDSIE",
+                                    key: "dtoDSI",
                                     ajaxOptions: function() {
                                         return {
                                             url: "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/CurrentEvaluation.json"
@@ -225,10 +159,9 @@
                             view: {
                                 template: function(args) {
                                     var gadget = this;
-                                    var data = args.dtoQF;
+                                    dataQF = args.dtoQF;
                                     console.log("**********************gadget.getDataQualityFactors()***************************");
-                                    console.log(data);
-                                    saveDataQualityFactors(data);
+                                    console.log(dataQF);
                                 },
                                 args: [{
                                     key: "dtoQF",
@@ -316,6 +249,76 @@
                             }
                         });
                     }
+
+                    $(document).ready(function () {
+                        // Tabs
+                        $('#id_tab_si').on('click', function(){
+                            $("#myTopnav .tab-nav").removeClass('active')
+                            $('#id_tab_si').addClass('active');
+                            if ($('#id_graphical_menu_item').hasClass('background-active-view'))
+                                printCurrentChartSI(dataSI);
+                            else
+                                printCurrentTableSI(dataSI);
+                        });
+
+                        $('#id_tab_dsi').on('click', function(){
+                            $("#myTopnav .tab-nav").removeClass('active')
+                            $('#id_tab_dsi').addClass('active');
+                            if ($('#id_graphical_menu_item').hasClass('background-active-view'))
+                                printCurrentChartDSI(dataDSI);
+                            else
+                                printCurrentTableDSI(dataDSI);
+                        });
+
+                        $('#id_tab_qf').on('click', function(){
+                            $("#myTopnav .tab-nav").removeClass('active')
+                            $('#id_tab_qf').addClass('active');
+                            if ($('#id_graphical_menu_item').hasClass('background-active-view'))
+                                printCurrentChartQF(dataQF);
+                            else
+                                printCurrentTableQF(dataQF);
+                        });
+
+                        $('#id_tab_m').on('click', function(){
+                            $("#myTopnav .tab-nav").removeClass('active')
+                            $('#id_tab_m').addClass('active');
+                        });
+
+                        // Menus Items Dropdown
+
+                        $('#id_graphical_menu_item').on('click', function(){
+                            $("#id_table_menu_item").removeClass('background-active-view')
+                            $('#id_graphical_menu_item').addClass('background-active-view');
+
+                            if ($('#id_tab_si').hasClass('active')) printCurrentChartSI(dataSI);
+                            else if ($('#id_tab_dsi').hasClass('active')) printCurrentChartDSI(dataDSI);
+                            else if ($('#id_tab_qf').hasClass('active')) printCurrentChartQF(dataQF);
+                        });
+
+                        $('#id_table_menu_item').on('click', function(){
+                            $("#id_graphical_menu_item").removeClass('background-active-view')
+                            $('#id_table_menu_item').addClass('background-active-view');
+
+                            if ($('#id_tab_si').hasClass('active')) printCurrentTableSI(dataSI);
+                            else if ($('#id_tab_dsi').hasClass('active')) printCurrentTableDSI(dataDSI);
+                            else if ($('#id_tab_qf').hasClass('active')) printCurrentTableQF(dataQF);
+                        });
+
+                        $('#id_radar_menu_item').on('click', function(){
+
+                        });
+
+                        $('#id_histo_menu_item').on('click', function(){
+
+                        });
+                    });
+
+                    (function () {
+                        getDataStrategicIndicators();
+                        getDataDetailedStrategicIndicators();
+                        getDataQualityFactors();
+                    })();
+
                 </script>
             </head>
 

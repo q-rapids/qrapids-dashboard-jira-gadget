@@ -1,37 +1,13 @@
-var dataSI = [];
-var dataDSI = [];
-var dataQF = [];
-var dataM = [];
 
+function printCurrentChartSI(dataSI) {
 
-function saveDataDetailedStrategicIndicators(data){
-    if (data != null) dataDSI = data;
-    console.log("___________________________2save_Data_DSI___________________________");
-    console.log(dataDSI);
-}
-
-
-function saveDataQualityFactors(data){
-    if (data != null) dataQF = data;
-    console.log("___________________________save_Data_QF___________________________");
-    console.log(dataQF);
-}
-
-function saveMetrics(data){
-    if (data != null) dataM = data;
-    console.log("___________________________save_Data_M___________________________");
-    console.log(dataM);
-}
-
-
-function printCurrentChartSI(data) {
-    if (data != null && dataSI == "") dataSI = data;
     console.log("**********************print_Chart_SI***************************");
+    console.log(dataSI);
     $("#si").empty();
     drawChart(dataSI, 'si', 150, 150, false, true);
 }
 
-function printCurrentTableSI() {
+function printCurrentTableSI(dataSI) {
     console.log("#######################print_Table_SI#######################");
 
     $("#si").empty();
@@ -118,12 +94,12 @@ function printCurrentTableSI() {
     body.appendChild(tbl);
 }
 
-function printCurrentChartDSI(data) {
+function printCurrentChartDSI(dataDSI) {
     console.log("**********************print_Chart_DSI***************************");
-    //$("#dsi").empty();
+    $("#dsi").empty();
 }
 
-function printCurrentTableDSI() {
+function printCurrentTableDSI(dataDSI) {
 
     console.log("#######################3print_Table_DSI#######################");
     console.log(dataDSI);
@@ -196,13 +172,12 @@ function printCurrentTableDSI() {
     body.appendChild(tbl);
 }
 
-function printCurrentChartQF(data) {
-    if (data != null && dataQF == "") dataQF = data;
+function printCurrentChartQF(dataQF) {
     console.log("**********************print_Chart_QF***************************");
     $("#qf").empty();
 }
 
-function printCurrentTableQF() {
+function printCurrentTableQF(dataQF) {
 
     console.log("#######################print_Table_QF#######################");
 
