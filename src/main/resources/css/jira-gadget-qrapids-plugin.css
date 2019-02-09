@@ -64,6 +64,10 @@
     background: #ddd;
 }
 
+.dropdown-menu a.active {
+    background-color: #ffc380;
+}
+
 .dropdown > ul > li{
     float: left;
     display: block;
@@ -87,10 +91,6 @@ th, td {
 
 .th-name-si:hover{
    background-color:#f5f5f5; !important;
-}
-
-.background-active-view{
-    background-color: #ffc380;
 }
 
 .icons-view-mode {

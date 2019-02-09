@@ -1,14 +1,20 @@
-
+// SI
 function printCurrentChartSI(dataSI) {
 
-    console.log("**********************print_Chart_SI***************************");
+    console.log("**********************print_Current_Chart_SI***************************");
     console.log(dataSI);
     $("#si").empty();
     drawGaugeChart(dataSI, 'si', 215, 215, false, true);
 }
 
+function printHistoricalChartSI(){
+    console.log("**********************print_Historical_Chart_SI***************************");
+    $("#si").empty();
+    document.getElementById("si").innerHTML = "HISTORICAL CHART SI";
+}
+
 function printCurrentTableSI(dataSI) {
-    console.log("#######################print_Table_SI#######################");
+    console.log("#######################print_Current_Table_SI#######################") ;
 
     $("#si").empty();
 
@@ -94,8 +100,16 @@ function printCurrentTableSI(dataSI) {
     body.appendChild(tbl);
 }
 
+function printHistoricalTableSI(dataSI) {
+    console.log("#######################print_Historical_Table_SI#######################");
+    $("#si").empty();
+    document.getElementById("si").innerHTML = "HISTORICAL TABLE SI";
+}
+
+
+// DSI
 function printCurrentChartDSI(dataDSI) {
-    console.log("**********************print_Chart_DSI***************************");
+    console.log("**********************print_Current_Chart_DSI***************************");
     $("#dsi").empty();
 
     //initialize data vectors
@@ -126,10 +140,17 @@ function printCurrentChartDSI(dataDSI) {
 
 }
 
+function printHistoricalChartDSI() {
+    console.log("**********************print_Historical_Chart_DSI***************************");
+    $("#dsi").empty();
+    document.getElementById("dsi").innerHTML = "HISTORICAL CHART DSI";
+}
+
 function printCurrentTableDSI(dataDSI) {
 
-    console.log("#######################3print_Table_DSI#######################");
-    console.log(dataDSI);
+    console.log("#######################print_Current_Table_DSI#######################");
+
+    //console.log(dataDSI);
 
     $("#dsi").empty();
 
@@ -199,8 +220,16 @@ function printCurrentTableDSI(dataDSI) {
     body.appendChild(tbl);
 }
 
+function printHistoricalTableDSI(dataDSI) {
+    console.log("#######################print_Historical_Table_DSI#######################");
+    $("#dsi").empty();
+    document.getElementById("dsi").innerHTML = "HISTORICAL TABLE DSI";
+}
+
+
+// QF
 function printCurrentChartQF(dataQF) {
-    console.log("**********************print_Chart_QF***************************");
+    console.log("**********************print_Current_Chart_QF***************************");
     $("#qf").empty();
     var titles = [];
     var ids = [];
@@ -228,9 +257,15 @@ function printCurrentChartQF(dataQF) {
     drawRadarChart(titles, ids, labels, values, "qf", false);
 }
 
+function printHistoricalChartQF() {
+    console.log("**********************print_Historical_Chart_QF***************************");
+    $("#qf").empty();
+    document.getElementById("qf").innerHTML = "HISTORICAL CHART QF";
+}
+
 function printCurrentTableQF(dataQF) {
 
-    console.log("#######################print_Table_QF#######################");
+    console.log("#######################print_Current_Table_QF#######################");
 
     $("#qf").empty();
 
@@ -299,4 +334,36 @@ function printCurrentTableQF(dataQF) {
     // put <table> in the <body>
     body.appendChild(tbl);
 
+}
+
+function printHistoricalTableQF(dataQF) {
+    console.log("#######################print_Historical_Table_QF#######################");
+    $("#qf").empty();
+    document.getElementById("qf").innerHTML = "HISTORICAL TABLE QF";
+}
+
+
+// M
+function printCurrentChartM(dataM) {
+    console.log("**********************print_Current_Chart_M***************************");
+    $("#m").empty();
+    document.getElementById("m").innerHTML = "CURRENT CHART M";
+}
+
+function printHistoricalChartM() {
+    console.log("**********************print_Historical_Chart_M***************************");
+    $("#m").empty();
+    document.getElementById("m").innerHTML = "HISTORICAL CHART M";
+}
+
+function printCurrentTableM(dataM) {
+    console.log("#######################print_Current_Table_M#######################");
+    $("#m").empty();
+    document.getElementById("m").innerHTML = "CURRENT TABLE M";
+}
+
+function printHistoricalTableM(dataM) {
+    console.log("#######################print_Historical_Table_M#######################");
+    $("#m").empty();
+    document.getElementById("m").innerHTML = "HISTORICAL TABLE M";
 }

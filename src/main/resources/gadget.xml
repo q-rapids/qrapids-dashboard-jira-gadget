@@ -102,22 +102,30 @@
 
                 <script type="text/javascript">
 
-                    var dataSI = [];
-                    var dataDSI = [];
-                    var dataQF = [];
-                    var dataM = [];
+                    var dataCurrentSI = [];
+                    var dataHistoricalSI = [];
 
-                    function getDataStrategicIndicators(){
+                    var dataCurrentDSI = [];
+                    var dataHistoricalDSI = [];
+
+                    var dataCurrentQF = [];
+                    var dataHistoricalQF = [];
+
+                    var dataCurrentM = [];
+                    var dataHistoricalM = [];
+
+                    // Current SI
+                    function getStrategicIndicatorsCurrentEvaluation(){
                         var gadget_strategic_indicators = AJS.Gadget({
                             baseUrl: "__ATLASSIAN_BASE_URL__",
                             useOauth: "/rest/gadget/1.0/currentUser",
                             view: {
                                 template: function(args) {
                                     var gadget = this;
-                                    dataSI = args.dtoSI;
-                                    console.log("**********************gadget.getStrategicIndicators()***************************");
-                                    console.log(dataSI);
-                                    printCurrentChartSI(dataSI);
+                                    dataCurrentSI = args.dtoSI;
+                                    console.log("**********************gadget.getStrategicIndicatorsCurrentEvaluation()***************************");
+                                    console.log(dataCurrentSI);
+                                    printCurrentChartSI(dataCurrentSI);
                                 },
                                 args: [{
                                     key: "dtoSI",
@@ -131,16 +139,42 @@
                         });
                     }
 
-                    function getDataDetailedStrategicIndicators(){
+                    // HistoricalData SI
+                    function getStrategicIndicatorsHistoricalData(){
                         var gadget_strategic_indicators = AJS.Gadget({
                             baseUrl: "__ATLASSIAN_BASE_URL__",
                             useOauth: "/rest/gadget/1.0/currentUser",
                             view: {
                                 template: function(args) {
                                     var gadget = this;
-                                    dataDSI = args.dtoDSI;
-                                    console.log("**********************gadget.getDataDetailedStrategicIndicators()***************************");
-                                    console.log(dataDSI);
+                                    dataHistoricalSI = args.dtoSI;
+                                    console.log("**********************gadget.getStrategicIndicatorsHistoricalData()***************************");
+                                    console.log(dataHistoricalSI);
+                                },
+                                args: [{
+                                    key: "dtoSI",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/StrategicIndicators/HistoricalData.json"
+                                        };
+                                    }
+                                }]
+                            }
+                        });
+                    }
+
+
+                    // Current DSI
+                    function getDetailedStrategicIndicatorsCurrentEvaluation(){
+                        var gadget_strategic_indicators = AJS.Gadget({
+                            baseUrl: "__ATLASSIAN_BASE_URL__",
+                            useOauth: "/rest/gadget/1.0/currentUser",
+                            view: {
+                                template: function(args) {
+                                    var gadget = this;
+                                    dataCurrentDSI = args.dtoDSI;
+                                    console.log("**********************gadget.getDetailedStrategicIndicatorsCurrentEvaluation()***************************");
+                                    console.log(dataCurrentDSI);
                                 },
                                 args: [{
                                     key: "dtoDSI",
@@ -154,16 +188,42 @@
                         });
                     }
 
-                    function getDataQualityFactors(){
+                    // HistoricalData DSI
+                    function getDetailedStrategicIndicatorsHistoricalData(){
                         var gadget_strategic_indicators = AJS.Gadget({
                             baseUrl: "__ATLASSIAN_BASE_URL__",
                             useOauth: "/rest/gadget/1.0/currentUser",
                             view: {
                                 template: function(args) {
                                     var gadget = this;
-                                    dataQF = args.dtoQF;
-                                    console.log("**********************gadget.getDataQualityFactors()***************************");
-                                    console.log(dataQF);
+                                    dataHistoricalDSI = args.dtoSI;
+                                    console.log("**********************gadget.getDetailedStrategicIndicatorsHistoricalData()***************************");
+                                    console.log(dataHistoricalDSI);
+                                },
+                                args: [{
+                                    key: "dtoSI",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/HistoricalData.json"
+                                        };
+                                    }
+                                }]
+                            }
+                        });
+                    }
+
+
+                    // Current QF
+                    function getQualityFactorsCurrentEvaluation(){
+                        var gadget_strategic_indicators = AJS.Gadget({
+                            baseUrl: "__ATLASSIAN_BASE_URL__",
+                            useOauth: "/rest/gadget/1.0/currentUser",
+                            view: {
+                                template: function(args) {
+                                    var gadget = this;
+                                    dataCurrentQF = args.dtoQF;
+                                    console.log("**********************gadget.getQualityFactorsCurrentEvaluation()***************************");
+                                    console.log(dataCurrentQF);
                                 },
                                 args: [{
                                     key: "dtoQF",
@@ -176,6 +236,81 @@
                             }
                         });
                     }
+
+                    // HistoricalData QF
+                    function getQualityFactorsHistoricalData(){
+                        var gadget_strategic_indicators = AJS.Gadget({
+                            baseUrl: "__ATLASSIAN_BASE_URL__",
+                            useOauth: "/rest/gadget/1.0/currentUser",
+                            view: {
+                                template: function(args) {
+                                    var gadget = this;
+                                    dataHistoricalQF = args.dtoQF;
+                                    console.log("**********************gadget.getQualityFactorsHistoricalData()***************************");
+                                    console.log(dataHistoricalQF);
+                                },
+                                args: [{
+                                    key: "dtoQF",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/QualityFactors/HistoricalData.json"
+                                        };
+                                    }
+                                }]
+                            }
+                        });
+                    }
+
+
+                    // Current M
+                    function getMetricsCurrentEvaluation(){
+                        var gadget_strategic_indicators = AJS.Gadget({
+                            baseUrl: "__ATLASSIAN_BASE_URL__",
+                            useOauth: "/rest/gadget/1.0/currentUser",
+                            view: {
+                                template: function(args) {
+                                    var gadget = this;
+                                    dataCurrentM = args.dtoQF;
+                                    console.log("**********************gadget.getMetricsCurrentEvaluation()***************************");
+                                    console.log(dataCurrentM);
+                                },
+                                args: [{
+                                    key: "dtoQF",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/Metrics/CurrentEvaluation.json"
+                                        };
+                                    }
+                                }]
+                            }
+                        });
+                    }
+
+                    // HistoricalData M
+                    function getMetricsHistoricalData(){
+                        var gadget_strategic_indicators = AJS.Gadget({
+                            baseUrl: "__ATLASSIAN_BASE_URL__",
+                            useOauth: "/rest/gadget/1.0/currentUser",
+                            view: {
+                                template: function(args) {
+                                    var gadget = this;
+                                    dataHistoricalM = args.dtoQF;
+                                    console.log("**********************gadget.getMetricsHistoricalData()***************************");
+                                    console.log(dataHistoricalM);
+                                },
+                                args: [{
+                                    key: "dtoQF",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/Metrics/HistoricalData.json"
+                                        };
+                                    }
+                                }]
+                            }
+                        });
+                    }
+
+
 
                     function getMessage(){
                         var gadget_message = AJS.Gadget({
@@ -257,68 +392,154 @@
                         $('#id_tab_si').on('click', function(){
                             $("#myTopnav .tab-nav").removeClass('active')
                             $('#id_tab_si').addClass('active');
-                            if ($('#id_graphical_menu_item').hasClass('background-active-view'))
-                                printCurrentChartSI(dataSI);
-                            else
-                                printCurrentTableSI(dataSI);
+
+                            if ($('#id_graphical_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentChartSI(dataCurrentSI);
+                            else if ($('#id_graphical_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalChartSI(dataHistoricalSI);
+                            else if ($('#id_table_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentTableSI(dataCurrentSI);
+                            else if ($('#id_table_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalTableSI(dataHistoricalSI);
                         });
 
                         $('#id_tab_dsi').on('click', function(){
                             $("#myTopnav .tab-nav").removeClass('active')
                             $('#id_tab_dsi').addClass('active');
-                            if ($('#id_graphical_menu_item').hasClass('background-active-view'))
-                                printCurrentChartDSI(dataDSI);
-                            else
-                                printCurrentTableDSI(dataDSI);
+
+                            if ($('#id_graphical_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
+                            else if ($('#id_graphical_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI);
+                            else if ($('#id_table_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
+                            else if ($('#id_table_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI);
                         });
 
                         $('#id_tab_qf').on('click', function(){
                             $("#myTopnav .tab-nav").removeClass('active')
                             $('#id_tab_qf').addClass('active');
-                            if ($('#id_graphical_menu_item').hasClass('background-active-view'))
-                                printCurrentChartQF(dataQF);
-                            else
-                                printCurrentTableQF(dataQF);
+
+                            if ($('#id_graphical_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentChartQF(dataCurrentQF);
+                            else if ($('#id_graphical_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalChartQF(dataHistoricalQF);
+                            else if ($('#id_table_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentTableQF(dataCurrentQF);
+                            else if ($('#id_table_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalTableQF(dataHistoricalQF);
                         });
 
                         $('#id_tab_m').on('click', function(){
                             $("#myTopnav .tab-nav").removeClass('active')
                             $('#id_tab_m').addClass('active');
+
+                            if ($('#id_graphical_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentChartM(dataCurrentM);
+                            else if ($('#id_graphical_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalChartM(dataHistoricalM);
+                            else if ($('#id_table_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentTableM(dataCurrentM);
+                            else if ($('#id_table_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalTableM(dataHistoricalM);
                         });
 
                         // Menus Items Dropdown
 
+                        // G
                         $('#id_graphical_menu_item').on('click', function(){
-                            $("#id_table_menu_item").removeClass('background-active-view')
-                            $('#id_graphical_menu_item').addClass('background-active-view');
+                            $("#id_table_menu_item").removeClass('active')
+                            $('#id_graphical_menu_item').addClass('active');
 
-                            if ($('#id_tab_si').hasClass('active')) printCurrentChartSI(dataSI);
-                            else if ($('#id_tab_dsi').hasClass('active')) printCurrentChartDSI(dataDSI);
-                            else if ($('#id_tab_qf').hasClass('active')) printCurrentChartQF(dataQF);
+                            // -> R
+                            if ($('#id_radar_menu_item').hasClass('active')) {
+                                console.log(" ________________________ G -> R ________________________ ");
+                                if ($('#id_tab_si').hasClass('active')) printCurrentChartSI(dataCurrentSI);
+                                else if ($('#id_tab_dsi').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
+                                else if ($('#id_tab_qf').hasClass('active')) printCurrentChartQF(dataCurrentQF);
+                                else if ($('#id_tab_m').hasClass('active')) printCurrentChartM(dataCurrentM);
+                            }
+                            // -> H
+                            else {
+                                console.log(" ________________________ G -> H ________________________ ");
+                                if ($('#id_tab_si').hasClass('active')) printHistoricalChartSI(dataHistoricalSI);
+                                else if ($('#id_tab_dsi').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI);
+                                else if ($('#id_tab_qf').hasClass('active')) printHistoricalChartQF(dataHistoricalQF);
+                                else if ($('#id_tab_m').hasClass('active')) printHistoricalChartM(dataHistoricalM);
+                            }
                         });
 
+                        // T
                         $('#id_table_menu_item').on('click', function(){
-                            $("#id_graphical_menu_item").removeClass('background-active-view')
-                            $('#id_table_menu_item').addClass('background-active-view');
+                            $("#id_graphical_menu_item").removeClass('active')
+                            $('#id_table_menu_item').addClass('active');
 
-                            if ($('#id_tab_si').hasClass('active')) printCurrentTableSI(dataSI);
-                            else if ($('#id_tab_dsi').hasClass('active')) printCurrentTableDSI(dataDSI);
-                            else if ($('#id_tab_qf').hasClass('active')) printCurrentTableQF(dataQF);
+                            // -> R
+                            if ($('#id_radar_menu_item').hasClass('active')) {
+                                console.log(" ________________________ T -> R ________________________ ");
+                                if ($('#id_tab_si').hasClass('active')) printCurrentTableSI(dataCurrentSI);
+                                else if ($('#id_tab_dsi').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
+                                else if ($('#id_tab_qf').hasClass('active')) printCurrentTableQF(dataCurrentQF);
+                                else if ($('#id_tab_m').hasClass('active')) printCurrentTableM(dataCurrentM);
+                            }
+
+                            // -> H
+                            else {
+                                console.log(" ________________________ T -> H ________________________ ");
+                                if ($('#id_tab_si').hasClass('active')) printHistoricalTableSI(dataHistoricalSI);
+                                else if ($('#id_tab_dsi').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI);
+                                else if ($('#id_tab_qf').hasClass('active')) printHistoricalTableQF(dataHistoricalQF);
+                                else if ($('#id_tab_m').hasClass('active')) printHistoricalTableM(dataHistoricalM);
+                            }
                         });
 
+                        // R
                         $('#id_radar_menu_item').on('click', function(){
+                            $("#id_historical_menu_item").removeClass('active')
+                            $('#id_radar_menu_item').addClass('active');
 
+                            // G
+                            if ($('#id_graphical_menu_item').hasClass('active')) {
+                                console.log(" ________________________ G <- R ________________________ ");
+                                if ($('#id_tab_si').hasClass('active')) printCurrentChartSI(dataCurrentSI);
+                                else if ($('#id_tab_dsi').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
+                                else if ($('#id_tab_qf').hasClass('active')) printCurrentChartQF(dataCurrentQF);
+                                else if ($('#id_tab_m').hasClass('active')) printCurrentChartQF(dataCurrentM);
+                            }
+
+                            // T
+                            else {
+                                console.log(" ________________________ T <- R ________________________ ");
+                                if ($('#id_tab_si').hasClass('active')) printCurrentTableSI(dataCurrentSI);
+                                else if ($('#id_tab_dsi').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
+                                else if ($('#id_tab_qf').hasClass('active')) printCurrentTableQF(dataCurrentQF);
+                                else if ($('#id_tab_m').hasClass('active')) printCurrentTableM(dataCurrentM);
+                            }
                         });
 
-                        $('#id_histo_menu_item').on('click', function(){
+                        // H
+                        $('#id_historical_menu_item').on('click', function(){
+                            $("#id_radar_menu_item").removeClass('active')
+                            $('#id_historical_menu_item').addClass('active');
+
+                            // G
+                            if ($('#id_graphical_menu_item').hasClass('active')) {
+                                console.log(" ________________________ G <- H ________________________ ");
+                                if ($('#id_tab_si').hasClass('active')) printHistoricalChartSI(dataHistoricalSI);
+                                else if ($('#id_tab_dsi').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI);
+                                else if ($('#id_tab_qf').hasClass('active')) printHistoricalChartQF(dataHistoricalQF);
+                                else if ($('#id_tab_m').hasClass('active')) printHistoricalChartM(dataHistoricalM);
+                            }
+
+                            // T
+                            else {
+                                console.log(" ________________________ T <- H ________________________ ");
+                                if ($('#id_tab_si').hasClass('active')) printHistoricalTableSI(dataHistoricalSI);
+                                else if ($('#id_tab_dsi').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI);
+                                else if ($('#id_tab_qf').hasClass('active')) printHistoricalTableQF(dataHistoricalQF);
+                                else if ($('#id_tab_m').hasClass('active')) printHistoricalTableM(dataHistoricalM);
+                            }
 
                         });
                     });
 
                     (function () {
-                        getDataStrategicIndicators();
-                        getDataDetailedStrategicIndicators();
-                        getDataQualityFactors();
+                        getStrategicIndicatorsCurrentEvaluation();
+                        getStrategicIndicatorsHistoricalData();
+
+                        getDetailedStrategicIndicatorsCurrentEvaluation();
+                        getDetailedStrategicIndicatorsHistoricalData();
+
+                        getQualityFactorsCurrentEvaluation();
+                        getQualityFactorsHistoricalData();
+
+                        getMetricsCurrentEvaluation();
+                        getMetricsHistoricalData();
                     })();
 
                 </script>
@@ -335,7 +556,7 @@
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle">View mode <b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a id="id_graphical_menu_item" class="background-active-view">
+                                    <a id="id_graphical_menu_item" class="active">
                                         <img class="icons-view-mode" src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/graphical.png" alt="graphical data"> Graphical
                                     </a>
                                 </li>
@@ -346,13 +567,13 @@
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li>
-                                    <a id="id_radar_menu_item" class="background-active-view">
+                                    <a id="id_radar_menu_item" class="active">
                                         <img class="icons-view-mode" src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/radar.png" alt="radar data"> Radar
                                     </a>
                                 </li>
                                 <li>
-                                    <a id="id_histo_menu_item">
-                                        <img class="icons-view-mode" src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/histo.png" alt="histo data"> Histo
+                                    <a id="id_historical_menu_item">
+                                        <img class="icons-view-mode" src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/histo.png" alt="histo data"> Historical
                                     </a>
                                 </li>
                             </ul>
@@ -364,9 +585,7 @@
                     <div class="tab-pane active" id="si"></div>
                     <div class="tab-pane" id="dsi"></div>
                     <div class="tab-pane" id="qf"></div>
-                    <div class="tab-pane" id="m">
-                        <h3>Metrics</h3>
-                    </div>
+                    <div class="tab-pane" id="m"></div>
                 </div>
 
                 <div id="debug_div" style="font-size:9pt; padding:5px; color: red;"></div>

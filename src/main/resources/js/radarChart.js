@@ -2,11 +2,11 @@ function drawRadarChart(titles, ids, labels, values, idDiv, isDSI) {
 
     console.log("**********************radarChart.drawChart()***************************");
 
-    console.log(titles);
-    console.log(ids);
-    console.log(labels);
-    console.log(values);
-    console.log(idDiv);
+    //console.log(titles);
+    //console.log(ids);
+    //console.log(labels);
+    //console.log(values);
+    //console.log(idDiv);
 
     for (i = 0; i < titles.length; ++i) {
         var a = document.createElement('a');
