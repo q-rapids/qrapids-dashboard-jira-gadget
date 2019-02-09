@@ -29,8 +29,9 @@
 
 .tab-content {
     padding: 5px;
-    height: auto; /* Used in this example to enable scrolling */
+    height: 500px; /* Used in this example to enable scrolling */
     text-align: center;
+    overflow: auto;
 }
 
 .dropdown{

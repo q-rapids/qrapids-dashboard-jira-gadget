@@ -31,6 +31,7 @@
         <Require feature="oauthpopup" />
         <Require feature="opensocial-0.8" />
         <Require feature="dynamic-height"/>
+        <Require feature="minimessage"/>
 
         #oauth
         <Locale messages="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/i18n/ALL_ALL.xml"/>
@@ -95,6 +96,7 @@
 
 
                 <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/gaugeChart.js" type="text/javascript"></script>
+                <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/radarChart.js" type="text/javascript"></script>
                 <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/jira-gadget-qrapids-plugin.js" type="text/javascript"></script>
                 <link href="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/css/jira-gadget-qrapids-plugin.css" type="text/css" rel="stylesheet">
 

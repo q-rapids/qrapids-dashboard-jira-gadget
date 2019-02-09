@@ -4,7 +4,7 @@ function printCurrentChartSI(dataSI) {
     console.log("**********************print_Chart_SI***************************");
     console.log(dataSI);
     $("#si").empty();
-    drawChart(dataSI, 'si', 150, 150, false, true);
+    drawGaugeChart(dataSI, 'si', 215, 215, false, true);
 }
 
 function printCurrentTableSI(dataSI) {
@@ -97,6 +97,33 @@ function printCurrentTableSI(dataSI) {
 function printCurrentChartDSI(dataDSI) {
     console.log("**********************print_Chart_DSI***************************");
     $("#dsi").empty();
+
+    //initialize data vectors
+    var titles = [];
+    var ids = [];
+    var labels = [];
+    var values = [];
+    for (i = 0; i < dataDSI.length; ++i) {
+        //for each dsi save name to titles vector and id to ids vector
+        titles.push(dataDSI[i].strategicIndicatorName);
+        ids.push(dataDSI[i].strategicIndicator_ID);
+        labels.push([]);
+        values.push([]);
+        for (j = 0; j < dataDSI[i].factors.length; ++j) {
+            //for each factor save name to labels vector and value to values vector
+            if (dataDSI[i].factors[j].factorName.length < 27)
+                labels[i].push(dataDSI[i].factors[j].factorName);
+            else
+                labels[i].push(dataDSI[i].factors[j].factorName.slice(0, 23) + "...");
+            values[i].push(dataDSI[i].factors[j].evaluationValue);
+        }
+    }
+    //console.log(titles);
+    //console.log(ids);
+    //console.log(labels);
+    //console.log(values);
+    drawRadarChart(titles, ids, labels, values, "dsi", true);
+
 }
 
 function printCurrentTableDSI(dataDSI) {
@@ -175,6 +202,30 @@ function printCurrentTableDSI(dataDSI) {
 function printCurrentChartQF(dataQF) {
     console.log("**********************print_Chart_QF***************************");
     $("#qf").empty();
+    var titles = [];
+    var ids = [];
+    var labels = [];
+    var values = [];
+    for (i = 0; i < dataQF.length; ++i) {
+        //for each dsi save name to titles vector and id to ids vector
+        titles.push(dataQF[i].factorName);
+        ids.push(dataQF[i].factor_ID);
+        labels.push([]);
+        values.push([]);
+        for (j = 0; j < dataQF[i].metrics.length; ++j) {
+            //for each factor save name to labels vector and value to values vector
+            if (dataQF[i].metrics[j].metricName.length < 27)
+                labels[i].push(dataQF[i].metrics[j].metricName);
+            else
+                labels[i].push(dataQF[i].metrics[j].metricName.slice(0, 23) + "...");
+            values[i].push(dataQF[i].metrics[j].evaluationValue);
+        }
+    }
+    //console.log(titles);
+    //console.log(ids);
+    //console.log(labels);
+    //console.log(values);
+    drawRadarChart(titles, ids, labels, values, "qf", false);
 }
 
 function printCurrentTableQF(dataQF) {

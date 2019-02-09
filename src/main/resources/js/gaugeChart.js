@@ -8,7 +8,7 @@ var target;
 var tau = Math.PI / 2;
 var urlLink;
 
-function drawChart(data, container, width, height, showButtons, chartHyperlinked) {
+function drawGaugeChart(data, container, width, height, showButtons, chartHyperlinked) {
 
     console.log("**********************gaugeChart.js:drawChart()***************************");
 
