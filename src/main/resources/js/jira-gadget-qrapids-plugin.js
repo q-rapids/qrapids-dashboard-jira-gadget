@@ -1,10 +1,10 @@
 // SI
 function printCurrentChartSI(dataSI) {
 
-    console.log("**********************print_Current_Chart_SI***************************");
-    console.log(dataSI);
+    //console.log("**********************print_Current_Chart_SI***************************");
+    //console.log(dataSI);
     $("#si").empty();
-    drawGaugeChart(dataSI, 'si', 215, 215, false, true);
+    drawGaugeChart(dataSI, 'si', 175, 175, false, true);
 }
 
 function printHistoricalChartSI(){

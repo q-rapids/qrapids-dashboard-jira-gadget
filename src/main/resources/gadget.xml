@@ -32,6 +32,7 @@
         <Require feature="opensocial-0.8" />
         <Require feature="dynamic-height"/>
         <Require feature="minimessage"/>
+        <Require feature="setprefs" />
 
         #oauth
         <Locale messages="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/i18n/ALL_ALL.xml"/>
@@ -80,6 +81,7 @@
                 #requireResource("confluence.web.resources:jquery")
                 #requireResource("confluence.web.resources:ajs")
                 #requireResource("com.atlassian.auiplugin:ajs")
+                #supportedLocales("gadget.common")
                 #includeResources()
 
 
@@ -114,6 +116,9 @@
                     var dataCurrentM = [];
                     var dataHistoricalM = [];
 
+                    var from = '2015-01-01';
+                    var to = '2019-02-11';
+
                     // Current SI
                     function getStrategicIndicatorsCurrentEvaluation(){
                         var gadget_strategic_indicators = AJS.Gadget({
@@ -122,13 +127,13 @@
                             view: {
                                 template: function(args) {
                                     var gadget = this;
-                                    dataCurrentSI = args.dtoSI;
-                                    console.log("**********************gadget.getStrategicIndicatorsCurrentEvaluation()***************************");
-                                    console.log(dataCurrentSI);
+                                    dataCurrentSI = args.dtoCSI;
+                                    //console.log("**********************gadget.SIC()***************************");
+                                    //console.log(dataCurrentSI);
                                     printCurrentChartSI(dataCurrentSI);
                                 },
                                 args: [{
-                                    key: "dtoSI",
+                                    key: "dtoCSI",
                                     ajaxOptions: function() {
                                         return {
                                             url: "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation.json"
@@ -140,22 +145,26 @@
                     }
 
                     // HistoricalData SI
-                    function getStrategicIndicatorsHistoricalData(){
+                    function getStrategicIndicatorsHistoricalData(from, to){
                         var gadget_strategic_indicators = AJS.Gadget({
                             baseUrl: "__ATLASSIAN_BASE_URL__",
                             useOauth: "/rest/gadget/1.0/currentUser",
                             view: {
                                 template: function(args) {
                                     var gadget = this;
-                                    dataHistoricalSI = args.dtoSI;
-                                    console.log("**********************gadget.getStrategicIndicatorsHistoricalData()***************************");
+                                    dataHistoricalSI = args.dtoHSI;
+                                    console.log("**********************gadget.SIH()***************************");
                                     console.log(dataHistoricalSI);
                                 },
                                 args: [{
-                                    key: "dtoSI",
+                                    key: "dtoHSI",
                                     ajaxOptions: function() {
+                                        console.log("__________________ HSI");
+                                        console.log(from);
+                                        console.log(to);
+
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/StrategicIndicators/HistoricalData.json"
+                                            url: "/rest/qrapids-gadget/1.0/StrategicIndicators/HistoricalData/from="+ from +"&to="+ to +".json"
                                         };
                                     }
                                 }]
@@ -173,8 +182,8 @@
                                 template: function(args) {
                                     var gadget = this;
                                     dataCurrentDSI = args.dtoDSI;
-                                    console.log("**********************gadget.getDetailedStrategicIndicatorsCurrentEvaluation()***************************");
-                                    console.log(dataCurrentDSI);
+                                    //console.log("**********************gadget.DSIC()***************************");
+                                    //console.log(dataCurrentDSI);
                                 },
                                 args: [{
                                     key: "dtoDSI",
@@ -189,7 +198,7 @@
                     }
 
                     // HistoricalData DSI
-                    function getDetailedStrategicIndicatorsHistoricalData(){
+                    function getDetailedStrategicIndicatorsHistoricalData(from, to){
                         var gadget_strategic_indicators = AJS.Gadget({
                             baseUrl: "__ATLASSIAN_BASE_URL__",
                             useOauth: "/rest/gadget/1.0/currentUser",
@@ -197,14 +206,19 @@
                                 template: function(args) {
                                     var gadget = this;
                                     dataHistoricalDSI = args.dtoSI;
-                                    console.log("**********************gadget.getDetailedStrategicIndicatorsHistoricalData()***************************");
+                                    console.log("**********************gadget.DSIH()***************************");
                                     console.log(dataHistoricalDSI);
                                 },
                                 args: [{
                                     key: "dtoSI",
                                     ajaxOptions: function() {
+
+                                        console.log("__________________ HDSI");
+                                        console.log(from);
+                                        console.log(to);
+
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/HistoricalData.json"
+                                            url: "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/HistoricalData/from="+ from +"&to="+ to +".json"
                                         };
                                     }
                                 }]
@@ -222,8 +236,8 @@
                                 template: function(args) {
                                     var gadget = this;
                                     dataCurrentQF = args.dtoQF;
-                                    console.log("**********************gadget.getQualityFactorsCurrentEvaluation()***************************");
-                                    console.log(dataCurrentQF);
+                                    //console.log("**********************gadget.QFC()***************************");
+                                    //console.log(dataCurrentQF);
                                 },
                                 args: [{
                                     key: "dtoQF",
@@ -238,7 +252,7 @@
                     }
 
                     // HistoricalData QF
-                    function getQualityFactorsHistoricalData(){
+                    function getQualityFactorsHistoricalData(from, to){
                         var gadget_strategic_indicators = AJS.Gadget({
                             baseUrl: "__ATLASSIAN_BASE_URL__",
                             useOauth: "/rest/gadget/1.0/currentUser",
@@ -246,14 +260,22 @@
                                 template: function(args) {
                                     var gadget = this;
                                     dataHistoricalQF = args.dtoQF;
-                                    console.log("**********************gadget.getQualityFactorsHistoricalData()***************************");
+                                    console.log("**********************gadget.QFH()***************************");
                                     console.log(dataHistoricalQF);
                                 },
                                 args: [{
                                     key: "dtoQF",
                                     ajaxOptions: function() {
+
+
+
+                                        console.log("__________________ HQF");
+                                        console.log(from);
+                                        console.log(to);
+
+
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/QualityFactors/HistoricalData.json"
+                                            url: "/rest/qrapids-gadget/1.0/QualityFactors/HistoricalData/from="+ from +"&to="+ to +".json"
                                         };
                                     }
                                 }]
@@ -270,12 +292,12 @@
                             view: {
                                 template: function(args) {
                                     var gadget = this;
-                                    dataCurrentM = args.dtoQF;
-                                    console.log("**********************gadget.getMetricsCurrentEvaluation()***************************");
-                                    console.log(dataCurrentM);
+                                    dataCurrentM = args.dtoM;
+                                    //console.log("**********************gadget.MC()***************************");
+                                    //console.log(dataCurrentM);
                                 },
                                 args: [{
-                                    key: "dtoQF",
+                                    key: "dtoM",
                                     ajaxOptions: function() {
                                         return {
                                             url: "/rest/qrapids-gadget/1.0/Metrics/CurrentEvaluation.json"
@@ -287,22 +309,28 @@
                     }
 
                     // HistoricalData M
-                    function getMetricsHistoricalData(){
+                    function getMetricsHistoricalData(from, to){
                         var gadget_strategic_indicators = AJS.Gadget({
                             baseUrl: "__ATLASSIAN_BASE_URL__",
                             useOauth: "/rest/gadget/1.0/currentUser",
                             view: {
                                 template: function(args) {
                                     var gadget = this;
-                                    dataHistoricalM = args.dtoQF;
-                                    console.log("**********************gadget.getMetricsHistoricalData()***************************");
+                                    dataHistoricalM = args.dtoM;
+                                    console.log("**********************gadgetMH()***************************");
                                     console.log(dataHistoricalM);
                                 },
                                 args: [{
-                                    key: "dtoQF",
+                                    key: "dtoM",
                                     ajaxOptions: function() {
+
+
+
+                                        console.log("__________________ HM");
+                                        console.log(from);
+                                        console.log(to);
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/Metrics/HistoricalData.json"
+                                            url: "/rest/qrapids-gadget/1.0/Metrics/HistoricalData/from="+ from +"&to="+ to +".json"
                                         };
                                     }
                                 }]
@@ -530,16 +558,16 @@
 
                     (function () {
                         getStrategicIndicatorsCurrentEvaluation();
-                        getStrategicIndicatorsHistoricalData();
+                        getStrategicIndicatorsHistoricalData(from, to);
 
                         getDetailedStrategicIndicatorsCurrentEvaluation();
-                        getDetailedStrategicIndicatorsHistoricalData();
+                        getDetailedStrategicIndicatorsHistoricalData(from, to);
 
                         getQualityFactorsCurrentEvaluation();
-                        getQualityFactorsHistoricalData();
+                        getQualityFactorsHistoricalData(from, to);
 
-                        getMetricsCurrentEvaluation();
-                        getMetricsHistoricalData();
+                        //getMetricsCurrentEvaluation();
+                        getMetricsHistoricalData(from, to);
                     })();
 
                 </script>

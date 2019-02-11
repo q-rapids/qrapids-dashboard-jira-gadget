@@ -41,12 +41,12 @@ public class StrategicIndicators {
         return Response.ok(mainJSON).build();
     }
 
-    @Path("/HistoricalData")
+    @Path("/HistoricalData/from={from}&to={to}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getStrategicIndicatorsHistoricalData(@QueryParam("prj") String prj) throws IOException {
-        String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/StrategicIndicators/HistoricalData";
+    public Response getStrategicIndicatorsHistoricalData(@PathParam("from") String from, @PathParam("to") String to) throws IOException {
+        String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/StrategicIndicators/HistoricalData?from=" + from + "&to=" + to ;
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();

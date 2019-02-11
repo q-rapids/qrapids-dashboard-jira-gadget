@@ -2,10 +2,7 @@ package com.atlassian.plugins.qrapids.rest.services.Metrics;
 
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.BufferedReader;
@@ -42,12 +39,12 @@ public class Metrics {
         return Response.ok(mainJSON).build();
     }
 
-    @Path("/HistoricalData")
+    @Path("/HistoricalData/from={from}&to={to}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getMetricsHistoricalData(@QueryParam("prj") String prj) throws IOException {
-        String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/Metrics/HistoricalData";
+    public Response getMetricsHistoricalData(@PathParam("from") String from, @PathParam("to") String to) throws IOException {
+        String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/Metrics/HistoricalData?from=" + from + "&to=" + to;
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();

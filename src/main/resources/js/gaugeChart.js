@@ -10,7 +10,7 @@ var urlLink;
 
 function drawGaugeChart(data, container, width, height, showButtons, chartHyperlinked) {
 
-    console.log("**********************gaugeChart.js:drawChart()***************************");
+    //console.log("**********************gaugeChart.js:drawChart()***************************");
 
 
     //sortDataAlphabetically(data);
