@@ -1,9 +1,12 @@
 var timeFormat = 'YYYY-MM-DD';
 
-function drawLineChart() {
+function drawLineChart(text, ids, dades, lowerThres, upperThres, target, isSI, idDiv) {
+
+    console.log("**********************lineChart.js:drawLineChart()***************************");
+
     for (i = 0; i < dades.length; ++i) {
         var a = document.createElement('a');
-        if (isSi) {
+        /*if (isSI) {
             //if its a SI chart make it a hyperlink
             var currentURL = window.location.href;
             if (currentURL.match("/PredictionChart")) urlLink = "../DetailedStrategicIndicators/PredictionChart?id=" + ids[i] + "&name=" + text[i];
@@ -16,19 +19,22 @@ function drawLineChart() {
                 urlLink = urlLink + "&from=" + $('#datepickerFrom').val() + "&to=" + $('#datepickerTo').val();
             }
             a.setAttribute("href", urlLink);
-        }
+        }*/
         a.innerHTML = text[i];
-        a.style.fontSize = "16px";
+        a.style.fontSize = "12px";
+        a.style.fontWeight = "bold";
+        a.style.color = "#333";
         var div = document.createElement('div');
         div.style.display = "inline-block";
         var p = document.createElement('p');
         var ctx = document.createElement('canvas');
         ctx.id = 'canvas' + i;
-        ctx.width = 350;
-        ctx.height = 350;
+        ctx.width = 300;
+        ctx.height = 300;
         ctx.style.display = "inline";
-        document.getElementById("chartContainer").appendChild(div).appendChild(ctx);
+        ctx.style.paddingBottom = "15px";
         div.appendChild(p).appendChild(a);
+        document.getElementById(idDiv).appendChild(div).appendChild(ctx);
         ctx.getContext("2d");
         //set chart config
         var config = {
@@ -82,6 +88,19 @@ function drawLineChart() {
                 }
             }
         };
+
+        if (isSI) {
+            config.options.horizontalLine = [{
+                    y: lowerThres[i],
+                    style: "rgba(255, 0, 0, .4)"
+                }, {
+                    y: target[i],
+                    style: "rgba(1, 119, 166, .4)"
+                }, {
+                    y: upperThres[i],
+                    style: "rgba(0, 255, 0, .4)"
+                }];
+        }
 
         //draw chart
         window.myLine = new Chart(ctx, config);

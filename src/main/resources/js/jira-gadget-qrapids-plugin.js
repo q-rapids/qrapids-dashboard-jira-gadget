@@ -1,16 +1,61 @@
 // SI
 function printCurrentChartSI(dataSI) {
 
-    //console.log("**********************print_Current_Chart_SI***************************");
-    //console.log(dataSI);
+    console.log("**********************print_Current_Chart_SI***************************");
+    console.log(dataSI);
     $("#si").empty();
     drawGaugeChart(dataSI, 'si', 175, 175, false, true);
 }
 
-function printHistoricalChartSI(){
+function printHistoricalChartSI(dataHSI){
     console.log("**********************print_Historical_Chart_SI***************************");
+    console.log(dataHSI);
     $("#si").empty();
-    document.getElementById("si").innerHTML = "HISTORICAL CHART SI";
+
+    var isSI = true;
+    var lowerThres = [];
+    var upperThres = [];
+    var target = [];
+    var text = [];
+    var dades = [];
+    var ids = [];
+    i = 0;
+    var line = [];
+    if (dataHSI[i]) {
+        last = dataHSI[i].strategicIndicatorName;
+        text.push(dataHSI[i].strategicIndicatorName);
+        lowerThres.push(dataHSI[i].kpilowerThreshold);
+        upperThres.push(dataHSI[i].kpiupperThreshold);
+        target.push(dataHSI[i].kpitarget);
+        ids.push(dataHSI[i].strategicIndicator_ID);
+    }
+    while (dataHSI[i]) {
+        //check if we are still on the same Strategic Indicator
+        if (dataHSI[i].strategicIndicatorName != last) {
+            dades.push(line);
+            line = [];
+            last = dataHSI[i].strategicIndicatorName;
+            text.push(last);
+            lowerThres.push(dataHSI[i].kpilowerThreshold);
+            upperThres.push(dataHSI[i].kpiupperThreshold);
+            target.push(dataHSI[i].kpitarget);
+            ids.push(dataHSI[i].strategicIndicator_ID);
+        }
+        //push date and value to line vector
+        if (!isNaN(dataHSI[i].evaluationValue)) {
+            line.push({
+                x: dataHSI[i].evaluationDate,
+                y: dataHSI[i].evaluationValue
+            });
+        }
+        ++i;
+    }
+    //push line vector to values vector for the last metric
+    if (dataHSI[i - 1])
+        dades.push(line);
+
+    drawLineChart(text, ids, dades, lowerThres, upperThres, target, isSI, "si");
+
 }
 
 function printCurrentTableSI(dataSI) {
@@ -100,7 +145,7 @@ function printCurrentTableSI(dataSI) {
     body.appendChild(tbl);
 }
 
-function printHistoricalTableSI(dataSI) {
+function printHistoricalTableSI(dataHSI) {
     console.log("#######################print_Historical_Table_SI#######################");
     $("#si").empty();
     document.getElementById("si").innerHTML = "HISTORICAL TABLE SI";
@@ -140,10 +185,52 @@ function printCurrentChartDSI(dataDSI) {
 
 }
 
-function printHistoricalChartDSI() {
+function printHistoricalChartDSI(dataHDSI) {
     console.log("**********************print_Historical_Chart_DSI***************************");
     $("#dsi").empty();
-    document.getElementById("dsi").innerHTML = "HISTORICAL CHART DSI";
+
+    //TODO: HDSI CHART
+    //initialize data vectors
+    var texts = [];
+    var ids = [];
+    var labels = [];
+    var value = [];
+    var isdsi = true;
+
+    for (i = 0; i < dataHDSI.length; ++i) {
+        //for each dsi save name to texts vector and id to ids vector
+        if (dataHDSI[i].factors.length > 0) {
+            texts.push(dataHDSI[i].strategicIndicatorName);
+            ids.push(dataHDSI[i].strategicIndicator_ID);
+
+            value.push([[]]);
+            last = dataHDSI[i].factors[0].factorName;
+            labels.push([dataHDSI[i].factors[0].factorName]);
+            k = 0;
+            for (j = 0; j < dataHDSI[i].factors.length; ++j) {
+                //check if we are still on the same factor
+                if (last != dataHDSI[i].factors[j].factorName) {
+                    labels[i].push(dataHDSI[i].factors[j].factorName);
+                    last = dataHDSI[i].factors[j].factorName;
+                    ++k;
+                    value[i].push([]);
+                }
+                //push date and value to values vector
+                if (!isNaN(dataHDSI[i].factors[j].evaluationValue))
+                {
+                    value[i][k].push(
+                        {
+                            x: dataHDSI[i].factors[j].evaluationDate,
+                            y: dataHDSI[i].factors[j].evaluationValue
+                        }
+                    );
+                }
+            }
+        } else {
+            dataHDSI.splice(i, 1);
+            --i;
+        }
+    }
 }
 
 function printCurrentTableDSI(dataDSI) {
@@ -257,10 +344,51 @@ function printCurrentChartQF(dataQF) {
     drawRadarChart(titles, ids, labels, values, "qf", false);
 }
 
-function printHistoricalChartQF() {
+function printHistoricalChartQF(dataHQF) {
     console.log("**********************print_Historical_Chart_QF***************************");
     $("#qf").empty();
-    document.getElementById("qf").innerHTML = "HISTORICAL CHART QF";
+
+    //TODO HQF CHART
+    //initialize data vectors
+    var texts = [];
+    var ids = [];
+    var labels = [];
+    var value = [];
+    var isdsi = false;
+
+    for (i = 0; i < data.length; ++i) {
+        //for each qf save name to texts vector and id to ids vector
+        if (data[i].metrics.length > 0) {
+            texts.push(data[i].factorName);
+            ids.push(data[i].factor_ID);
+
+            value.push([[]]);
+            last = data[i].metrics[0].metricName;
+            labels.push([data[i].metrics[0].metricName]);
+            k = 0;
+            for (j = 0; j < data[i].metrics.length; ++j) {
+                //check if we are still on the same metric
+                if (last != data[i].metrics[j].metricName) {
+                    labels[i].push(data[i].metrics[j].metricName);
+                    last = data[i].metrics[j].metricName;
+                    ++k;
+                    value[i].push([]);
+                }
+                //push date and value to values vector
+                if (!isNaN(data[i].metrics[j].evaluationValue)){
+                    value[i][k].push(
+                        {
+                            x: data[i].metrics[j].evaluationDate,
+                            y: data[i].metrics[j].evaluationValue
+                        }
+                    );
+                }
+            }
+        } else {
+            data.splice(i, 1);
+            --i;
+        }
+    }
 }
 
 function printCurrentTableQF(dataQF) {
@@ -336,7 +464,7 @@ function printCurrentTableQF(dataQF) {
 
 }
 
-function printHistoricalTableQF(dataQF) {
+function printHistoricalTableQF(dataHQF) {
     console.log("#######################print_Historical_Table_QF#######################");
     $("#qf").empty();
     document.getElementById("qf").innerHTML = "HISTORICAL TABLE QF";
@@ -350,10 +478,55 @@ function printCurrentChartM(dataM) {
     document.getElementById("m").innerHTML = "CURRENT CHART M";
 }
 
-function printHistoricalChartM() {
+function printHistoricalChartM(dataHM) {
     console.log("**********************print_Historical_Chart_M***************************");
     $("#m").empty();
-    document.getElementById("m").innerHTML = "HISTORICAL CHART M";
+
+
+    // TODO: HM CHART
+    var isSI = false;
+    var lowerThres = [];
+    var upperThres = [];
+    var target = [];
+    var text = [];
+    var dades = [];
+    var ids = [];
+    i = 0;
+    var line = [];
+    if (dataHM[i]) {
+        last = dataHM[i].strategicIndicatorName;
+        text.push(dataHM[i].strategicIndicatorName);
+        lowerThres.push(dataHM[i].kpilowerThreshold);
+        upperThres.push(dataHM[i].kpiupperThreshold);
+        target.push(dataHM[i].kpitarget);
+        ids.push(dataHM[i].strategicIndicator_ID);
+    }
+    while (dataHM[i]) {
+        //check if we are still on the same Strategic Indicator
+        if (dataHM[i].strategicIndicatorName != last) {
+            dades.push(line);
+            line = [];
+            last = dataHM[i].strategicIndicatorName;
+            text.push(last);
+            lowerThres.push(dataHM[i].kpilowerThreshold);
+            upperThres.push(dataHM[i].kpiupperThreshold);
+            target.push(dataHM[i].kpitarget);
+            ids.push(dataHM[i].strategicIndicator_ID);
+        }
+        //push date and value to line vector
+        if (!isNaN(dataHM[i].evaluationValue)) {
+            line.push({
+                x: dataHM[i].evaluationDate,
+                y: dataHM[i].evaluationValue
+            });
+        }
+        ++i;
+    }
+    //push line vector to values vector for the last metric
+    if (dataHM[i - 1])
+        dades.push(line);
+
+    drawLineChart(text, ids, dades, lowerThres, upperThres, target, isSI, "m");
 }
 
 function printCurrentTableM(dataM) {
@@ -362,7 +535,7 @@ function printCurrentTableM(dataM) {
     document.getElementById("m").innerHTML = "CURRENT TABLE M";
 }
 
-function printHistoricalTableM(dataM) {
+function printHistoricalTableM(dataHM) {
     console.log("#######################print_Historical_Table_M#######################");
     $("#m").empty();
     document.getElementById("m").innerHTML = "HISTORICAL TABLE M";
