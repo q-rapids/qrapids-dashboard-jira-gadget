@@ -250,7 +250,6 @@ function printHistoricalChartDSI(dataHDSI) {
     console.log("**********************print_Historical_Chart_DSI***************************");
     $("#dsi").empty();
 
-    //TODO: HDSI CHART
     //initialize data vectors
     var texts = [];
     var ids = [];
@@ -485,7 +484,6 @@ function printHistoricalChartQF(dataHQF) {
     console.log("**********************print_Historical_Chart_QF***************************");
     $("#qf").empty();
 
-    //TODO HQF CHART
     //initialize data vectors
     var texts = [];
     var ids = [];
@@ -493,36 +491,36 @@ function printHistoricalChartQF(dataHQF) {
     var value = [];
     var isDSI = false;
 
-    for (i = 0; i < data.length; ++i) {
+    for (i = 0; i < dataHQF.length; ++i) {
         //for each qf save name to texts vector and id to ids vector
-        if (data[i].metrics.length > 0) {
-            texts.push(data[i].factorName);
-            ids.push(data[i].factor_ID);
+        if (dataHQF[i].metrics.length > 0) {
+            texts.push(dataHQF[i].factorName);
+            ids.push(dataHQF[i].factor_ID);
 
             value.push([[]]);
-            last = data[i].metrics[0].metricName;
-            labels.push([data[i].metrics[0].metricName]);
+            last = dataHQF[i].metrics[0].metricName;
+            labels.push([dataHQF[i].metrics[0].metricName]);
             k = 0;
-            for (j = 0; j < data[i].metrics.length; ++j) {
+            for (j = 0; j < dataHQF[i].metrics.length; ++j) {
                 //check if we are still on the same metric
-                if (last != data[i].metrics[j].metricName) {
-                    labels[i].push(data[i].metrics[j].metricName);
-                    last = data[i].metrics[j].metricName;
+                if (last != dataHQF[i].metrics[j].metricName) {
+                    labels[i].push(dataHQF[i].metrics[j].metricName);
+                    last = dataHQF[i].metrics[j].metricName;
                     ++k;
                     value[i].push([]);
                 }
                 //push date and value to values vector
-                if (!isNaN(data[i].metrics[j].evaluationValue)){
+                if (!isNaN(dataHQF[i].metrics[j].evaluationValue)){
                     value[i][k].push(
                         {
-                            x: data[i].metrics[j].evaluationDate,
-                            y: data[i].metrics[j].evaluationValue
+                            x: dataHQF[i].metrics[j].evaluationDate,
+                            y: dataHQF[i].metrics[j].evaluationValue
                         }
                     );
                 }
             }
         } else {
-            data.splice(i, 1);
+            dataHQF.splice(i, 1);
             --i;
         }
     }
@@ -695,7 +693,6 @@ function printHistoricalChartM(dataHM) {
     console.log("**********************print_Historical_Chart_M***************************");
     $("#m").empty();
 
-    // TODO: HM CHART
     var isSI = false;
     var lowerThres = [];
     var upperThres = [];
@@ -706,31 +703,25 @@ function printHistoricalChartM(dataHM) {
     i = 0;
     var line = [];
     if (dataHM[i]) {
-        last = dataHM[i].strategicIndicatorName;
-        text.push(dataHM[i].strategicIndicatorName);
-        lowerThres.push(dataHM[i].kpilowerThreshold);
-        upperThres.push(dataHM[i].kpiupperThreshold);
-        target.push(dataHM[i].kpitarget);
-        ids.push(dataHM[i].strategicIndicator_ID);
+        last = dataHM[i].metricName;
+        text.push(last);
     }
     while (dataHM[i]) {
-        //check if we are still on the same Strategic Indicator
-        if (dataHM[i].strategicIndicatorName != last) {
+        //check if we are still on the same metric
+        if (dataHM[i].metricName != last) {
             dades.push(line);
             line = [];
-            last = dataHM[i].strategicIndicatorName;
+            last = dataHM[i].metricName;
             text.push(last);
-            lowerThres.push(dataHM[i].kpilowerThreshold);
-            upperThres.push(dataHM[i].kpiupperThreshold);
-            target.push(dataHM[i].kpitarget);
-            ids.push(dataHM[i].strategicIndicator_ID);
         }
         //push date and value to line vector
-        if (!isNaN(dataHM[i].evaluationValue)) {
+        if (!isNaN(dataHM[i].evaluationValue))
+        {
             line.push({
                 x: dataHM[i].evaluationDate,
                 y: dataHM[i].evaluationValue
             });
+
         }
         ++i;
     }

@@ -86,7 +86,7 @@ function drawStackedLineChart(texts, ids, labels, value, isDSI, idDIV) {
         }
         */
         a.setAttribute("href", urlLink);
-        a.innerHTML = text[i];
+        a.innerHTML = texts[i];
         a.style.fontSize = "12px";
         a.style.fontWeight = "bold";
         a.style.color = "#333";
