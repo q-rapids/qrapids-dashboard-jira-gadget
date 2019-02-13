@@ -3,7 +3,7 @@ var config = [];
 
 var colors = ['rgb(1, 119, 166)', 'rgb(255, 153, 51)', 'rgb(51, 204, 51)', 'rgb(255, 80, 80)', 'rgb(204, 201, 53)', 'rgb(192, 96, 201)'];
 
-function drawChart() {
+function drawStackedLineChart(texts, ids, labels, value, isDSI, idDIV) {
     config = [];
     for (var i = 0; i < texts.length; ++i) {    //create config for each chart
         var c = {
@@ -58,8 +58,9 @@ function drawChart() {
 
     for (i = 0; i < texts.length; ++i) {
         var a = document.createElement('a');
+        /*
         var currentURL = window.location.href;
-        if (isdsi)  //if it is a Stacked Line Chart for Detailed Strategic Indicators
+        if (isDSI)  //if it is a Stacked Line Chart for Detailed Strategic Indicators
             if (currentURL.match("/PredictionChart")) urlLink = "../QualityFactors/PredictionChart?id=" + ids[i] + "&name=" + texts[i];
             else urlLink = "../QualityFactors/HistoricChart?id=" + ids[i] + "&name=" + texts[i];
         else { //if it is a Stacked Line Chart for Quality Factors
@@ -74,6 +75,7 @@ function drawChart() {
                 else urlLink = "../Metrics/HistoricChart?id=" + ids[i] + "&name=" + texts[i];
             }
         }
+
         var from = getParameterByName('from');
         var to = getParameterByName('to');
         if ($('#datepickerFrom').length || (from.length != 0 && to.length != 0)) {
@@ -82,20 +84,25 @@ function drawChart() {
             else
                 urlLink = urlLink + "&from=" + from + "&to=" + to;
         }
+        */
         a.setAttribute("href", urlLink);
-        a.innerHTML = texts[i];
-        a.style.fontSize = "16px";
+        a.innerHTML = text[i];
+        a.style.fontSize = "12px";
+        a.style.fontWeight = "bold";
+        a.style.color = "#333";
         var div = document.createElement('div');
         div.style.display = "inline-block";
         var p = document.createElement('p');
         var ctx = document.createElement('canvas');
         ctx.id = 'canvas' + i;
-        ctx.width = 350;
-        ctx.height = 350;
+        ctx.width = 300;
+        ctx.height = 300;
         ctx.style.display = "inline";
-        document.getElementById("chartContainer").appendChild(div).appendChild(ctx);
+        ctx.style.paddingBottom = "15px";
         div.appendChild(p).appendChild(a);
+        document.getElementById(idDIV).appendChild(div).appendChild(ctx);
         ctx.getContext("2d");
+
         window.myLine = new Chart(ctx, config[i]);  //draw chart
     }
 }

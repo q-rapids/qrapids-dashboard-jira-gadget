@@ -148,7 +148,68 @@ function printCurrentTableSI(dataSI) {
 function printHistoricalTableSI(dataHSI) {
     console.log("#######################print_Historical_Table_SI#######################");
     $("#si").empty();
-    document.getElementById("si").innerHTML = "HISTORICAL TABLE SI";
+    //document.getElementById("si").innerHTML = "HISTORICAL TABLE SI";
+
+    //body reference
+    var body = document.getElementById('si');
+
+    // create elements <table> and a <tbody>
+    var tbl = document.createElement('table');
+    tbl.setAttribute("class","table table-hover");
+
+    var tblhead = document.createElement("thead");
+    var rowHead = document.createElement("tr");
+
+    var cell = document.createElement("th");
+    var cellText = document.createTextNode("Date");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Strategic Indicator");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Value");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    tblhead.appendChild(rowHead);
+    tbl.appendChild(tblhead);
+
+    var tblBody = document.createElement("tbody");
+
+
+    // cells creation
+    for (var i = 0; i < dataHSI.length; ++i) {
+        // table row creation
+        var row = document.createElement("tr");
+        row.setAttribute("class","th-name-si");
+
+        var cell = document.createElement("td");
+        var cellText = document.createTextNode(dataHSI[i].evaluationDate);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataHSI[i].strategicIndicatorName);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataHSI[i].evaluationValue.toFixed(2));
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        //row added to end of table body
+        tblBody.appendChild(row);
+    }
+
+    // append the <tbody> inside the <table>
+    tbl.appendChild(tblBody);
+    // put <table> in the <body>
+    body.appendChild(tbl);
 }
 
 
@@ -195,7 +256,7 @@ function printHistoricalChartDSI(dataHDSI) {
     var ids = [];
     var labels = [];
     var value = [];
-    var isdsi = true;
+    var isDSI = true;
 
     for (i = 0; i < dataHDSI.length; ++i) {
         //for each dsi save name to texts vector and id to ids vector
@@ -231,6 +292,8 @@ function printHistoricalChartDSI(dataHDSI) {
             --i;
         }
     }
+
+    drawStackedLineChart(texts, ids, labels, value, isDSI, "dsi");
 }
 
 function printCurrentTableDSI(dataDSI) {
@@ -307,10 +370,84 @@ function printCurrentTableDSI(dataDSI) {
     body.appendChild(tbl);
 }
 
-function printHistoricalTableDSI(dataDSI) {
+function printHistoricalTableDSI(dataHDSI) {
     console.log("#######################print_Historical_Table_DSI#######################");
     $("#dsi").empty();
-    document.getElementById("dsi").innerHTML = "HISTORICAL TABLE DSI";
+    //document.getElementById("dsi").innerHTML = "HISTORICAL TABLE DSI";
+
+    //body reference
+    var body = document.getElementById('dsi');
+
+    // create elements <table> and a <tbody>
+    var tbl = document.createElement('table');
+    tbl.setAttribute("class","table table-hover");
+
+    var tblhead = document.createElement("thead");
+    var rowHead = document.createElement("tr");
+
+    var cell = document.createElement("th");
+    var cellText = document.createTextNode("Evaluation Date");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Strategic Indicator");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Factor");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Value");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    tblhead.appendChild(rowHead);
+    tbl.appendChild(tblhead);
+
+    var tblBody = document.createElement("tbody");
+
+
+    // cells creation
+    for (var i = 0; i < dataHDSI.length; ++i) {
+        for (var j = 0; j < dataHDSI[i].factors.length; ++j) {
+            // table row creation
+            var row = document.createElement("tr");
+            row.setAttribute("class","th-name-si");
+
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(dataHDSI[i].factors[j].evaluationDate);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(dataHDSI[i].strategicIndicatorName);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(dataHDSI[i].factors[j].factorName);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(dataHDSI[i].factors[j].evaluationValue.toFixed(2));
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            //row added to end of table body
+            tblBody.appendChild(row);
+        }
+    }
+
+    // append the <tbody> inside the <table>
+    tbl.appendChild(tblBody);
+    // put <table> in the <body>
+    body.appendChild(tbl);
+
 }
 
 
@@ -354,7 +491,7 @@ function printHistoricalChartQF(dataHQF) {
     var ids = [];
     var labels = [];
     var value = [];
-    var isdsi = false;
+    var isDSI = false;
 
     for (i = 0; i < data.length; ++i) {
         //for each qf save name to texts vector and id to ids vector
@@ -389,6 +526,8 @@ function printHistoricalChartQF(dataHQF) {
             --i;
         }
     }
+
+    drawStackedLineChart(texts, ids, labels, value, isDSI, "qf");
 }
 
 function printCurrentTableQF(dataQF) {
@@ -467,7 +606,81 @@ function printCurrentTableQF(dataQF) {
 function printHistoricalTableQF(dataHQF) {
     console.log("#######################print_Historical_Table_QF#######################");
     $("#qf").empty();
-    document.getElementById("qf").innerHTML = "HISTORICAL TABLE QF";
+    //document.getElementById("qf").innerHTML = "HISTORICAL TABLE QF";
+
+    //body reference
+    var body = document.getElementById('qf');
+
+    // create elements <table> and a <tbody>
+    var tbl = document.createElement('table');
+    tbl.setAttribute("class","table table-hover");
+
+    var tblhead = document.createElement("thead");
+    var rowHead = document.createElement("tr");
+
+    var cell = document.createElement("th");
+    var cellText = document.createTextNode("Date");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Factor");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Metric");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Value");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    tblhead.appendChild(rowHead);
+    tbl.appendChild(tblhead);
+
+    var tblBody = document.createElement("tbody");
+
+
+    // cells creation
+    for (var i = 0; i < dataHQF.length; ++i) {
+        for (var j = 0; j < dataHQF[i].metrics.length; ++j) {
+            // table row creation
+            var row = document.createElement("tr");
+            row.setAttribute("class","th-name-si");
+
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(dataHQF[i].metrics[j].evaluationDate);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(dataHQF[i].factorName);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(dataHQF[i].metrics[j].metricName);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(dataHQF[i].metrics[j].evaluationValue.toFixed(2));
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            //row added to end of table body
+            tblBody.appendChild(row);
+        }
+    }
+
+    // append the <tbody> inside the <table>
+    tbl.appendChild(tblBody);
+    // put <table> in the <body>
+    body.appendChild(tbl);
+
 }
 
 
@@ -481,7 +694,6 @@ function printCurrentChartM(dataM) {
 function printHistoricalChartM(dataHM) {
     console.log("**********************print_Historical_Chart_M***************************");
     $("#m").empty();
-
 
     // TODO: HM CHART
     var isSI = false;
@@ -538,5 +750,68 @@ function printCurrentTableM(dataM) {
 function printHistoricalTableM(dataHM) {
     console.log("#######################print_Historical_Table_M#######################");
     $("#m").empty();
-    document.getElementById("m").innerHTML = "HISTORICAL TABLE M";
+    //document.getElementById("m").innerHTML = "HISTORICAL TABLE M";
+
+    //body reference
+    var body = document.getElementById('m');
+
+    // create elements <table> and a <tbody>
+    var tbl = document.createElement('table');
+    tbl.setAttribute("class","table table-hover");
+
+    var tblhead = document.createElement("thead");
+    var rowHead = document.createElement("tr");
+
+    var cell = document.createElement("th");
+    var cellText = document.createTextNode("Date");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Metric");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Value");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    tblhead.appendChild(rowHead);
+    tbl.appendChild(tblhead);
+
+
+    var tblBody = document.createElement("tbody");
+
+
+    // cells creation
+    for (var i = 0; i < dataHM.length; ++i) {
+        // table row creation
+        var row = document.createElement("tr");
+        row.setAttribute("class","th-name-si");
+
+        var cell = document.createElement("td");
+        var cellText = document.createTextNode(dataHM[i].evaluationDate);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataHM[i].metricName);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataHM[i].evaluationValue.toFixed(2));
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        //row added to end of table body
+        tblBody.appendChild(row);
+    }
+
+    // append the <tbody> inside the <table>
+    tbl.appendChild(tblBody);
+    // put <table> in the <body>
+    body.appendChild(tbl);
+
 }

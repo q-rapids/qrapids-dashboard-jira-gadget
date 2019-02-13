@@ -403,6 +403,10 @@
                     }
 
                     $(document).ready(function () {
+
+                        // Current DATA SI
+                        getStrategicIndicatorsCurrentEvaluation();
+
                         // Tabs
                         $('#id_tab_si').on('click', function(){
                             $("#myTopnav .tab-nav").removeClass('active')
@@ -544,17 +548,16 @@
                     });
 
                     (function () {
-                        //getMetricsCurrentEvaluation();
-                        getMetricsHistoricalData(from, to);
-
-                        getQualityFactorsHistoricalData(from, to);
-                        getQualityFactorsCurrentEvaluation();
-
-                        getDetailedStrategicIndicatorsHistoricalData(from, to);
+                        // Current DATA
                         getDetailedStrategicIndicatorsCurrentEvaluation();
+                        getQualityFactorsCurrentEvaluation();
+                        //getMetricsCurrentEvaluation();
 
+                        // Historical DATA
                         getStrategicIndicatorsHistoricalData(from, to);
-                        getStrategicIndicatorsCurrentEvaluation();
+                        getDetailedStrategicIndicatorsHistoricalData(from, to);
+                        getQualityFactorsHistoricalData(from, to);
+                        getMetricsHistoricalData(from, to);
                     })();
 
                 </script>
