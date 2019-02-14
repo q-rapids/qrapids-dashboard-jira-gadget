@@ -12,6 +12,8 @@ function printHistoricalChartSI(dataHSI){
     console.log(dataHSI);
     $("#si").empty();
 
+    addDatePickerDiv("si");
+
     var isSI = true;
     var lowerThres = [];
     var upperThres = [];
@@ -805,4 +807,119 @@ function printHistoricalTableM(dataHM) {
     // put <table> in the <body>
     body.appendChild(tbl);
 
+}
+
+
+// Date picker
+function addDatePickerDiv(idDIV){
+
+    var body = document.getElementById(idDIV);
+
+    var divDate = document.createElement('div');
+    divDate.setAttribute("class","pull-right date-picker-right-position");
+
+    var formInline = document.createElement('form');
+    formInline.setAttribute("class", "form-inline well");
+    formInline.setAttribute("style", "float: right");
+
+    // 1
+    // FORM
+    var divFrom = document.createElement('div');
+    divFrom.setAttribute("class","form-group");
+    // LABEL
+    var labelFrom = document.createElement('label');
+    labelFrom.setAttribute("class","control-label");
+    labelFrom.setAttribute("style","font-size: 12px");
+    var fromText = document.createTextNode("From: ");
+    labelFrom.appendChild(fromText);
+    // DIV WRAPPER
+    var divWrapperFrom = document.createElement('div');
+    divWrapperFrom.setAttribute("role","wrapper");
+    divWrapperFrom.setAttribute("class","gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group");
+    divWrapperFrom.setAttribute("style","width: 140px; padding: 5px");
+    // INPUT
+    var inputFrom = document.createElement('input');
+    inputFrom.setAttribute("class","form-control");
+    inputFrom.setAttribute("id","datepickerFrom");
+    inputFrom.setAttribute("width","250");
+    inputFrom.setAttribute("data-type","datepicker");
+    inputFrom.setAttribute("data-datepicker","true");
+    inputFrom.setAttribute("role","input");
+    inputFrom.setAttribute("style","font-size: 12px");
+    // SPAN
+    var spanFrom = document.createElement('span');
+    spanFrom.setAttribute("class","input-group-addon");
+    spanFrom.setAttribute("role","right-icon");
+    // I
+    var iFrom = document.createElement('i');
+    iFrom.setAttribute("class", "fa fa-calendar");
+    iFrom.setAttribute("aria-hidden", "true");
+
+    spanFrom.appendChild(iFrom);
+
+    divWrapperFrom.appendChild(inputFrom);
+    divWrapperFrom.appendChild(spanFrom);
+
+    divFrom.appendChild(labelFrom);
+    divFrom.appendChild(divWrapperFrom);
+
+    // 2
+    // FORM
+    var divTo = document.createElement('div');
+    divTo.setAttribute("class","form-group");
+    // LABEL
+    var labelTo = document.createElement('label');
+    labelTo.setAttribute("class","control-label");
+    labelTo.setAttribute("style","font-size: 12px");
+    var toText = document.createTextNode("To: ");
+    labelTo.appendChild(toText);
+    // DIV WRAPPER
+    var divWrapperTo = document.createElement('div');
+    divWrapperTo.setAttribute("role","wrapper");
+    divWrapperTo.setAttribute("class","gj-datepicker gj-datepicker-bootstrap gj-unselectable input-group");
+    divWrapperTo.setAttribute("style","width: 140px; padding: 5px");
+    // INPUT
+    var inputTo = document.createElement('input');
+    inputTo.setAttribute("class","form-control");
+    inputTo.setAttribute("id","datepickerTo");
+    inputTo.setAttribute("width","250");
+    inputTo.setAttribute("data-type","datepicker");
+    inputTo.setAttribute("data-datepicker","true");
+    inputTo.setAttribute("role","input");
+    inputTo.setAttribute("style","font-size: 12px");
+    // SPAN
+    var spanTo = document.createElement('span');
+    spanTo.setAttribute("class","input-group-addon");
+    spanTo.setAttribute("role","right-icon");
+    // I
+    var iTo = document.createElement('i');
+    iTo.setAttribute("class", "fa fa-calendar");
+    iTo.setAttribute("aria-hidden", "true");
+
+    spanTo.appendChild(iTo);
+
+    divWrapperTo.appendChild(inputTo);
+    divWrapperTo.appendChild(spanTo);
+
+    divTo.appendChild(labelTo);
+    divTo.appendChild(divWrapperTo);
+
+    // 3
+    var applyButton = document.createElement('button');
+    applyButton.setAttribute("type","button");
+    applyButton.setAttribute("class","btn btn-default");
+    applyButton.setAttribute("ng-click","");
+    applyButton.setAttribute("ng-init","");
+    applyButton.setAttribute("style","font-size: 12px");
+    var applyText = document.createTextNode("Apply");
+    applyButton.appendChild(applyText);
+
+
+    formInline.appendChild(divFrom);
+    formInline.appendChild(divTo);
+    formInline.appendChild(applyButton);
+
+    divDate.appendChild(formInline);
+
+    body.appendChild(divDate);
 }

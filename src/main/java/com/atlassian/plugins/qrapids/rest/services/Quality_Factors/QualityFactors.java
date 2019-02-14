@@ -14,13 +14,7 @@ import java.net.URL;
 @Path("/QualityFactors")
 public class QualityFactors {
 
-    @Path("/CurrentEvaluation")
-    @GET
-    @AnonymousAllowed
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getQualityFactorsCurrentEvaluation(@QueryParam("prj") String prj) throws IOException {
-        String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/QualityFactors/CurrentEvaluation";
-
+    private String getResponseResult(String url) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
         con.setRequestMethod("GET");
@@ -34,9 +28,16 @@ public class QualityFactors {
         }
         in.close();
 
-        String mainJSON = response.toString();
+        return response.toString();
+    }
 
-        return Response.ok(mainJSON).build();
+    @Path("/CurrentEvaluation")
+    @GET
+    @AnonymousAllowed
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+    public Response getQualityFactorsCurrentEvaluation() throws IOException {
+        String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/QualityFactors/CurrentEvaluation";
+        return Response.ok(getResponseResult(url)).build();
     }
 
     @Path("/HistoricalData/from={from}&to={to}")
@@ -45,22 +46,6 @@ public class QualityFactors {
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getQualityFactorsHistoricalData(@PathParam("from") String from, @PathParam("to") String to) throws IOException {
         String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/QualityFactors/HistoricalData?from=" + from + "&to=" + to;
-
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
-
-        String mainJSON = response.toString();
-
-        return Response.ok(mainJSON).build();
+        return Response.ok(getResponseResult(url)).build();
     }
 }

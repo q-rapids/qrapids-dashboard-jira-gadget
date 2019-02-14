@@ -16,7 +16,6 @@ import java.net.URL;
 @Path("/StrategicIndicators")
 public class StrategicIndicators {
 
-
     private String getResponseResult(String url) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -31,8 +30,7 @@ public class StrategicIndicators {
         }
         in.close();
 
-        String mainJSON = response.toString();
-        return mainJSON;
+        return response.toString();
     }
 
 

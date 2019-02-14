@@ -98,3 +98,10 @@ th, td {
     width: 30%;
     vertical-align: bottom;
 }
+
+
+.date-picker-right-position {
+    width: 100%;
+    padding-right: 1em;
+    padding-left: 1em;
+}

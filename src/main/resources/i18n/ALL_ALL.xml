@@ -2,4 +2,10 @@
     <msg name="gadget.title">Q-Rapids</msg>
     <msg name="gadget.title.url">http://www.q-rapids.eu/</msg>
     <msg name="gadget.description">Q-Rapids Gadget to install into JIRA.</msg>
+
+
+    <msg name="gadget.common.configure">Configure</msg>
+    <msg name="gadget.common.save">Save</msg>
+    <msg name="gadget.common.cancel">Cancel</msg>
+
 </messagebundle>
