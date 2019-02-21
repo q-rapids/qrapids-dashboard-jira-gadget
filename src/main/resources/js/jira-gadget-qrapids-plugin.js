@@ -152,6 +152,8 @@ function printHistoricalTableSI(dataHSI) {
     $("#si").empty();
     //document.getElementById("si").innerHTML = "HISTORICAL TABLE SI";
 
+    addDatePickerDiv('si');
+
     //body reference
     var body = document.getElementById('si');
 
@@ -251,6 +253,8 @@ function printCurrentChartDSI(dataDSI) {
 function printHistoricalChartDSI(dataHDSI) {
     console.log("**********************print_Historical_Chart_DSI***************************");
     $("#dsi").empty();
+
+    addDatePickerDiv('dsi');
 
     //initialize data vectors
     var texts = [];
@@ -376,6 +380,8 @@ function printHistoricalTableDSI(dataHDSI) {
     $("#dsi").empty();
     //document.getElementById("dsi").innerHTML = "HISTORICAL TABLE DSI";
 
+    addDatePickerDiv('dsi');
+
     //body reference
     var body = document.getElementById('dsi');
 
@@ -485,6 +491,8 @@ function printCurrentChartQF(dataQF) {
 function printHistoricalChartQF(dataHQF) {
     console.log("**********************print_Historical_Chart_QF***************************");
     $("#qf").empty();
+
+    addDatePickerDiv('qf');
 
     //initialize data vectors
     var texts = [];
@@ -608,6 +616,8 @@ function printHistoricalTableQF(dataHQF) {
     $("#qf").empty();
     //document.getElementById("qf").innerHTML = "HISTORICAL TABLE QF";
 
+    addDatePickerDiv('qf');
+
     //body reference
     var body = document.getElementById('qf');
 
@@ -695,6 +705,8 @@ function printHistoricalChartM(dataHM) {
     console.log("**********************print_Historical_Chart_M***************************");
     $("#m").empty();
 
+    addDatePickerDiv('m');
+
     var isSI = false;
     var lowerThres = [];
     var upperThres = [];
@@ -744,6 +756,8 @@ function printHistoricalTableM(dataHM) {
     console.log("#######################print_Historical_Table_M#######################");
     $("#m").empty();
     //document.getElementById("m").innerHTML = "HISTORICAL TABLE M";
+
+    addDatePickerDiv('m');
 
     //body reference
     var body = document.getElementById('m');
@@ -816,11 +830,10 @@ function addDatePickerDiv(idDIV){
     var body = document.getElementById(idDIV);
 
     var divDate = document.createElement('div');
-    divDate.setAttribute("class","pull-right date-picker-right-position");
+    divDate.setAttribute("class","pull-right date-picker-right-position center");
 
     var formInline = document.createElement('form');
     formInline.setAttribute("class", "form-inline well");
-    formInline.setAttribute("style", "float: right");
 
     // 1
     // FORM
@@ -845,7 +858,7 @@ function addDatePickerDiv(idDIV){
     inputFrom.setAttribute("data-type","datepicker");
     inputFrom.setAttribute("data-datepicker","true");
     inputFrom.setAttribute("role","input");
-    inputFrom.setAttribute("style","font-size: 12px");
+    inputFrom.setAttribute("style","font-size: 12px; z-index: auto");
     // SPAN
     var spanFrom = document.createElement('span');
     spanFrom.setAttribute("class","input-group-addon");
@@ -886,7 +899,7 @@ function addDatePickerDiv(idDIV){
     inputTo.setAttribute("data-type","datepicker");
     inputTo.setAttribute("data-datepicker","true");
     inputTo.setAttribute("role","input");
-    inputTo.setAttribute("style","font-size: 12px");
+    inputTo.setAttribute("style","font-size: 12px; z-index: auto");
     // SPAN
     var spanTo = document.createElement('span');
     spanTo.setAttribute("class","input-group-addon");

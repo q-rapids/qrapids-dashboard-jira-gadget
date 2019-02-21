@@ -33,6 +33,7 @@ atlas-help  -- prints description for all commands in the SDK
 - [Writing Gadgets](https://developers.google.com/gadgets/docs/gs)
 - [Gadget developer documentation](https://developer.atlassian.com/server/framework/gadgets/)
 - [Factoria del constructor AJS.Gadget(...). Gadget Object API](https://developer.atlassian.com/server/framework/gadgets/gadget-object-api/)
+- [Fields definitions](https://developer.atlassian.com/server/framework/gadgets/field-definitions/)
 
 ## Otras paginas de interes:
 - [J-Tricks. Little JIRA Tricks](https://www.j-tricks.com/tutorials/invoking-rest-services-from-gadgets)

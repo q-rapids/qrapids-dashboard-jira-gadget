@@ -13,7 +13,7 @@
     color: white;
     text-align: center;
     padding: 10px;
-    text-decoration: none;
+    text-decoration: none !important;
     font-size: 12px;
 }
 
@@ -104,4 +104,23 @@ th, td {
     width: 100%;
     padding-right: 1em;
     padding-left: 1em;
+}
+
+.center {
+    width:100%;
+    margin:0 auto;
+    display:inline-block;
+    text-align:center;
+}
+
+.margin-button-nav{
+    margin-left: 4px;
+    margin-top: 3px;
+}
+
+.current-project-style{
+    float: right;
+    margin-right: inherit;
+    color: black;
+    background: #ffc380;
 }

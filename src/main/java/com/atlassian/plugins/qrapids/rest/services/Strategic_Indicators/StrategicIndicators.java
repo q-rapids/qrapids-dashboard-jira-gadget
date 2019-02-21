@@ -38,7 +38,11 @@ public class StrategicIndicators {
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getStrategicIndicatorsCurrentEvaluation() throws IOException {
+    public Response getStrategicIndicatorsCurrentEvaluation(@PathParam("from") String urlPath) throws IOException {
+
+        System.out.println(" urlPath =================> " + urlPath);
+
+
         String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/StrategicIndicators/CurrentEvaluation";
         return Response.ok(getResponseResult(url)).build();
     }

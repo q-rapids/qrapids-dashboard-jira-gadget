@@ -75,419 +75,516 @@
     <Content type="html" view="canvas,profile" >
         <![CDATA[
 
-            <head>
-                #requireResource("com.atlassian.jira.gadgets:common")
-                #requireResource("com.atlassian.gadgets.publisher:ajs-gadgets")
-                #requireResource("com.atlassian.plugins.qrapids:jira-gadget-qrapids-plugin")
-                #requireResource("confluence.web.resources:jquery")
-                #requireResource("confluence.web.resources:ajs")
-                #requireResource("com.atlassian.auiplugin:ajs")
-                #supportedLocales("gadget.common")
-                #includeResources()
+            #requireResource("com.atlassian.jira.gadgets:common")
+            #requireResource("com.atlassian.gadgets.publisher:ajs-gadgets")
+            #requireResource("com.atlassian.plugins.qrapids:jira-gadget-qrapids-plugin")
+            #requireResource("confluence.web.resources:jquery")
+            #requireResource("confluence.web.resources:ajs")
+            #requireResource("com.atlassian.auiplugin:ajs")
+            #supportedLocales("gadget.common")
+            #includeResources()
 
 
-                <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
-                <script src="https://d3js.org/d3.v5.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
+            <script src="https://d3js.org/d3.v5.js"></script>
 
-                <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-                <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+            <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+            <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 
-                <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/gaugeChart.js" type="text/javascript"></script>
-                <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/radarChart.js" type="text/javascript"></script>
-                <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/lineChart.js" type="text/javascript"></script>
-                <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/stackedLineChart.js" type="text/javascript"></script>
-                <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/scriptDatePicker.js" type="text/javascript"></script>
-                <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/jira-gadget-qrapids-plugin.js" type="text/javascript"></script>
-                <link href="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/css/jira-gadget-qrapids-plugin.css" type="text/css" rel="stylesheet">
+            <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/gaugeChart.js" type="text/javascript"></script>
+            <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/radarChart.js" type="text/javascript"></script>
+            <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/lineChart.js" type="text/javascript"></script>
+            <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/stackedLineChart.js" type="text/javascript"></script>
+            <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/scriptDatePicker.js" type="text/javascript"></script>
+            <script src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/js/jira-gadget-qrapids-plugin.js" type="text/javascript"></script>
+            <link href="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/css/jira-gadget-qrapids-plugin.css" type="text/css" rel="stylesheet">
 
-                <script type="text/javascript">
-                    (function() {
-                        var dataCurrentSI = [];
-                        var dataHistoricalSI  = [];
+            <script type="text/javascript">
+                (function() {
+                    var dataCurrentSI = [];
+                    var dataHistoricalSI  = [];
 
-                        var dataCurrentDSI  = [];
-                        var dataHistoricalDSI  = [];
+                    var dataCurrentDSI  = [];
+                    var dataHistoricalDSI  = [];
 
-                        var dataCurrentQF  = [];
-                        var dataHistoricalQF  = [];
+                    var dataCurrentQF  = [];
+                    var dataHistoricalQF  = [];
 
-                        var dataCurrentM  = [];
-                        var dataHistoricalM  = [];
+                    var dataCurrentM  = [];
+                    var dataHistoricalM  = [];
 
-                        var from = '2015-01-01';
-                        var to = getToday();
+                    var viewItemText = ["Graphical","Table","Radar","Historical"];
 
-                        var gadgetQRAPID = AJS.Gadget({
-                            baseUrl: "__ATLASSIAN_BASE_URL__",
-                            useOauth: "/rest/gadget/1.0/currentUser",
-                            config: {
-                               descriptor: function(args) {
-                                  //document.getElementById('chart').style.visibility = "hidden";
-                                  var gadget = this;
-                                  return {
-                                     action: "/rest/gadget/1.0/currentUser",
-                                     theme : function () {
+                    var from = '2015-01-01';
+                    var to = getToday();
+
+                    function buildDivView(currentProject) {
+
+                        console.log("####################### buildDivView #######################");
+
+                        var divView = document.getElementsByClassName('view');
+
+                        //TopNav
+                        var div_TopNav = document.createElement('div');
+                        div_TopNav.setAttribute("class", "topnav");
+                        div_TopNav.setAttribute("id","id_TopNav");
+
+                        //Dropdown menu
+                        var spanPosition = document.createElement('span');
+                        spanPosition.setAttribute("class", "span-position");
+
+                        var divDropdown = document.createElement('div');
+                        divDropdown.setAttribute("class", "dropdown");
+
+                        var buttonDropdown = document.createElement('button');
+                        buttonDropdown.setAttribute("type","button");
+                        buttonDropdown.setAttribute("class","btn btn-default dropdown-toggle margin-button-nav");
+                        buttonDropdown.setAttribute("data-toggle","dropdown");
+                        buttonDropdown.setAttribute("aria-haspopup","true");
+                        buttonDropdown.setAttribute("aria-expanded","false");
+
+                        var imageDropdown = document.createElement('img');
+                        imageDropdown.setAttribute("src","__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/view-mode.png");
+                        buttonDropdown.appendChild(imageDropdown);
+
+                        var ulDropdown = document.createElement('ul');
+                        ulDropdown.setAttribute("class","dropdown-menu");
+
+                        for (i = 0; i < viewItemText.length; ++i) {
+                            var id = "id_" + viewItemText[i];
+                            var liDropdown = document.createElement('li');
+                            var aLi = document.createElement('a');
+                            aLi.setAttribute("id",id);
+                            if (i == 0 ||i == 2) aLi.setAttribute("class", "active");
+                            var imgLi = document.createElement('img');
+                            imgLi.setAttribute("class","icons-view-mode");
+                            if (viewItemText[i] == "Graphical") {
+                                imgLi.setAttribute("src","__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/graphical.png");
+                                imgLi.setAttribute("alt","graphical data");
+                            }
+                            else if (viewItemText[i] == "Table") {
+                                imgLi.setAttribute("src","__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/table.png");
+                                imgLi.setAttribute("alt","table data");
+                            }
+                            else if (viewItemText[i] == "Radar") {
+                                imgLi.setAttribute("src","__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/radar.png");
+                                imgLi.setAttribute("alt","radar data");
+                            }
+                            else if (viewItemText[i] == "Historical") {
+                                imgLi.setAttribute("src","__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/histo.png");
+                                imgLi.setAttribute("alt","historical data");
+                            }
+
+                            aLi.appendChild(imgLi);
+                            aLi.append(viewItemText[i]);
+                            liDropdown.appendChild(aLi);
+                            ulDropdown.appendChild(liDropdown);
+                            if (i == 1) {
+                                var liSeparator = document.createElement('li');
+                                liSeparator.setAttribute("role","separator");
+                                liSeparator.setAttribute("class","divider");
+                                ulDropdown.appendChild(liSeparator);
+                            }
+                        }
+
+                        divDropdown.appendChild(buttonDropdown);
+                        divDropdown.appendChild(ulDropdown);
+                        spanPosition.appendChild(divDropdown);
+                        div_TopNav.appendChild(spanPosition);
+
+                        //Tab SI
+                        var tab = document.createElement('a');
+                        tab.setAttribute("id","id_tab_si");
+                        tab.setAttribute("class","tab-nav active");
+                        tab.setAttribute("data-toggle","tab");
+                        tab.setAttribute("href","#si");
+                        tab.setAttribute("style","margin-left: 50px;");
+                        var text = document.createTextNode("Strategic Indicators");
+                        tab.appendChild(text);
+                        div_TopNav.appendChild(tab);
+
+                        //Tab DSI
+                        tab = document.createElement('a');
+                        tab.setAttribute("id","id_tab_dsi");
+                        tab.setAttribute("class","tab-nav");
+                        tab.setAttribute("data-toggle","tab");
+                        tab.setAttribute("href","#dsi");
+                        text = document.createTextNode("Detailed Strategic Indicators");
+                        tab.appendChild(text);
+                        div_TopNav.appendChild(tab);
+
+                        //Tab QF
+                        tab = document.createElement('a');
+                        tab.setAttribute("id","id_tab_qf");
+                        tab.setAttribute("class","tab-nav");
+                        tab.setAttribute("data-toggle","tab");
+                        tab.setAttribute("href","#qf");
+                        text = document.createTextNode("Quality Factors");
+                        tab.appendChild(text);
+                        div_TopNav.appendChild(tab);
+
+                        //Tab M
+                        tab = document.createElement('a');
+                        tab.setAttribute("id","id_tab_m");
+                        tab.setAttribute("class","tab-nav");
+                        tab.setAttribute("data-toggle","tab");
+                        tab.setAttribute("href","#m");
+                        text = document.createTextNode("Metrics");
+                        tab.appendChild(text);
+                        div_TopNav.appendChild(tab);
+
+                        //Tab QR
+                        tab = document.createElement('a');
+                        tab.setAttribute("id","id_tab_qr");
+                        tab.setAttribute("class","tab-nav");
+                        tab.setAttribute("data-toggle","tab");
+                        tab.setAttribute("href","#qr");
+                        text = document.createTextNode("QR");
+                        tab.appendChild(text);
+                        div_TopNav.appendChild(tab);
+
+                        //Tab Project
+                        tab = document.createElement('p');
+                        tab.setAttribute("id","id_tab_project");
+                        tab.setAttribute("class","current-project-style");
+                        console.log(currentProject);
+                        tab.append(currentProject);
+                        div_TopNav.appendChild(tab);
+
+                        //TabContent
+                        var div_TabContent = document.createElement('div');
+                        div_TabContent.setAttribute("class", "tab-content clearfix");
+                        div_TabContent.setAttribute("id","id_TabContent");
+
+                        //Div SI
+                        var divTab = document.createElement('div');
+                        divTab.setAttribute("class","tab-pane active");
+                        divTab.setAttribute("id","si");
+                        div_TabContent.appendChild(divTab);
+
+                        //Div DSI
+                        divTab = document.createElement('div');
+                        divTab.setAttribute("class","tab-pane");
+                        divTab.setAttribute("id","dsi");
+                        div_TabContent.appendChild(divTab);
+
+                        //Div QF
+                        divTab = document.createElement('div');
+                        divTab.setAttribute("class","tab-pane");
+                        divTab.setAttribute("id","qf");
+                        div_TabContent.appendChild(divTab);
+
+                        //Div M
+                        divTab = document.createElement('div');
+                        divTab.setAttribute("class","tab-pane");
+                        divTab.setAttribute("id","m");
+                        div_TabContent.appendChild(divTab);
+
+                        //Div QR
+                        divTab = document.createElement('div');
+                        divTab.setAttribute("class","tab-pane");
+                        divTab.setAttribute("id","qr");
+                        div_TabContent.appendChild(divTab);
+
+                        divView.item(0).append(div_TopNav);
+                        divView.item(0).append(div_TabContent);
+                    }
+
+                    var gadgetQRAPID = AJS.Gadget({
+                        baseUrl: "__ATLASSIAN_BASE_URL__",
+                        useOauth: "/rest/gadget/1.0/currentUser",
+                        config: {
+                           descriptor: function(args) {
+                               var gadget = this;
+
+                               var listProjects = [];
+
+                               args.projectData.forEach(function(item) {
+                                    var currentItem = {label: item, value: item};
+                                    listProjects.push(currentItem);
+                               });
+
+                               return {
+                                    action: "/rest/gadget/1.0/currentUser",
+                                    theme : function () {
                                         if (gadgets.window.getViewportDimensions().width < 450) {
-                                           return "gdt top-label";
+                                            return "gdt top-label";
                                         } else {
                                            return "gdt";
                                         }
-                                     }(),
-                                     fields: [
+                                    }(),
+                                    fields: [
                                         {
-                                           userpref: "gadgetURLUserPref",
-                                           label: "URL:",
-                                           description: "Enter the URL to use on the Gadget.",
-                                           type: "text",
-                                           value: gadget.getPref("gadgetURLUserPref")
-                                        },
-                                        {
-                                           userpref: "barExampleSelectUserPref",
-                                           label: "Example select:",
-                                           description: "Example.",
-                                           type: "select",
-                                           selected: gadget.getPref("barExampleSelectUserPref"),
-                                           options:[
-                                              {
-                                                 label: "Bar",
-                                                 value: "bar"
-                                              },
-                                              {
-                                                 label: "Doughnut",
-                                                 value: "doughnut"
-                                              },
-                                              {
-                                                 label: "Horizontal Bar",
-                                                 value: "horizontalBar"
-                                              },
-                                              {
-                                                 label: "Line",
-                                                 value: "line"
-                                              },
-                                              {
-                                                 label: "Pie",
-                                                 value: "pie"
-                                              },
-                                              {
-                                                 label: "Stacked",
-                                                 value: "stacked"
-                                              }
-                                           ]
-                                        },
-                                        {
-                                            type: "checkbox",
-                                            label: "Example checkbox:",
-                                            options: [{id: 1, value: "true", label: " Show changeset info as part of last build details"}],
-                                            userpref: "barExampleSelectUserPref",
-                                            value: gadget.getPref("barExampleSelectUserPref")
+                                            userpref: "selectProjectUserPref",
+                                            label: "Project:",
+                                            description: "Select project",
+                                            type: "select",
+                                            selected: gadget.getPref("selectProjectUserPref"),
+                                            options: listProjects
                                         },
 
                                         AJS.gadget.fields.nowConfigured()
-                                     ]
-                                  };
-                               },
-                               args: []
-                            },
-                            view: {
-                                enableReload: false,
-                                onResizeReload: true,
-                                onResizeAdjustHeight: true,
-                                template: function(args) {
 
-                                    console.log(" \\\\\\\\\\\\\\ args ///////////// ");
-                                    console.log(args);
+                                   ]
+                               };
+                           },
+                           args: [
+                                {
+                                    key: "projectData",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/Projects/AssessedProjects.json"
+                                        };
+                                    }
+                                }
+                           ]
+                        },
+                        view: {
+                            enableReload: false,
+                            onResizeReload: false,
+                            onResizeAdjustHeight: true,
+                            template: function(args) {
 
-                                    var gadget = this;
+                                console.log(" \\\\\\\\\\\\\\ args ///////////// ");
+                                console.log(args);
 
-                                    var apiURL = gadget.getPref("gadgetURLUserPref");
-                                    var selectPref = gadget.getPref("barExampleSelectUserPref");
-                                    var checkboxExample = gadget.getPref("barExampleSelectUserPref");
-                                    console.log(apiURL);
-                                    console.log(selectPref);
-                                    console.log(checkboxExample);
+                                var gadget = this;
 
-                                    $("#myTopnav").removeClass('hidden');
-                                    $("#myTabContent").removeClass('hidden');
+                                var currentProject = gadget.getPref("selectProjectUserPref");
+                                console.log(currentProject);
 
-                                    var dataCurrentSI = args.dtoCSI;
-                                    var dataHistoricalSI  = args.dtoHSI;
+                                buildDivView(currentProject);
 
-                                    var dataCurrentDSI  = args.dtoCDSI;
-                                    var dataHistoricalDSI  = args.dtoHDSI;
 
-                                    var dataCurrentQF  = args.dtoCQF;
-                                    var dataHistoricalQF  = args.dtoHQF;
+                                var dataCurrentSI = args.dtoCSI;
+                                var dataHistoricalSI  = args.dtoHSI;
 
-                                    var dataCurrentM;
-                                    var dataHistoricalM  = args.dtoHM;
+                                var dataCurrentDSI  = args.dtoCDSI;
+                                var dataHistoricalDSI  = args.dtoHDSI;
 
-                                    printCurrentChartSI(dataCurrentSI);
+                                var dataCurrentQF  = args.dtoCQF;
+                                var dataHistoricalQF  = args.dtoHQF;
 
-                                    // Tabs
-                                    $('#id_tab_si').on('click', function(){
-                                        $("#myTopnav .tab-nav").removeClass('active');
-                                        $('#id_tab_si').addClass('active');
+                                var dataCurrentM;
+                                var dataHistoricalM  = args.dtoHM;
 
-                                        if ($('#id_graphical_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentChartSI(dataCurrentSI);
-                                        else if ($('#id_graphical_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalChartSI(dataHistoricalSI);
-                                        else if ($('#id_table_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentTableSI(dataCurrentSI);
-                                        else if ($('#id_table_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalTableSI(dataHistoricalSI);
-                                    });
+                                printCurrentChartSI(dataCurrentSI);
 
-                                    $('#id_tab_dsi').on('click', function(){
-                                        $("#myTopnav .tab-nav").removeClass('active');
-                                        $('#id_tab_dsi').addClass('active');
+                                // Tabs
+                                $('#id_tab_si').on('click', function(){
+                                    $(".tab-nav").removeClass('active');
+                                    $('#id_tab_si').addClass('active');
 
-                                        if ($('#id_graphical_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
-                                        else if ($('#id_graphical_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI);
-                                        else if ($('#id_table_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
-                                        else if ($('#id_table_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI);
-                                    });
+                                    if ($('#id_Graphical').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentChartSI(dataCurrentSI);
+                                    else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartSI(dataHistoricalSI);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentTableSI(dataCurrentSI);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableSI(dataHistoricalSI);
+                                });
 
-                                    $('#id_tab_qf').on('click', function(){
-                                        $("#myTopnav .tab-nav").removeClass('active');
-                                        $('#id_tab_qf').addClass('active');
+                                $('#id_tab_dsi').on('click', function(){
+                                    $(".tab-nav").removeClass('active');
+                                    $('#id_tab_dsi').addClass('active');
 
-                                        if ($('#id_graphical_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentChartQF(dataCurrentQF);
-                                        else if ($('#id_graphical_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalChartQF(dataHistoricalQF);
-                                        else if ($('#id_table_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentTableQF(dataCurrentQF);
-                                        else if ($('#id_table_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalTableQF(dataHistoricalQF);
-                                    });
+                                    if ($('#id_Graphical').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
+                                    else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI);
+                                });
 
-                                    $('#id_tab_m').on('click', function(){
-                                        $("#myTopnav .tab-nav").removeClass('active');
-                                        $('#id_tab_m').addClass('active');
+                                $('#id_tab_qf').on('click', function(){
+                                    $(".tab-nav").removeClass('active');
+                                    $('#id_tab_qf').addClass('active');
 
-                                        if ($('#id_graphical_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentChartM(dataCurrentM);
-                                        else if ($('#id_graphical_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalChartM(dataHistoricalM);
-                                        else if ($('#id_table_menu_item').hasClass('active') && $('#id_radar_menu_item').hasClass('active')) printCurrentTableM(dataCurrentM);
-                                        else if ($('#id_table_menu_item').hasClass('active') && $('#id_historical_menu_item').hasClass('active')) printHistoricalTableM(dataHistoricalM);
-                                    });
+                                    if ($('#id_Graphical').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentChartQF(dataCurrentQF);
+                                    else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartQF(dataHistoricalQF);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentTableQF(dataCurrentQF);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableQF(dataHistoricalQF);
+                                });
 
-                                    // Menus Items Dropdown
+                                $('#id_tab_m').on('click', function(){
+                                    $(".tab-nav").removeClass('active');
+                                    $('#id_tab_m').addClass('active');
+
+                                    if ($('#id_Graphical').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentChartM(dataCurrentM);
+                                    else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartM(dataHistoricalM);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentTableM(dataCurrentM);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableM(dataHistoricalM);
+                                });
+
+                                // Menus Items Dropdown
+
+                                // G
+                                $('#id_Graphical').on('click', function(){
+                                    $("#id_Table").removeClass('active');
+                                    $('#id_Graphical').addClass('active');
+
+                                    // -> R
+                                    if ($('#id_Radar').hasClass('active')) {
+                                        console.log(" ________________________ G -> R ________________________ ");
+                                        if ($('#id_tab_si').hasClass('active')) printCurrentChartSI(dataCurrentSI);
+                                        else if ($('#id_tab_dsi').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
+                                        else if ($('#id_tab_qf').hasClass('active')) printCurrentChartQF(dataCurrentQF);
+                                        else if ($('#id_tab_m').hasClass('active')) printCurrentChartM(dataCurrentM);
+                                    }
+                                    // -> H
+                                    else {
+                                        console.log(" ________________________ G -> H ________________________ ");
+                                        if ($('#id_tab_si').hasClass('active')) printHistoricalChartSI(dataHistoricalSI);
+                                        else if ($('#id_tab_dsi').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI);
+                                        else if ($('#id_tab_qf').hasClass('active')) printHistoricalChartQF(dataHistoricalQF);
+                                        else if ($('#id_tab_m').hasClass('active')) printHistoricalChartM(dataHistoricalM);
+                                    }
+                                });
+
+                                // T
+                                $('#id_Table').on('click', function(){
+                                    $("#id_Graphical").removeClass('active');
+                                    $('#id_Table').addClass('active');
+
+                                    // -> R
+                                    if ($('#id_Radar').hasClass('active')) {
+                                        console.log(" ________________________ T -> R ________________________ ");
+                                        if ($('#id_tab_si').hasClass('active')) printCurrentTableSI(dataCurrentSI);
+                                        else if ($('#id_tab_dsi').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
+                                        else if ($('#id_tab_qf').hasClass('active')) printCurrentTableQF(dataCurrentQF);
+                                        else if ($('#id_tab_m').hasClass('active')) printCurrentTableM(dataCurrentM);
+                                    }
+
+                                    // -> H
+                                    else {
+                                        console.log(" ________________________ T -> H ________________________ ");
+                                        if ($('#id_tab_si').hasClass('active')) printHistoricalTableSI(dataHistoricalSI);
+                                        else if ($('#id_tab_dsi').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI);
+                                        else if ($('#id_tab_qf').hasClass('active')) printHistoricalTableQF(dataHistoricalQF);
+                                        else if ($('#id_tab_m').hasClass('active')) printHistoricalTableM(dataHistoricalM);
+                                    }
+                                });
+
+                                // R
+                                $('#id_Radar').on('click', function(){
+                                    $("#id_Historical").removeClass('active');
+                                    $('#id_Radar').addClass('active');
 
                                     // G
-                                    $('#id_graphical_menu_item').on('click', function(){
-                                        $("#id_table_menu_item").removeClass('active');
-                                        $('#id_graphical_menu_item').addClass('active');
-
-                                        // -> R
-                                        if ($('#id_radar_menu_item').hasClass('active')) {
-                                            console.log(" ________________________ G -> R ________________________ ");
-                                            if ($('#id_tab_si').hasClass('active')) printCurrentChartSI(dataCurrentSI);
-                                            else if ($('#id_tab_dsi').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
-                                            else if ($('#id_tab_qf').hasClass('active')) printCurrentChartQF(dataCurrentQF);
-                                            else if ($('#id_tab_m').hasClass('active')) printCurrentChartM(dataCurrentM);
-                                        }
-                                        // -> H
-                                        else {
-                                            console.log(" ________________________ G -> H ________________________ ");
-                                            if ($('#id_tab_si').hasClass('active')) printHistoricalChartSI(dataHistoricalSI);
-                                            else if ($('#id_tab_dsi').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI);
-                                            else if ($('#id_tab_qf').hasClass('active')) printHistoricalChartQF(dataHistoricalQF);
-                                            else if ($('#id_tab_m').hasClass('active')) printHistoricalChartM(dataHistoricalM);
-                                        }
-                                    });
+                                    if ($('#id_Graphical').hasClass('active')) {
+                                        console.log(" ________________________ G <- R ________________________ ");
+                                        if ($('#id_tab_si').hasClass('active')) printCurrentChartSI(dataCurrentSI);
+                                        else if ($('#id_tab_dsi').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
+                                        else if ($('#id_tab_qf').hasClass('active')) printCurrentChartQF(dataCurrentQF);
+                                        else if ($('#id_tab_m').hasClass('active')) printCurrentChartM(dataCurrentM);
+                                    }
 
                                     // T
-                                    $('#id_table_menu_item').on('click', function(){
-                                        $("#id_graphical_menu_item").removeClass('active');
-                                        $('#id_table_menu_item').addClass('active');
-
-                                        // -> R
-                                        if ($('#id_radar_menu_item').hasClass('active')) {
-                                            console.log(" ________________________ T -> R ________________________ ");
-                                            if ($('#id_tab_si').hasClass('active')) printCurrentTableSI(dataCurrentSI);
-                                            else if ($('#id_tab_dsi').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
-                                            else if ($('#id_tab_qf').hasClass('active')) printCurrentTableQF(dataCurrentQF);
-                                            else if ($('#id_tab_m').hasClass('active')) printCurrentTableM(dataCurrentM);
-                                        }
-
-                                        // -> H
-                                        else {
-                                            console.log(" ________________________ T -> H ________________________ ");
-                                            if ($('#id_tab_si').hasClass('active')) printHistoricalTableSI(dataHistoricalSI);
-                                            else if ($('#id_tab_dsi').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI);
-                                            else if ($('#id_tab_qf').hasClass('active')) printHistoricalTableQF(dataHistoricalQF);
-                                            else if ($('#id_tab_m').hasClass('active')) printHistoricalTableM(dataHistoricalM);
-                                        }
-                                    });
-
-                                    // R
-                                    $('#id_radar_menu_item').on('click', function(){
-                                        $("#id_historical_menu_item").removeClass('active');
-                                        $('#id_radar_menu_item').addClass('active');
-
-                                        // G
-                                        if ($('#id_graphical_menu_item').hasClass('active')) {
-                                            console.log(" ________________________ G <- R ________________________ ");
-                                            if ($('#id_tab_si').hasClass('active')) printCurrentChartSI(dataCurrentSI);
-                                            else if ($('#id_tab_dsi').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
-                                            else if ($('#id_tab_qf').hasClass('active')) printCurrentChartQF(dataCurrentQF);
-                                            else if ($('#id_tab_m').hasClass('active')) printCurrentChartM(dataCurrentM);
-                                        }
-
-                                        // T
-                                        else {
-                                            console.log(" ________________________ T <- R ________________________ ");
-                                            if ($('#id_tab_si').hasClass('active')) printCurrentTableSI(dataCurrentSI);
-                                            else if ($('#id_tab_dsi').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
-                                            else if ($('#id_tab_qf').hasClass('active')) printCurrentTableQF(dataCurrentQF);
-                                            else if ($('#id_tab_m').hasClass('active')) printCurrentTableM(dataCurrentM);
-                                        }
-                                    });
-
-                                    // H
-                                    $('#id_historical_menu_item').on('click', function(){
-                                        $("#id_radar_menu_item").removeClass('active');
-                                        $('#id_historical_menu_item').addClass('active');
-
-                                        // G
-                                        if ($('#id_graphical_menu_item').hasClass('active')) {
-                                            console.log(" ________________________ G <- H ________________________ ");
-                                            if ($('#id_tab_si').hasClass('active')) printHistoricalChartSI(dataHistoricalSI);
-                                            else if ($('#id_tab_dsi').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI);
-                                            else if ($('#id_tab_qf').hasClass('active')) printHistoricalChartQF(dataHistoricalQF);
-                                            else if ($('#id_tab_m').hasClass('active')) printHistoricalChartM(dataHistoricalM);
-                                        }
-
-                                        // T
-                                        else {
-                                            console.log(" ________________________ T <- H ________________________ ");
-                                            if ($('#id_tab_si').hasClass('active')) printHistoricalTableSI(dataHistoricalSI);
-                                            else if ($('#id_tab_dsi').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI);
-                                            else if ($('#id_tab_qf').hasClass('active')) printHistoricalTableQF(dataHistoricalQF);
-                                            else if ($('#id_tab_m').hasClass('active')) printHistoricalTableM(dataHistoricalM);
-                                        }
-                                    });
-                                },
-                                args: [
-                                    {
-                                        key: "dtoCSI",
-                                        ajaxOptions: function() {
-                                            return {
-                                                url: "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation.json"
-                                            };
-                                        }
-                                    },
-                                    {
-                                        key: "dtoCDSI",
-                                        ajaxOptions: function() {
-                                            return {
-                                                url: "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/CurrentEvaluation.json"
-                                            };
-                                        }
-                                    },
-                                    {
-                                        key: "dtoCQF",
-                                        ajaxOptions: function() {
-                                            return {
-                                                url: "/rest/qrapids-gadget/1.0/QualityFactors/CurrentEvaluation.json"
-                                            };
-                                        }
-                                    },
-                                    /*{
-                                        key: "dtoCM",
-                                        ajaxOptions: function() {
-                                            return {
-                                                url: "/rest/qrapids-gadget/1.0/Metrics/CurrentEvaluation.json"
-                                            };
-                                        }
-                                    },*/
-                                    {
-                                        key: "dtoHM",
-                                        ajaxOptions: function() {
-                                            return {
-                                                url: "/rest/qrapids-gadget/1.0/Metrics/HistoricalData/from="+ from +"&to="+ to +".json"
-                                            };
-                                        }
-                                    },
-                                    {
-                                        key: "dtoHQF",
-                                        ajaxOptions: function() {
-                                            return {
-                                                url: "/rest/qrapids-gadget/1.0/QualityFactors/HistoricalData/from="+ from +"&to="+ to +".json"
-                                            };
-                                        }
-                                    },
-                                    {
-                                        key: "dtoHDSI",
-                                        ajaxOptions: function() {
-                                            return {
-                                                url: "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/HistoricalData/from="+ from +"&to="+ to +".json"
-                                            };
-                                        }
-                                    },
-                                    {
-                                        key: "dtoHSI",
-                                        ajaxOptions: function() {
-                                            return {
-                                                url: "/rest/qrapids-gadget/1.0/StrategicIndicators/HistoricalData/from="+ from +"&to="+ to +".json"
-                                            };
-                                        }
+                                    else {
+                                        console.log(" ________________________ T <- R ________________________ ");
+                                        if ($('#id_tab_si').hasClass('active')) printCurrentTableSI(dataCurrentSI);
+                                        else if ($('#id_tab_dsi').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
+                                        else if ($('#id_tab_qf').hasClass('active')) printCurrentTableQF(dataCurrentQF);
+                                        else if ($('#id_tab_m').hasClass('active')) printCurrentTableM(dataCurrentM);
                                     }
-                                ]
-                            }
-                        });
-                    })();
+                                });
 
-                </script>
-            </head>
+                                // H
+                                $('#id_Historical').on('click', function(){
+                                    $("#id_Radar").removeClass('active');
+                                    $('#id_Historical').addClass('active');
 
-            <body>
-                <div class="topnav hidden" id="myTopnav">
-                    <a id="id_tab_si" class="tab-nav active" data-toggle="tab" href="#si">Strategic Indicators</a>
-                    <a id="id_tab_dsi" class="tab-nav" data-toggle="tab" href="#dsi">Detailed Strategic Indicators</a>
-                    <a id="id_tab_qf" class="tab-nav" data-toggle="tab" href="#qf">Quality Factors</a>
-                    <a id="id_tab_m" class="tab-nav" data-toggle="tab" href="#m">Metrics</a>
-                    <span class="span-position">
-                        <div class="dropdown">
-                            <a href="#" data-toggle="dropdown" class="dropdown-toggle">View mode <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a id="id_graphical_menu_item" class="active">
-                                        <img class="icons-view-mode" src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/graphical.png" alt="graphical data"> Graphical
-                                    </a>
-                                </li>
-                                <li>
-                                    <a id="id_table_menu_item">
-                                        <img class="icons-view-mode" src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/table.png" alt="table data"> Table
-                                    </a>
-                                </li>
-                                <li role="separator" class="divider"></li>
-                                <li>
-                                    <a id="id_radar_menu_item" class="active">
-                                        <img class="icons-view-mode" src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/radar.png" alt="radar data"> Radar
-                                    </a>
-                                </li>
-                                <li>
-                                    <a id="id_historical_menu_item">
-                                        <img class="icons-view-mode" src="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/histo.png" alt="histo data"> Historical
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </span>
-                </div>
+                                    // G
+                                    if ($('#id_Graphical').hasClass('active')) {
+                                        console.log(" ________________________ G <- H ________________________ ");
+                                        if ($('#id_tab_si').hasClass('active')) printHistoricalChartSI(dataHistoricalSI);
+                                        else if ($('#id_tab_dsi').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI);
+                                        else if ($('#id_tab_qf').hasClass('active')) printHistoricalChartQF(dataHistoricalQF);
+                                        else if ($('#id_tab_m').hasClass('active')) printHistoricalChartM(dataHistoricalM);
+                                    }
 
-                <div id="myTabContent" class="tab-content clearfix hidden">
-                    <div class="tab-pane active" id="si"></div>
-                    <div class="tab-pane" id="dsi"></div>
-                    <div class="tab-pane" id="qf"></div>
-                    <div class="tab-pane" id="m"></div>
-                </div>
+                                    // T
+                                    else {
+                                        console.log(" ________________________ T <- H ________________________ ");
+                                        if ($('#id_tab_si').hasClass('active')) printHistoricalTableSI(dataHistoricalSI);
+                                        else if ($('#id_tab_dsi').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI);
+                                        else if ($('#id_tab_qf').hasClass('active')) printHistoricalTableQF(dataHistoricalQF);
+                                        else if ($('#id_tab_m').hasClass('active')) printHistoricalTableM(dataHistoricalM);
+                                    }
+                                });
+                            },
+                            args: [
+                                {
+                                    key: "dtoCSI",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation.json"
+                                        };
+                                    }
+                                },
+                                {
+                                    key: "dtoCDSI",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/CurrentEvaluation.json"
+                                        };
+                                    }
+                                },
+                                {
+                                    key: "dtoCQF",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/QualityFactors/CurrentEvaluation.json"
+                                        };
+                                    }
+                                },
+                                /*{
+                                    key: "dtoCM",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/Metrics/CurrentEvaluation.json"
+                                        };
+                                    }
+                                },*/
+                                {
+                                    key: "dtoHM",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/Metrics/HistoricalData/from="+ from +"&to="+ to +".json"
+                                        };
+                                    }
+                                },
+                                {
+                                    key: "dtoHQF",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/QualityFactors/HistoricalData/from="+ from +"&to="+ to +".json"
+                                        };
+                                    }
+                                },
+                                {
+                                    key: "dtoHDSI",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/HistoricalData/from="+ from +"&to="+ to +".json"
+                                        };
+                                    }
+                                },
+                                {
+                                    key: "dtoHSI",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/StrategicIndicators/HistoricalData/from="+ from +"&to="+ to +".json"
+                                        };
+                                    }
+                                }
+                            ]
+                        }
+                    });
+                })();
 
-                <div id="debug_div" style="font-size:9pt; padding:5px; color: red;"></div>
-
-            </body>
-
-
+            </script>
         ]]>
     </Content>
 </Module>
