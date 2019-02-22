@@ -12,7 +12,7 @@
     display: block;
     color: white;
     text-align: center;
-    padding: 10px;
+    padding: 10px 7px 10px 7px;
     text-decoration: none !important;
     font-size: 12px;
 }
@@ -120,7 +120,15 @@ th, td {
 
 .current-project-style{
     float: right;
-    margin-right: inherit;
     color: black;
-    background: #ffc380;
+    background-color: #ffc380;
+    border-radius: 4px 4px 4px 4px ;
+}
+
+.navbar-text{
+    margin-top: 5px !important;
+    margin-bottom: 0px !important;
+    margin-left: 0px !important;
+    margin-right: 5px !important;
+    padding: 5px !important;
 }

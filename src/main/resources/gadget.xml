@@ -120,6 +120,7 @@
                     var dataHistoricalM  = [];
 
                     var viewItemText = ["Graphical","Table","Radar","Historical"];
+                    var currentProject;
 
                     var from = '2015-01-01';
                     var to = getToday();
@@ -250,9 +251,9 @@
                         div_TopNav.appendChild(tab);
 
                         //Tab Project
-                        tab = document.createElement('p');
+                        tab = document.createElement('span');
                         tab.setAttribute("id","id_tab_project");
-                        tab.setAttribute("class","current-project-style");
+                        tab.setAttribute("class","current-project-style navbar-text");
                         console.log(currentProject);
                         tab.append(currentProject);
                         div_TopNav.appendChild(tab);
@@ -356,10 +357,18 @@
 
                                 var gadget = this;
 
-                                var currentProject = gadget.getPref("selectProjectUserPref");
-                                console.log(currentProject);
+                                var projectSelected = gadget.getPref("selectProjectUserPref");
+                                if ($('#id_tab_project').length == 0) {
+                                    currentProject = projectSelected;
+                                    buildDivView(currentProject);
+                                }
+                                else {
+                                    if (currentProject != projectSelected) {
+                                        currentProject = projectSelected;
+                                        document.getElementById("id_tab_project").innerHTML = currentProject;
+                                    }
+                                }
 
-                                buildDivView(currentProject);
 
 
                                 var dataCurrentSI = args.dtoCSI;
