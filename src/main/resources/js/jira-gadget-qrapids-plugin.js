@@ -824,6 +824,105 @@ function printHistoricalTableM(dataHM) {
 }
 
 
+//QR
+function printTableQR(dataQR) {
+
+    console.log("#######################print_Table_QR#######################");
+
+    $("#qr").empty();
+
+     //body reference
+    var body = document.getElementById('qr');
+
+    // create elements <table> and a <tbody>
+    var tbl = document.createElement('table');
+    tbl.setAttribute("class","table table-hover");
+
+    var tblhead = document.createElement("thead");
+    var rowHead = document.createElement("tr");
+
+    var cell = document.createElement("th");
+    var cellText = document.createTextNode("Date");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Category");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Name");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Value");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Type");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Issue");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    tblhead.appendChild(rowHead);
+    tbl.appendChild(tblhead);
+
+    var tblBody = document.createElement("tbody");
+
+    // cells creation
+    for (var i = 0; i < dataQR.length; ++i) {
+        // table row creation
+        var row = document.createElement("tr");
+        row.setAttribute("class","th-name-si");
+
+        var cell = document.createElement("td");
+        var cellText = document.createTextNode(dataQR[i].date);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataQR[i].category);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataQR[i].name);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataQR[i].value.toFixed(2));
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataQR[i].type);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode("issue link");
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        //row added to end of table body
+        tblBody.appendChild(row);
+    }
+
+    // append the <tbody> inside the <table>
+    tbl.appendChild(tblBody);
+    // put <table> in the <body>
+    body.appendChild(tbl);
+
+}
+
 // Date picker
 function addDatePickerDiv(idDIV){
 

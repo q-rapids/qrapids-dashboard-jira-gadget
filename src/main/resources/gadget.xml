@@ -119,6 +119,8 @@
                     var dataCurrentM  = [];
                     var dataHistoricalM  = [];
 
+                    var dataQR  = [];
+
                     var viewItemText = ["Graphical","Table","Radar","Historical"];
                     var currentProject;
 
@@ -366,24 +368,32 @@
                                     if (currentProject != projectSelected) {
                                         currentProject = projectSelected;
                                         document.getElementById("id_tab_project").innerHTML = currentProject;
+                                        $("#id_Table").removeClass('active');
+                                        $("#id_Historical").removeClass('active');
+                                        $('#id_Graphical').addClass('active');
+                                        $('#id_Radar').addClass('active');
                                     }
                                 }
 
 
 
-                                var dataCurrentSI = args.dtoCSI;
-                                var dataHistoricalSI  = args.dtoHSI;
+                                dataCurrentSI = args.dtoCSI;
+                                dataHistoricalSI  = args.dtoHSI;
 
-                                var dataCurrentDSI  = args.dtoCDSI;
-                                var dataHistoricalDSI  = args.dtoHDSI;
+                                dataCurrentDSI  = args.dtoCDSI;
+                                dataHistoricalDSI  = args.dtoHDSI;
 
-                                var dataCurrentQF  = args.dtoCQF;
-                                var dataHistoricalQF  = args.dtoHQF;
+                                dataCurrentQF  = args.dtoCQF;
+                                dataHistoricalQF  = args.dtoHQF;
 
-                                var dataCurrentM;
-                                var dataHistoricalM  = args.dtoHM;
+                                dataCurrentM;
+                                dataHistoricalM  = args.dtoHM;
+
+                                dataQR = args.dtoQR;
 
                                 printCurrentChartSI(dataCurrentSI);
+
+                                IssueService issueService = ComponentAccessor.getIssueService();
 
                                 // Tabs
                                 $('#id_tab_si').on('click', function(){
@@ -424,6 +434,13 @@
                                     else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartM(dataHistoricalM);
                                     else if ($('#id_Table').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentTableM(dataCurrentM);
                                     else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableM(dataHistoricalM);
+                                });
+
+                                $('#id_tab_qr').on('click', function(){
+                                    $(".tab-nav").removeClass('active');
+                                    $('#id_tab_qr').addClass('active');
+
+                                    printTableQR(dataQR);
                                 });
 
                                 // Menus Items Dropdown
@@ -585,6 +602,14 @@
                                     ajaxOptions: function() {
                                         return {
                                             url: "/rest/qrapids-gadget/1.0/StrategicIndicators/HistoricalData/from="+ from +"&to="+ to +".json"
+                                        };
+                                    }
+                                },
+                                {
+                                    key: "dtoQR",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/QualityRequirements/Alerts.json"
                                         };
                                     }
                                 }
