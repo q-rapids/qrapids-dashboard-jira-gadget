@@ -37,8 +37,10 @@ public class QualityRequirements {
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getQualityFactorsCurrentEvaluation() throws IOException {
+    public Response getQualityFactorsCurrentEvaluation() throws Exception {
         String url = "http://localhost:3000/Alerts";
-        return Response.ok(getResponseResult(url)).build();
+        String resultRequest = getResponseResult(url);
+        return Response.ok(resultRequest).build();
+
     }
 }

@@ -747,13 +747,13 @@ function printHistoricalChartM(dataHM) {
 }
 
 function printCurrentTableM(dataM) {
-    console.log("#######################print_Current_Table_M#######################");
+    console.log("**********************print_Current_Table_M**********************");
     $("#m").empty();
     document.getElementById("m").innerHTML = "CURRENT TABLE M";
 }
 
 function printHistoricalTableM(dataHM) {
-    console.log("#######################print_Historical_Table_M#######################");
+    console.log("**********************print_Historical_Table_M**********************");
     $("#m").empty();
     //document.getElementById("m").innerHTML = "HISTORICAL TABLE M";
 
@@ -825,9 +825,11 @@ function printHistoricalTableM(dataHM) {
 
 
 //QR
-function printTableQR(dataQR) {
+function printTableQR(dataQR, dataIssues, url) {
 
-    console.log("#######################print_Table_QR#######################");
+    console.log("**********************print_Table_QR**********************");
+    console.log(dataQR);
+    console.log(dataIssues);
 
     $("#qr").empty();
 
@@ -871,6 +873,16 @@ function printTableQR(dataQR) {
     cell.appendChild(cellText);
     rowHead.appendChild(cell);
 
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Summary");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Status");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
     tblhead.appendChild(rowHead);
     tbl.appendChild(tblhead);
 
@@ -908,7 +920,24 @@ function printTableQR(dataQR) {
         row.appendChild(cell);
 
         cell = document.createElement("td");
-        cellText = document.createTextNode("issue link");
+        var p = document.createElement('p');
+        var a = document.createElement('a');
+        a.setAttribute("class","issue-link");
+        a.setAttribute("data-issue-key",dataIssues[i].key);
+        a.setAttribute("href",url + "/" + dataIssues[i].key);
+        cellText = document.createTextNode(dataIssues[i].key);
+        a.appendChild(cellText);
+        p.appendChild(a);
+        cell.appendChild(p);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataIssues[i].summary);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataIssues[i].status);
         cell.appendChild(cellText);
         row.appendChild(cell);
 

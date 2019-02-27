@@ -313,6 +313,10 @@
                                     listProjects.push(currentItem);
                                });
 
+                               console.log(" \\\\\\\\\\\\\\ gadget-config ///////////// ");
+                               console.log(args);
+
+
                                return {
                                     action: "/rest/gadget/1.0/currentUser",
                                     theme : function () {
@@ -354,7 +358,7 @@
                             onResizeAdjustHeight: true,
                             template: function(args) {
 
-                                console.log(" \\\\\\\\\\\\\\ args ///////////// ");
+                                console.log(" \\\\\\\\\\\\\\ gadget-view ///////////// ");
                                 console.log(args);
 
                                 var gadget = this;
@@ -375,8 +379,6 @@
                                     }
                                 }
 
-
-
                                 dataCurrentSI = args.dtoCSI;
                                 dataHistoricalSI  = args.dtoHSI;
 
@@ -391,9 +393,13 @@
 
                                 dataQR = args.dtoQR;
 
+                                if (!$("#id_tab_si").hasClass('active') && !$('#si').hasClass('active')) {
+                                    $(".tab-nav").removeClass('active');
+                                    $(".tab-pane").removeClass('active')
+                                    $('#id_tab_si').addClass('active');
+                                    $('#si').addClass('active');
+                                }
                                 printCurrentChartSI(dataCurrentSI);
-
-                                IssueService issueService = ComponentAccessor.getIssueService();
 
                                 // Tabs
                                 $('#id_tab_si').on('click', function(){
@@ -440,7 +446,23 @@
                                     $(".tab-nav").removeClass('active');
                                     $('#id_tab_qr').addClass('active');
 
-                                    printTableQR(dataQR);
+                                    var qr_currentProject = AJS.Gadget({
+                                        baseUrl: "__ATLASSIAN_BASE_URL__",
+                                        useOauth: "/rest/gadget/1.0/currentUser",
+                                        view: {
+                                            template: function(args) {
+                                                printTableQR(dataQR, args.dtoIssues, "__ATLASSIAN_BASE_URL__/browse");
+                                            },
+                                            args: [{
+                                                key: "dtoIssues",
+                                                ajaxOptions: function() {
+                                                    return {
+                                                        url: "/rest/qrapids-gadget/1.0/Issues/"+ currentProject +".json"
+                                                    };
+                                                }
+                                            }]
+                                        }
+                                    });
                                 });
 
                                 // Menus Items Dropdown
@@ -610,6 +632,14 @@
                                     ajaxOptions: function() {
                                         return {
                                             url: "/rest/qrapids-gadget/1.0/QualityRequirements/Alerts.json"
+                                        };
+                                    }
+                                },
+                                {
+                                    key: "projects",
+                                    ajaxOptions: function() {
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/Projects.json"
                                         };
                                     }
                                 }

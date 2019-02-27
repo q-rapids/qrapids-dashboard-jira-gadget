@@ -34,6 +34,8 @@ atlas-help  -- prints description for all commands in the SDK
 - [Gadget developer documentation](https://developer.atlassian.com/server/framework/gadgets/)
 - [Factoria del constructor AJS.Gadget(...). Gadget Object API](https://developer.atlassian.com/server/framework/gadgets/gadget-object-api/)
 - [Fields definitions](https://developer.atlassian.com/server/framework/gadgets/field-definitions/)
+- [Interface IssueConstant](https://docs.atlassian.com/software/jira/docs/api/7.1.2/com/atlassian/jira/issue/IssueConstant.html)
+- [Issue](https://docs.atlassian.com/DAC/javadoc/jira/reference/com/atlassian/jira/issue/Issue.html)
 
 ## Otras paginas de interes:
 - [J-Tricks. Little JIRA Tricks](https://www.j-tricks.com/tutorials/invoking-rest-services-from-gadgets)
