@@ -8,10 +8,7 @@ var target;
 var tau = Math.PI / 2;
 var urlLink;
 
-function drawGaugeChart(data, container, width, height, showButtons, chartHyperlinked) {
-
-    //console.log("**********************gaugeChart.js:drawChart()***************************");
-
+function drawGaugeChart(data, container, width, height) {
 
     //sortDataAlphabetically(data);
     var someSIhasBN = false;
@@ -21,10 +18,6 @@ function drawGaugeChart(data, container, width, height, showButtons, chartHyperl
         div.style.display = "inline-block";
         div.style.margin = "10px";
         document.getElementById(container).appendChild(div);
-
-        //0 to 1 values to angular values
-        //console.log(data[i]);
-        //console.log("0 to 1 values to angular values");
 
         angle = data[i].evaluationValue * 180 + 90;
         upperThresh = data[i].kpiupperThreshold * Math.PI - Math.PI / 2;
@@ -46,45 +39,15 @@ function drawGaugeChart(data, container, width, height, showButtons, chartHyperl
 
         //create chart svg with hyperlink inide the "container"
 
-        if (chartHyperlinked){
-            /*urlLink = ""
-                + data[i].id + "&name=" + data[i].name;
 
-            //add from + to to link if found
-            var from = getParameterByName('from');
-            var to = getParameterByName('to');
-            if (from.length != 0 && to.length != 0) {
-                urlLink = urlLink + "&from=" + from + "&to=" + to;
-            }*/
-
-            // --> all the chart is hyperlinked
-            //console.log('#'+div.id);
-            var svg = d3.select('#'+div.id).append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .style("margin", 5)
-                .attr("class", "chart")
-                .append("a")
-                .attr("xlink:href", function (d) {
-                    return urlLink
-                })
-                .append("g")
-                .attr("transform",
-                    "translate(" + width / 2 + "," + height / 2 + ")");
-
-        }
-        else {
-            var svg = d3.select('#'+div.id).append("svg")
-                .attr("width", width)
-                .attr("height", height)
-                .style("margin", 5)
-                .attr("class", "chart")
-                .append("g")
-                .attr("transform",
-                    "translate(" + width / 2 + "," + height / 2 + ")");
-
-        }
-
+        var svg = d3.select('#'+div.id).append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .style("margin", 5)
+            .attr("class", "chart")
+            .append("g")
+            .attr("transform",
+                "translate(" + width / 2 + "," + height / 2 + ")");
 
         /*
         for (j = data[i].kpiupperThreshold - 1; j > -1; --j) {
@@ -95,7 +58,6 @@ function drawGaugeChart(data, container, width, height, showButtons, chartHyperl
                 .attr("d", arc);
         }
         */
-
 
         //draw arc from -90 to 90 degrees in green
         svg.append("path")
@@ -154,9 +116,9 @@ function drawGaugeChart(data, container, width, height, showButtons, chartHyperl
             .attr("font-family", "sans-serif")
             .attr("fill", "#000")
             .style("font-size", "12px")
+            .style("font-weight", "bold")
+            .style("color","rgb(1, 119, 166)")
             .text(data[i].strategicIndicatorName);
-
-//    .style("font-size", 11+8*width/250+"px")
 
         //add label under the name with the value description
         svg.append("text")
@@ -166,60 +128,7 @@ function drawGaugeChart(data, container, width, height, showButtons, chartHyperl
             .attr("font-family", "sans-serif")
             .attr("fill", "#0177a6")
             .style("font-size", "14px");
-
-        //            .style("font-size", 11+6*width/250+"px")
-
-
-        // Buttons just bellow the Chart
-
-        if (showButtons) {
-            var br = document.createElement("br");
-            div.appendChild(br);
-
-            var editBtn = document.createElement("button");
-            editBtn.id = "buttonEdit"+data[i].strategicIndicator_ID;
-            editBtn.dbId = data[i].strategicIndicator_ID;
-            editBtn.classList.add('btn');
-            editBtn.classList.add('btn-default');
-            editBtn.style.marginRight = "5px";
-            /*editBtn.onclick = function () {
-                location.href = "../EditStrategicIndicators/" + this.dbId;
-            };*/
-            editBtn.appendChild(document.createTextNode("Edit"));
-            if (data[i].strategicIndicator_ID == null) editBtn.disabled = true;
-            div.appendChild(editBtn);
-
-
-            var feedbackBtn= document.createElement("button");
-            feedbackBtn.id = "buttonFeedback"+data[i].strategicIndicator_ID;
-            feedbackBtn.dbId = data[i].strategicIndicator_ID;
-            feedbackBtn.classList.add('btn');
-            feedbackBtn.classList.add('btn-default');
-            feedbackBtn.setAttribute("pos", i.toString());
-            /*feedbackBtn.onclick = function () {
-                location.href = "FeedbackReport" + "?id=" + this.dbId;
-            };*/
-            feedbackBtn.appendChild(document.createTextNode("Show Feedback"));
-            if (data[i].dbId == null) feedbackBtn.disabled = true;
-            if (!data[i].hasFeedback) feedbackBtn.style.display = "none";
-            div.appendChild(feedbackBtn);
-
-            //if (data[i].hasBN) someSIhasBN = true
-        }
-
     }
 
-    //if (!someSIhasBN) $("#feedbackButton").hide();
 
-}
-
-function sortDataAlphabetically (data) {
-    function compare (a, b) {
-        if (a.name < b.name) return -1;
-        else if (a.name > b.name) return 1;
-        else return 0;
-    }
-    data.sort(compare);
-    console.log("**********************gaugeChart.js:sortDataAlp.***************************");
-    console.log(data);
 }

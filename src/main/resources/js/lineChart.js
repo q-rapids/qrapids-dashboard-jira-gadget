@@ -1,39 +1,24 @@
-var timeFormat = 'YYYY-MM-DD';
+var timeFormat = 'MMM-DD';
 
-function drawLineChart(text, ids, dades, lowerThres, upperThres, target, isSI, idDiv) {
+function drawLineChart(text, ids, dades, lowerThres, upperThres, target, idDiv) {
 
     console.log("**********************lineChart.js:drawLineChart()***************************");
 
     for (i = 0; i < dades.length; ++i) {
-        var a = document.createElement('a');
-        /*if (isSI) {
-            //if its a SI chart make it a hyperlink
-            var currentURL = window.location.href;
-            if (currentURL.match("/PredictionChart")) urlLink = "../DetailedStrategicIndicators/PredictionChart?id=" + ids[i] + "&name=" + text[i];
-            else urlLink = "../DetailedStrategicIndicators/HistoricChart?id=" + ids[i] + "&name=" + text[i];
-
-            //add from + to to link
-            var from = getParameterByName('from');
-            var to = getParameterByName('to');
-            if ($('#datepickerFrom').length) {
-                urlLink = urlLink + "&from=" + $('#datepickerFrom').val() + "&to=" + $('#datepickerTo').val();
-            }
-            a.setAttribute("href", urlLink);
-        }*/
-        a.innerHTML = text[i];
-        a.style.fontSize = "12px";
-        a.style.fontWeight = "bold";
-        a.style.color = "#333";
         var div = document.createElement('div');
         div.style.display = "inline-block";
         var p = document.createElement('p');
+        p.innerHTML = text[i];
+        p.style.fontSize = "12px";
+        p.style.fontWeight = "bold";
+        p.style.color = "#333";
         var ctx = document.createElement('canvas');
         ctx.id = 'canvas' + i;
         ctx.width = 300;
         ctx.height = 300;
         ctx.style.display = "inline";
         ctx.style.paddingBottom = "15px";
-        div.appendChild(p).appendChild(a);
+        div.appendChild(p);
         document.getElementById(idDiv).appendChild(div).appendChild(ctx);
         ctx.getContext("2d");
         //set chart config
@@ -88,19 +73,6 @@ function drawLineChart(text, ids, dades, lowerThres, upperThres, target, isSI, i
                 }
             }
         };
-
-        if (isSI) {
-            config.options.horizontalLine = [{
-                    y: lowerThres[i],
-                    style: "rgba(255, 0, 0, .4)"
-                }, {
-                    y: target[i],
-                    style: "rgba(1, 119, 166, .4)"
-                }, {
-                    y: upperThres[i],
-                    style: "rgba(0, 255, 0, .4)"
-                }];
-        }
 
         //draw chart
         window.myLine = new Chart(ctx, config);

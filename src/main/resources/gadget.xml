@@ -451,6 +451,8 @@
                                         useOauth: "/rest/gadget/1.0/currentUser",
                                         view: {
                                             template: function(args) {
+                                                console.log(" \\\\\\\\\\\\\\ gadget-view ///////////// ");
+                                                console.log(args);
                                                 printTableQR(dataQR, args.dtoIssues, "__ATLASSIAN_BASE_URL__/browse");
                                             },
                                             args: [{

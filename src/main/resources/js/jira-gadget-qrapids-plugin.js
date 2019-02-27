@@ -4,7 +4,7 @@ function printCurrentChartSI(dataSI) {
     console.log("**********************print_Current_Chart_SI***************************");
     console.log(dataSI);
     $("#si").empty();
-    drawGaugeChart(dataSI, 'si', 175, 175, false, true);
+    drawGaugeChart(dataSI, 'si', 175, 175);
 }
 
 function printHistoricalChartSI(dataHSI){
@@ -14,7 +14,6 @@ function printHistoricalChartSI(dataHSI){
 
     addDatePickerDiv("si");
 
-    var isSI = true;
     var lowerThres = [];
     var upperThres = [];
     var target = [];
@@ -56,7 +55,7 @@ function printHistoricalChartSI(dataHSI){
     if (dataHSI[i - 1])
         dades.push(line);
 
-    drawLineChart(text, ids, dades, lowerThres, upperThres, target, isSI, "si");
+    drawLineChart(text, ids, dades, lowerThres, upperThres, target, "si");
 
 }
 
@@ -261,7 +260,6 @@ function printHistoricalChartDSI(dataHDSI) {
     var ids = [];
     var labels = [];
     var value = [];
-    var isDSI = true;
 
     for (i = 0; i < dataHDSI.length; ++i) {
         //for each dsi save name to texts vector and id to ids vector
@@ -298,7 +296,7 @@ function printHistoricalChartDSI(dataHDSI) {
         }
     }
 
-    drawStackedLineChart(texts, ids, labels, value, isDSI, "dsi");
+    drawStackedLineChart(texts, ids, labels, value, "dsi");
 }
 
 function printCurrentTableDSI(dataDSI) {
@@ -499,7 +497,6 @@ function printHistoricalChartQF(dataHQF) {
     var ids = [];
     var labels = [];
     var value = [];
-    var isDSI = false;
 
     for (i = 0; i < dataHQF.length; ++i) {
         //for each qf save name to texts vector and id to ids vector
@@ -535,7 +532,7 @@ function printHistoricalChartQF(dataHQF) {
         }
     }
 
-    drawStackedLineChart(texts, ids, labels, value, isDSI, "qf");
+    drawStackedLineChart(texts, ids, labels, value, "qf");
 }
 
 function printCurrentTableQF(dataQF) {
@@ -707,7 +704,6 @@ function printHistoricalChartM(dataHM) {
 
     addDatePickerDiv('m');
 
-    var isSI = false;
     var lowerThres = [];
     var upperThres = [];
     var target = [];
@@ -743,7 +739,7 @@ function printHistoricalChartM(dataHM) {
     if (dataHM[i - 1])
         dades.push(line);
 
-    drawLineChart(text, ids, dades, lowerThres, upperThres, target, isSI, "m");
+    drawLineChart(text, ids, dades, lowerThres, upperThres, target, "m");
 }
 
 function printCurrentTableM(dataM) {

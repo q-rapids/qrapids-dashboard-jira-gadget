@@ -53,15 +53,14 @@ public class IssuesResources {
     @Path("/{currentProject}")
     public Response getIssues(@PathParam("currentProject") String keyCurrentProject) throws Exception {
         ApplicationUser user = authenticationContext.getLoggedInUser();
-        // retrieve all objects for projects this user has permission to browse
+        Collection<IssueRepresentation> issueRepresentation = new LinkedList<>();
         Collection<Project> projects = permissionManager.getProjects(ProjectPermissions.BROWSE_PROJECTS, user);
         Long idProject = null;
-        for(Project p : projects)
+        for (Project p : projects)
             if (p.getKey().equals(keyCurrentProject)) idProject = p.getId();
-        Collection<IssueRepresentation> issueRepresentation = new LinkedList<>();
         List<Long> listIssuesId = (List<Long>) issueManager.getIssueIdsForProject(idProject);
         Collections.sort(listIssuesId);
-        for (Long longId : listIssuesId ) {
+        for (Long longId : listIssuesId) {
             Issue issue = issueManager.getIssueObject(longId);
             IssueRepresentation issueR = new IssueRepresentation(issue);
             issueRepresentation.add(issueR);
