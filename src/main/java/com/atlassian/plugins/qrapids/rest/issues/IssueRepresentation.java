@@ -2,6 +2,7 @@ package com.atlassian.plugins.qrapids.rest.issues;
 
 
 import com.atlassian.jira.issue.Issue;
+import com.atlassian.jira.issue.priority.Priority;
 import net.jcip.annotations.Immutable;
 
 import javax.xml.bind.annotation.*;
@@ -32,6 +33,9 @@ public class IssueRepresentation {
     private String status;
 
     @XmlAttribute
+    private String priorityIconUrl;
+
+    @XmlAttribute
     private String description;
 
     // This private constructor isn't used by any code, but JAXB requires any
@@ -56,6 +60,7 @@ public class IssueRepresentation {
         this.summary = issue.getSummary();
         this.assignedId = issue.getAssigneeId();
         this.status = issue.getStatus().getName();
+        this.priorityIconUrl = issue.getPriority().getSvgIconUrl();
         this.description = issue.getDescription();
     }
 
@@ -97,6 +102,14 @@ public class IssueRepresentation {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPriorityIconUrl() {
+        return priorityIconUrl;
+    }
+
+    public void setPriorityIconUrl(String priorityIconUrl) {
+        this.priorityIconUrl = priorityIconUrl;
     }
 
     public String getDescription() {

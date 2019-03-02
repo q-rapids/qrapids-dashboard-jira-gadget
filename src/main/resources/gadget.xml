@@ -453,13 +453,13 @@
                                             template: function(args) {
                                                 console.log(" \\\\\\\\\\\\\\ gadget-view ///////////// ");
                                                 console.log(args);
-                                                printTableQR(dataQR, args.dtoIssues, "__ATLASSIAN_BASE_URL__/browse");
+                                                printTableQR(dataQR, args.dtoIssues, "__ATLASSIAN_BASE_URL__");
                                             },
                                             args: [{
                                                 key: "dtoIssues",
                                                 ajaxOptions: function() {
                                                     return {
-                                                        url: "/rest/qrapids-gadget/1.0/Issues/"+ currentProject +".json"
+                                                        url: "/rest/qrapids-gadget/1.0/Issues/QP.json"
                                                     };
                                                 }
                                             }]

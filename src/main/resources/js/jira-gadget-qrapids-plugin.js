@@ -821,7 +821,7 @@ function printHistoricalTableM(dataHM) {
 
 
 //QR
-function printTableQR(dataQR, dataIssues, url) {
+function printTableQR(dataQR, dataIssues, atlassianBaseUrl) {
 
     console.log("**********************print_Table_QR**********************");
     console.log(dataQR);
@@ -841,11 +841,6 @@ function printTableQR(dataQR, dataIssues, url) {
 
     var cell = document.createElement("th");
     var cellText = document.createTextNode("Date");
-    cell.appendChild(cellText);
-    rowHead.appendChild(cell);
-
-    cell = document.createElement("th");
-    cellText = document.createTextNode("Category");
     cell.appendChild(cellText);
     rowHead.appendChild(cell);
 
@@ -879,6 +874,11 @@ function printTableQR(dataQR, dataIssues, url) {
     cell.appendChild(cellText);
     rowHead.appendChild(cell);
 
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Priority");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
     tblhead.appendChild(rowHead);
     tbl.appendChild(tblhead);
 
@@ -892,11 +892,6 @@ function printTableQR(dataQR, dataIssues, url) {
 
         var cell = document.createElement("td");
         var cellText = document.createTextNode(dataQR[i].date);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
-
-        cell = document.createElement("td");
-        cellText = document.createTextNode(dataQR[i].category);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
@@ -920,7 +915,8 @@ function printTableQR(dataQR, dataIssues, url) {
         var a = document.createElement('a');
         a.setAttribute("class","issue-link");
         a.setAttribute("data-issue-key",dataIssues[i].key);
-        a.setAttribute("href",url + "/" + dataIssues[i].key);
+        a.setAttribute("href","/jira/browse/" + dataIssues[i].key);
+        a.setAttribute("target","_blank");
         cellText = document.createTextNode(dataIssues[i].key);
         a.appendChild(cellText);
         p.appendChild(a);
@@ -936,6 +932,16 @@ function printTableQR(dataQR, dataIssues, url) {
         cellText = document.createTextNode(dataIssues[i].status);
         cell.appendChild(cellText);
         row.appendChild(cell);
+
+         cell = document.createElement("td");
+         var img = document.createElement('img');
+         img.setAttribute("src",atlassianBaseUrl + dataIssues[i].priorityIconUrl);
+         img.setAttribute("height","16");
+         img.setAttribute("width","16");
+         img.setAttribute("border","0");
+         img.setAttribute("align","absmiddle");
+         cell.appendChild(img);
+         row.appendChild(cell);
 
         //row added to end of table body
         tblBody.appendChild(row);
