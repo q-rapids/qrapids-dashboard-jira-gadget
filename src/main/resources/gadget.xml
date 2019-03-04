@@ -121,7 +121,7 @@
 
                     var dataQR  = [];
 
-                    var viewItemText = ["Graphical","Table","Radar","Historical"];
+                    var viewItemText = ["Graphical","Table","Current","Historical"];
                     var currentProject;
 
                     var from = '2015-01-01';
@@ -175,12 +175,12 @@
                                 imgLi.setAttribute("src","__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/table.png");
                                 imgLi.setAttribute("alt","table data");
                             }
-                            else if (viewItemText[i] == "Radar") {
-                                imgLi.setAttribute("src","__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/radar.png");
-                                imgLi.setAttribute("alt","radar data");
+                            else if (viewItemText[i] == "Current") {
+                                imgLi.setAttribute("src","__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/current.png");
+                                imgLi.setAttribute("alt","current data");
                             }
                             else if (viewItemText[i] == "Historical") {
-                                imgLi.setAttribute("src","__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/histo.png");
+                                imgLi.setAttribute("src","__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/historical.png");
                                 imgLi.setAttribute("alt","historical data");
                             }
 
