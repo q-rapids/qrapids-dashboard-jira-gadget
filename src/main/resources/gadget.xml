@@ -45,10 +45,9 @@
 
     El contenedor maneja la generación de la IU de configuración, guarda la configuración y proporciona una API para acceder a la configuración en JavaScript.
     -->
-    <UserPref name="show_date" display_name="Show Dates?" datatype="bool" default_value="true"/>
-    <UserPref name="show_summ" display_name="Show Summaries?" datatype="bool" default_value="true"/>
-    <UserPref name="num_entries" display_name="Number of Entries:" default_value="5"/>
-    <UserPref name="selectedTab" datatype="hidden"/>
+
+    <UserPref name="isConfigured" datatype="hidden" default_value="false"/>
+    <UserPref name="selectProjectUserPref" datatype="hidden" />
 
 
     <!--
@@ -107,6 +106,9 @@
 
             <script type="text/javascript">
                 (function() {
+
+                    console.clear();
+
                     var dataCurrentSI = [];
                     var dataHistoricalSI  = [];
 
@@ -126,6 +128,8 @@
 
                     var from = '2015-01-01';
                     var to = getToday();
+
+                    //var prefs = new gadgets.Prefs();
 
                     function buildDivView(currentProject) {
 
@@ -308,7 +312,7 @@
 
                                var listProjects = [];
 
-                               args.projectData.forEach(function(item) {
+                               args.projectSelected.forEach(function(item) {
                                     var currentItem = {label: item, value: item};
                                     listProjects.push(currentItem);
                                });
@@ -343,7 +347,7 @@
                            },
                            args: [
                                 {
-                                    key: "projectData",
+                                    key: "projectSelected",
                                     ajaxOptions: function() {
                                         return {
                                             url: "/rest/qrapids-gadget/1.0/Projects/AssessedProjects.json"
@@ -360,13 +364,12 @@
 
                                 console.log(" \\\\\\\\\\\\\\ gadget-view ///////////// ");
                                 console.log(args);
-
                                 var gadget = this;
-
                                 var projectSelected = gadget.getPref("selectProjectUserPref");
                                 if ($('#id_tab_project').length == 0) {
                                     currentProject = projectSelected;
                                     buildDivView(currentProject);
+                                    gadget.savePref("selectProjectUserPref",currentProject);
                                 }
                                 else {
                                     if (currentProject != projectSelected) {
@@ -375,7 +378,8 @@
                                         $("#id_Table").removeClass('active');
                                         $("#id_Historical").removeClass('active');
                                         $('#id_Graphical').addClass('active');
-                                        $('#id_Radar').addClass('active');
+                                        $('#id_Current').addClass('active');
+                                        gadget.savePref("selectProjectUserPref",currentProject);
                                     }
                                 }
 
@@ -406,9 +410,9 @@
                                     $(".tab-nav").removeClass('active');
                                     $('#id_tab_si').addClass('active');
 
-                                    if ($('#id_Graphical').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentChartSI(dataCurrentSI);
+                                    if ($('#id_Graphical').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentChartSI(dataCurrentSI);
                                     else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartSI(dataHistoricalSI);
-                                    else if ($('#id_Table').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentTableSI(dataCurrentSI);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentTableSI(dataCurrentSI);
                                     else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableSI(dataHistoricalSI);
                                 });
 
@@ -416,9 +420,9 @@
                                     $(".tab-nav").removeClass('active');
                                     $('#id_tab_dsi').addClass('active');
 
-                                    if ($('#id_Graphical').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
+                                    if ($('#id_Graphical').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
                                     else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI);
-                                    else if ($('#id_Table').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
                                     else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI);
                                 });
 
@@ -426,9 +430,9 @@
                                     $(".tab-nav").removeClass('active');
                                     $('#id_tab_qf').addClass('active');
 
-                                    if ($('#id_Graphical').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentChartQF(dataCurrentQF);
+                                    if ($('#id_Graphical').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentChartQF(dataCurrentQF);
                                     else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartQF(dataHistoricalQF);
-                                    else if ($('#id_Table').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentTableQF(dataCurrentQF);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentTableQF(dataCurrentQF);
                                     else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableQF(dataHistoricalQF);
                                 });
 
@@ -436,9 +440,9 @@
                                     $(".tab-nav").removeClass('active');
                                     $('#id_tab_m').addClass('active');
 
-                                    if ($('#id_Graphical').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentChartM(dataCurrentM);
+                                    if ($('#id_Graphical').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentChartM(dataCurrentM);
                                     else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartM(dataHistoricalM);
-                                    else if ($('#id_Table').hasClass('active') && $('#id_Radar').hasClass('active')) printCurrentTableM(dataCurrentM);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentTableM(dataCurrentM);
                                     else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableM(dataHistoricalM);
                                 });
 
@@ -475,8 +479,8 @@
                                     $('#id_Graphical').addClass('active');
 
                                     // -> R
-                                    if ($('#id_Radar').hasClass('active')) {
-                                        console.log(" ________________________ G -> R ________________________ ");
+                                    if ($('#id_Current').hasClass('active')) {
+                                        console.log(" ________________________ G -> C ________________________ ");
                                         if ($('#id_tab_si').hasClass('active')) printCurrentChartSI(dataCurrentSI);
                                         else if ($('#id_tab_dsi').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
                                         else if ($('#id_tab_qf').hasClass('active')) printCurrentChartQF(dataCurrentQF);
@@ -498,8 +502,8 @@
                                     $('#id_Table').addClass('active');
 
                                     // -> R
-                                    if ($('#id_Radar').hasClass('active')) {
-                                        console.log(" ________________________ T -> R ________________________ ");
+                                    if ($('#id_Current').hasClass('active')) {
+                                        console.log(" ________________________ T -> C ________________________ ");
                                         if ($('#id_tab_si').hasClass('active')) printCurrentTableSI(dataCurrentSI);
                                         else if ($('#id_tab_dsi').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
                                         else if ($('#id_tab_qf').hasClass('active')) printCurrentTableQF(dataCurrentQF);
@@ -517,13 +521,13 @@
                                 });
 
                                 // R
-                                $('#id_Radar').on('click', function(){
+                                $('#id_Current').on('click', function(){
                                     $("#id_Historical").removeClass('active');
-                                    $('#id_Radar').addClass('active');
+                                    $('#id_Current').addClass('active');
 
                                     // G
                                     if ($('#id_Graphical').hasClass('active')) {
-                                        console.log(" ________________________ G <- R ________________________ ");
+                                        console.log(" ________________________ G <- C ________________________ ");
                                         if ($('#id_tab_si').hasClass('active')) printCurrentChartSI(dataCurrentSI);
                                         else if ($('#id_tab_dsi').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
                                         else if ($('#id_tab_qf').hasClass('active')) printCurrentChartQF(dataCurrentQF);
@@ -532,7 +536,7 @@
 
                                     // T
                                     else {
-                                        console.log(" ________________________ T <- R ________________________ ");
+                                        console.log(" ________________________ T <- C ________________________ ");
                                         if ($('#id_tab_si').hasClass('active')) printCurrentTableSI(dataCurrentSI);
                                         else if ($('#id_tab_dsi').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
                                         else if ($('#id_tab_qf').hasClass('active')) printCurrentTableQF(dataCurrentQF);
@@ -542,7 +546,7 @@
 
                                 // H
                                 $('#id_Historical').on('click', function(){
-                                    $("#id_Radar").removeClass('active');
+                                    $("#id_Current").removeClass('active');
                                     $('#id_Historical').addClass('active');
 
                                     // G
