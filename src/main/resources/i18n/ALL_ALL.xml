@@ -8,4 +8,10 @@
     <msg name="gadget.common.save">Save</msg>
     <msg name="gadget.common.cancel">Cancel</msg>
 
+    <msg name="gadget.common.display.text.label">Dashboard URL: </msg>
+    <msg name="gadget.common.display.text.description">Base URL of Dashboard API calls, eg. http://gessi3.cs.upc.edu/QRapids-Dashboard.</msg>
+
+    <msg name="gadget.common.cumulative.label">Project: </msg>
+    <msg name="gadget.common.cumulative.description">Select project</msg>
+
 </messagebundle>

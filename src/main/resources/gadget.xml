@@ -46,8 +46,8 @@
     El contenedor maneja la generación de la IU de configuración, guarda la configuración y proporciona una API para acceder a la configuración en JavaScript.
     -->
 
-    <UserPref name="isConfigured" datatype="hidden" default_value="false"/>
-    <UserPref name="urlDashboardApiCallsPref" datatype="hidden" />
+    <UserPref name="isConfigured" datatype="hidden" default_value="false" />
+    <UserPref name="urlDashboardApiCallsPref" datatype="hidden"/>
     <UserPref name="selectProjectUserPref" datatype="hidden" />
 
 
@@ -92,6 +92,11 @@
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
             <script src="https://d3js.org/d3.v5.js"></script>
+
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <script src="https://unpkg.com/gijgo@1.9.11/js/gijgo.min.js" type="text/javascript"></script>
+            <link href="https://unpkg.com/gijgo@1.9.11/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
             <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
             <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
@@ -303,6 +308,20 @@
 
                         divView.item(0).append(div_TopNav);
                         divView.item(0).append(div_TabContent);
+
+
+                        $(document).on('click', '#id_spanFrom', function(){
+                            console.log("id_spanFrom");
+                            var config = getConfig();
+                            console.log("getConfig: " + config);
+                            $(document).find('#datepickerFrom').datepicker(config);
+                            alert("hey");
+                        });
+
+                        $(document).on('click', '#id_spanTo', function(){
+                            alert("id_spanTo");
+                        });
+
                     }
 
                     function getAllData(enc) {
@@ -315,7 +334,6 @@
                                dataCurrentSI = data;
                             }
                         });
-                        console.log("-------> dataCurrentSI: " + dataCurrentSI);
                     }
 
                     //  AJS (Atlassian JavaScipt)
@@ -336,6 +354,8 @@
                                console.log(" \\\\\\\\\\\\\\ gadget-config ///////////// ");
                                console.log(args);
 
+                               //document.getElementById('urlDashboardApiCallsPref').innerHTML += "<span class='aui-icon icon-required'> required</span>";
+
 
                                return {
                                     action: "/rest/gadget/1.0/currentUser",
@@ -349,15 +369,15 @@
                                     fields: [
                                         {
                                             userpref: "urlDashboardApiCallsPref",
-                                            label: "Dashboard URL: ",
-                                            description: "Base URL of Dashboard API calls, eg. http://gessi3.cs.upc.edu/QRapids-Dashboard",
-                                            type: "text",
+                                            label: gadget.getMsg("gadget.common.display.text.label"),
+                                            description: gadget.getMsg("gadget.common.display.text.description"),
+                                            type: "textArea",
                                             value: gadget.getPref("urlDashboardApiCallsPref")
                                         },
                                         {
                                             userpref: "selectProjectUserPref",
-                                            label: "Project:",
-                                            description: "Select project",
+                                            label: gadget.getMsg("gadget.common.cumulative.label"),
+                                            description: gadget.getMsg("gadget.common.cumulative.description"),
                                             type: "select",
                                             selected: gadget.getPref("selectProjectUserPref"),
                                             options: listProjects
@@ -396,10 +416,10 @@
                                 var enc = window.btoa(urlDashboardApi);
                                 var dec = window.atob(enc);
 
-                                console.log("projectSelected: " + projectSelected);
-                                console.log("urlDashboardApi: " + urlDashboardApi);
-                                console.log("enc: " + enc);
-                                console.log("dec: " + dec);
+                                //console.log("projectSelected: " + projectSelected);
+                                //console.log("urlDashboardApi: " + urlDashboardApi);
+                                //console.log("enc: " + enc);
+                                //console.log("dec: " + dec);
                                 getAllData(enc)
 
 
@@ -446,6 +466,7 @@
                                 printCurrentChartSI(dataCurrentSI);
 
                                 // Tabs
+
                                 $('#id_tab_si').on('click', function(){
                                     $(".tab-nav").removeClass('active');
                                     $('#id_tab_si').addClass('active');
@@ -598,6 +619,10 @@
                                         else if ($('#id_tab_qf').hasClass('active')) printHistoricalTableQF(dataHistoricalQF);
                                         else if ($('#id_tab_m').hasClass('active')) printHistoricalTableM(dataHistoricalM);
                                     }
+                                });
+
+                                $(document).on('click', '#id_applyDates', function(){
+                                    alert("id_applyDates");
                                 });
                             },
                             args: [/*

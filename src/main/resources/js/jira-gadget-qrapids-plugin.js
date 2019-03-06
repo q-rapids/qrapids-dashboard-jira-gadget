@@ -1,3 +1,6 @@
+var from = '2015-01-01';
+var to = getToday();
+
 // SI
 function printCurrentChartSI(dataSI) {
 
@@ -971,7 +974,7 @@ function addDatePickerDiv(idDIV){
     var body = document.getElementById(idDIV);
 
     var divDate = document.createElement('div');
-    divDate.setAttribute("class","pull-right date-picker-right-position center");
+    divDate.setAttribute("class","pull-right");
 
     var formInline = document.createElement('form');
     formInline.setAttribute("class", "form-inline well");
@@ -995,15 +998,19 @@ function addDatePickerDiv(idDIV){
     var inputFrom = document.createElement('input');
     inputFrom.setAttribute("class","form-control");
     inputFrom.setAttribute("id","datepickerFrom");
-    inputFrom.setAttribute("width","250");
+    inputFrom.setAttribute("name","dateFrom");
+    inputFrom.setAttribute("value",from);
     inputFrom.setAttribute("data-type","datepicker");
     inputFrom.setAttribute("data-datepicker","true");
     inputFrom.setAttribute("role","input");
-    inputFrom.setAttribute("style","font-size: 12px; z-index: auto");
+    inputFrom.setAttribute("disabled","disabled");
+    inputFrom.setAttribute("style","font-size: 12px; z-index: auto; background: white");
     // SPAN
     var spanFrom = document.createElement('span');
+    spanFrom.setAttribute("id","id_spanFrom");
     spanFrom.setAttribute("class","input-group-addon");
     spanFrom.setAttribute("role","right-icon");
+    spanFrom.setAttribute("style","cursor: pointer; width: auto");
     // I
     var iFrom = document.createElement('i');
     iFrom.setAttribute("class", "fa fa-calendar");
@@ -1036,15 +1043,19 @@ function addDatePickerDiv(idDIV){
     var inputTo = document.createElement('input');
     inputTo.setAttribute("class","form-control");
     inputTo.setAttribute("id","datepickerTo");
-    inputTo.setAttribute("width","250");
+    inputTo.setAttribute("name","dateTo");
+    inputTo.setAttribute("value",to);
     inputTo.setAttribute("data-type","datepicker");
     inputTo.setAttribute("data-datepicker","true");
     inputTo.setAttribute("role","input");
-    inputTo.setAttribute("style","font-size: 12px; z-index: auto");
+    inputTo.setAttribute("disabled","disabled");
+    inputTo.setAttribute("style","font-size: 12px; z-index: auto; background: white");
     // SPAN
     var spanTo = document.createElement('span');
+    spanTo.setAttribute("id","id_spanTo");
     spanTo.setAttribute("class","input-group-addon");
     spanTo.setAttribute("role","right-icon");
+    spanTo.setAttribute("style","cursor: pointer; width: auto");
     // I
     var iTo = document.createElement('i');
     iTo.setAttribute("class", "fa fa-calendar");
@@ -1062,6 +1073,7 @@ function addDatePickerDiv(idDIV){
     var applyButton = document.createElement('button');
     applyButton.setAttribute("type","button");
     applyButton.setAttribute("class","btn btn-default");
+    applyButton.setAttribute("id","id_applyDates");
     applyButton.setAttribute("ng-click","");
     applyButton.setAttribute("ng-init","");
     applyButton.setAttribute("style","font-size: 12px");
