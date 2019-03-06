@@ -1,6 +1,12 @@
 package com.atlassian.plugins.qrapids.rest.services.Strategic_Indicators;
 
+import com.atlassian.jira.component.ComponentAccessor;
+import com.atlassian.jira.security.JiraAuthenticationContext;
+import com.atlassian.jira.user.preferences.UserPreferencesManager;
+import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
+
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -9,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Base64;
 
 /**
  * A resource of message.
@@ -33,17 +40,14 @@ public class StrategicIndicators {
         return response.toString();
     }
 
-
-    @Path("/CurrentEvaluation")
+    @Path("/CurrentEvaluation/url={url}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getStrategicIndicatorsCurrentEvaluation(@PathParam("from") String urlPath) throws IOException {
-
-        System.out.println(" urlPath =================> " + urlPath);
-
-
-        String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/StrategicIndicators/CurrentEvaluation";
+    public Response getStrategicIndicatorsCurrentEvaluation(@PathParam("url") String encodedURL) throws IOException {
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedURL);
+        String decodedURL = new String(decodedBytes);
+        String url = decodedURL + "/SICurrent";//"/api/StrategicIndicators/CurrentEvaluation";
         return Response.ok(getResponseResult(url)).build();
     }
 

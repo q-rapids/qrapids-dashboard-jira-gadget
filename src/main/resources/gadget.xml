@@ -47,6 +47,7 @@
     -->
 
     <UserPref name="isConfigured" datatype="hidden" default_value="false"/>
+    <UserPref name="urlDashboardApiCallsPref" datatype="hidden" />
     <UserPref name="selectProjectUserPref" datatype="hidden" />
 
 
@@ -129,7 +130,8 @@
                     var from = '2015-01-01';
                     var to = getToday();
 
-                    //var prefs = new gadgets.Prefs();
+                    var uri = "http://gessi3.cs.upc.edu/QRapids-Dashboard";
+                    var urlApiCalls = encodeURIComponent(uri);
 
                     function buildDivView(currentProject) {
 
@@ -303,6 +305,20 @@
                         divView.item(0).append(div_TabContent);
                     }
 
+                    function getAllData(enc) {
+                        AJS.$.ajax({
+                            url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation/url="+enc+".json",
+                            type: 'get',
+                            dataType: 'json',
+                            async: false,
+                            success: function(data){
+                               dataCurrentSI = data;
+                            }
+                        });
+                        console.log("-------> dataCurrentSI: " + dataCurrentSI);
+                    }
+
+                    //  AJS (Atlassian JavaScipt)
                     var gadgetQRAPID = AJS.Gadget({
                         baseUrl: "__ATLASSIAN_BASE_URL__",
                         useOauth: "/rest/gadget/1.0/currentUser",
@@ -331,6 +347,13 @@
                                         }
                                     }(),
                                     fields: [
+                                        {
+                                            userpref: "urlDashboardApiCallsPref",
+                                            label: "Dashboard URL: ",
+                                            description: "Base URL of Dashboard API calls, eg. http://gessi3.cs.upc.edu/QRapids-Dashboard",
+                                            type: "text",
+                                            value: gadget.getPref("urlDashboardApiCallsPref")
+                                        },
                                         {
                                             userpref: "selectProjectUserPref",
                                             label: "Project:",
@@ -364,8 +387,25 @@
 
                                 console.log(" \\\\\\\\\\\\\\ gadget-view ///////////// ");
                                 console.log(args);
+
+
+
                                 var gadget = this;
                                 var projectSelected = gadget.getPref("selectProjectUserPref");
+                                var urlDashboardApi = gadget.getPref("urlDashboardApiCallsPref");
+                                var enc = window.btoa(urlDashboardApi);
+                                var dec = window.atob(enc);
+
+                                console.log("projectSelected: " + projectSelected);
+                                console.log("urlDashboardApi: " + urlDashboardApi);
+                                console.log("enc: " + enc);
+                                console.log("dec: " + dec);
+                                getAllData(enc)
+
+
+                                //console.log("uri: " + uri);
+                                //console.log("urlApiCalls: " + urlApiCalls);
+
                                 if ($('#id_tab_project').length == 0) {
                                     currentProject = projectSelected;
                                     buildDivView(currentProject);
@@ -383,7 +423,7 @@
                                     }
                                 }
 
-                                dataCurrentSI = args.dtoCSI;
+                                //dataCurrentSI = args.dtoCSI;
                                 dataHistoricalSI  = args.dtoHSI;
 
                                 dataCurrentDSI  = args.dtoCDSI;
@@ -450,25 +490,17 @@
                                     $(".tab-nav").removeClass('active');
                                     $('#id_tab_qr').addClass('active');
 
-                                    var qr_currentProject = AJS.Gadget({
-                                        baseUrl: "__ATLASSIAN_BASE_URL__",
-                                        useOauth: "/rest/gadget/1.0/currentUser",
-                                        view: {
-                                            template: function(args) {
-                                                console.log(" \\\\\\\\\\\\\\ gadget-view ///////////// ");
-                                                console.log(args);
-                                                printTableQR(dataQR, args.dtoIssues, "__ATLASSIAN_BASE_URL__");
-                                            },
-                                            args: [{
-                                                key: "dtoIssues",
-                                                ajaxOptions: function() {
-                                                    return {
-                                                        url: "/rest/qrapids-gadget/1.0/Issues/QP.json"
-                                                    };
-                                                }
-                                            }]
+                                    var dtoIssues = [];
+                                    AJS.$.ajax({
+                                        url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/Issues/QP.json",
+                                        type: 'get',
+                                        dataType: 'json',
+                                        async: false,
+                                        success: function(data){
+                                           dtoIssues = data;
                                         }
                                     });
+                                    printTableQR(dataQR, dtoIssues, "__ATLASSIAN_BASE_URL__");
                                 });
 
                                 // Menus Items Dropdown
@@ -568,7 +600,7 @@
                                     }
                                 });
                             },
-                            args: [
+                            args: [/*
                                 {
                                     key: "dtoCSI",
                                     ajaxOptions: function() {
@@ -576,7 +608,7 @@
                                             url: "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation.json"
                                         };
                                     }
-                                },
+                                },*/
                                 {
                                     key: "dtoCDSI",
                                     ajaxOptions: function() {

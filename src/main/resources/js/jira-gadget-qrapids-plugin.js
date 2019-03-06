@@ -910,38 +910,49 @@ function printTableQR(dataQR, dataIssues, atlassianBaseUrl) {
         cell.appendChild(cellText);
         row.appendChild(cell);
 
-        cell = document.createElement("td");
-        var p = document.createElement('p');
-        var a = document.createElement('a');
-        a.setAttribute("class","issue-link");
-        a.setAttribute("data-issue-key",dataIssues[i].key);
-        a.setAttribute("href","/jira/browse/" + dataIssues[i].key);
-        a.setAttribute("target","_blank");
-        cellText = document.createTextNode(dataIssues[i].key);
-        a.appendChild(cellText);
-        p.appendChild(a);
-        cell.appendChild(p);
-        row.appendChild(cell);
+        // Data Issues Information
+        if (i < dataIssues.length) {
+            cell = document.createElement("td");
+            var p = document.createElement('p');
+            var a = document.createElement('a');
+            a.setAttribute("class","issue-link");
+            a.setAttribute("data-issue-key",dataIssues[i].key);
+            a.setAttribute("href","/jira/browse/" + dataIssues[i].key);
+            a.setAttribute("target","_blank");
+            cellText = document.createTextNode(dataIssues[i].key);
+            a.appendChild(cellText);
+            p.appendChild(a);
+            cell.appendChild(p);
+            row.appendChild(cell);
 
-        cell = document.createElement("td");
-        cellText = document.createTextNode(dataIssues[i].summary);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
+            cell = document.createElement("td");
+            cellText = document.createTextNode(dataIssues[i].summary);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
 
-        cell = document.createElement("td");
-        cellText = document.createTextNode(dataIssues[i].status);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
+            cell = document.createElement("td");
+            cellText = document.createTextNode(dataIssues[i].status);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
 
-         cell = document.createElement("td");
-         var img = document.createElement('img');
-         img.setAttribute("src",atlassianBaseUrl + dataIssues[i].priorityIconUrl);
-         img.setAttribute("height","16");
-         img.setAttribute("width","16");
-         img.setAttribute("border","0");
-         img.setAttribute("align","absmiddle");
-         cell.appendChild(img);
-         row.appendChild(cell);
+             cell = document.createElement("td");
+             var img = document.createElement('img');
+             img.setAttribute("src",atlassianBaseUrl + dataIssues[i].priorityIconUrl);
+             img.setAttribute("height","16");
+             img.setAttribute("width","16");
+             img.setAttribute("border","0");
+             img.setAttribute("align","absmiddle");
+             cell.appendChild(img);
+             row.appendChild(cell);
+        }
+        else {
+            for (var j = 0; j < 4; ++j) {
+                cell = document.createElement("td");
+                cellText = document.createTextNode("-");
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+            }
+        }
 
         //row added to end of table body
         tblBody.appendChild(row);
