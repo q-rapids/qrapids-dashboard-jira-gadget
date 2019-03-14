@@ -1,12 +1,8 @@
 package com.atlassian.plugins.qrapids.rest.services.Strategic_Indicators;
 
-import com.atlassian.jira.component.ComponentAccessor;
-import com.atlassian.jira.security.JiraAuthenticationContext;
-import com.atlassian.jira.user.preferences.UserPreferencesManager;
-import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
+import com.atlassian.plugins.qrapids.config.URIRestApi;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -22,6 +18,9 @@ import java.util.Base64;
  */
 @Path("/StrategicIndicators")
 public class StrategicIndicators {
+
+
+    private URIRestApi uriRestApi = URIRestApi.getInstance();
 
     private String getResponseResult(String url) throws IOException {
         URL obj = new URL(url);
@@ -40,23 +39,26 @@ public class StrategicIndicators {
         return response.toString();
     }
 
+    private String getDecodeURI(String encodedURL) {
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedURL);
+        return new String(decodedBytes);
+    }
+
     @Path("/CurrentEvaluation/url={url}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     public Response getStrategicIndicatorsCurrentEvaluation(@PathParam("url") String encodedURL) throws IOException {
-        byte[] decodedBytes = Base64.getDecoder().decode(encodedURL);
-        String decodedURL = new String(decodedBytes);
-        String url = decodedURL + "/SICurrent";//"/api/StrategicIndicators/CurrentEvaluation";
+        String url = getDecodeURI(encodedURL) + uriRestApi.getURISICurrentEvaluation();
         return Response.ok(getResponseResult(url)).build();
     }
 
-    @Path("/HistoricalData/from={from}&to={to}")
+    @Path("/HistoricalData/url={url}/from={from}&to={to}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getStrategicIndicatorsHistoricalData(@PathParam("from") String from, @PathParam("to") String to) throws IOException {
-        String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/StrategicIndicators/HistoricalData?from=" + from + "&to=" + to ;
+    public Response getStrategicIndicatorsHistoricalData(@PathParam("url") String encodedURL, @PathParam("from") String from, @PathParam("to") String to) throws IOException {
+        String url = getDecodeURI(encodedURL) + uriRestApi.getURISIHistoricalData() + "?from=" + from + "&to=" + to ;
         return Response.ok(getResponseResult(url)).build();
     }
 }

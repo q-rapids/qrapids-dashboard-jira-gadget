@@ -1,5 +1,6 @@
 var from = '2015-01-01';
 var to = getToday();
+var config = getConfig();
 
 // SI
 function printCurrentChartSI(dataSI) {
@@ -17,39 +18,30 @@ function printHistoricalChartSI(dataHSI){
 
     addDatePickerDiv("si");
 
-    var lowerThres = [];
-    var upperThres = [];
-    var target = [];
     var text = [];
     var dades = [];
     var ids = [];
     i = 0;
     var line = [];
     if (dataHSI[i]) {
-        last = dataHSI[i].strategicIndicatorName;
-        text.push(dataHSI[i].strategicIndicatorName);
-        lowerThres.push(dataHSI[i].kpilowerThreshold);
-        upperThres.push(dataHSI[i].kpiupperThreshold);
-        target.push(dataHSI[i].kpitarget);
-        ids.push(dataHSI[i].strategicIndicator_ID);
+        last = dataHSI[i].id;
+        text.push(dataHSI[i].name);
+        ids.push(dataHSI[i].id);
     }
     while (dataHSI[i]) {
         //check if we are still on the same Strategic Indicator
-        if (dataHSI[i].strategicIndicatorName != last) {
+        if (dataHSI[i].id != last) {
             dades.push(line);
             line = [];
-            last = dataHSI[i].strategicIndicatorName;
-            text.push(last);
-            lowerThres.push(dataHSI[i].kpilowerThreshold);
-            upperThres.push(dataHSI[i].kpiupperThreshold);
-            target.push(dataHSI[i].kpitarget);
-            ids.push(dataHSI[i].strategicIndicator_ID);
+            last = dataHSI[i].id;
+            text.push(dataHSI[i].name);
+            ids.push(dataHSI[i].id);
         }
         //push date and value to line vector
-        if (!isNaN(dataHSI[i].evaluationValue)) {
+        if (!isNaN(dataHSI[i].value.first)) {
             line.push({
-                x: dataHSI[i].evaluationDate,
-                y: dataHSI[i].evaluationValue
+                x: dataHSI[i].date.year + "-" + dataHSI[i].date.monthValue + "-" + dataHSI[i].date.dayOfMonth,
+                y: dataHSI[i].value.first
             });
         }
         ++i;
@@ -58,7 +50,7 @@ function printHistoricalChartSI(dataHSI){
     if (dataHSI[i - 1])
         dades.push(line);
 
-    drawLineChart(text, ids, dades, lowerThres, upperThres, target, "si");
+    drawLineChart(text, ids, dades, "si");
 
 }
 
@@ -88,17 +80,12 @@ function printCurrentTableSI(dataSI) {
     rowHead.appendChild(cell);
 
     cell = document.createElement("th");
-    cellText = document.createTextNode("Target Value");
+    cellText = document.createTextNode("Category");
     cell.appendChild(cellText);
     rowHead.appendChild(cell);
 
     cell = document.createElement("th");
-    cellText = document.createTextNode("Lower Threshold");
-    cell.appendChild(cellText);
-    rowHead.appendChild(cell);
-
-    cell = document.createElement("th");
-    cellText = document.createTextNode("Upper Threshold");
+    cellText = document.createTextNode("Description");
     cell.appendChild(cellText);
     rowHead.appendChild(cell);
 
@@ -115,27 +102,22 @@ function printCurrentTableSI(dataSI) {
         row.setAttribute("class","th-name-si");
 
         var cell = document.createElement("td");
-        var cellText = document.createTextNode(dataSI[i].strategicIndicatorName);
+        var cellText = document.createTextNode(dataSI[i].name);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
         cell = document.createElement("td");
-        cellText = document.createTextNode(dataSI[i].evaluationValue.toFixed(2));
+        cellText = document.createTextNode(dataSI[i].value.first.toFixed(2));
         cell.appendChild(cellText);
         row.appendChild(cell);
 
         cell = document.createElement("td");
-        cellText = document.createTextNode(dataSI[i].kpitarget.toFixed(2));
+        cellText = document.createTextNode(dataSI[i].value.second);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
         cell = document.createElement("td");
-        cellText = document.createTextNode(dataSI[i].kpilowerThreshold.toFixed(2));
-        cell.appendChild(cellText);
-        row.appendChild(cell);
-
-        cell = document.createElement("td");
-        cellText = document.createTextNode(dataSI[i].kpiupperThreshold.toFixed(2));
+        cellText = document.createTextNode(dataSI[i].description);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
@@ -194,17 +176,17 @@ function printHistoricalTableSI(dataHSI) {
         row.setAttribute("class","th-name-si");
 
         var cell = document.createElement("td");
-        var cellText = document.createTextNode(dataHSI[i].evaluationDate);
+        var cellText = document.createTextNode(dataHSI[i].date.year + "-" + dataHSI[i].date.monthValue + "-" + dataHSI[i].date.dayOfMonth);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
         cell = document.createElement("td");
-        cellText = document.createTextNode(dataHSI[i].strategicIndicatorName);
+        cellText = document.createTextNode(dataHSI[i].name);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
         cell = document.createElement("td");
-        cellText = document.createTextNode(dataHSI[i].evaluationValue.toFixed(2));
+        cellText = document.createTextNode(dataHSI[i].value.first.toFixed(2));
         cell.appendChild(cellText);
         row.appendChild(cell);
 
@@ -1089,3 +1071,17 @@ function addDatePickerDiv(idDIV){
 
     body.appendChild(divDate);
 }
+
+
+$('#id_spanFrom').on('click', function(){
+    console.log("id_spanFrom");
+    console.log("getConfig: " + config);
+    $('#datepickerFrom').datepicker(config);
+    alert("hey");
+});
+
+$('#id_spanTo').on('click', function(){
+    console.log("id_spanTo");
+    console.log("getConfig: " + config);
+    $('#datepickerTo').datepicker(config);
+});

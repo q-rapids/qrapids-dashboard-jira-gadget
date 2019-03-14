@@ -1,6 +1,6 @@
 var timeFormat = 'MMM-DD';
 
-function drawLineChart(text, ids, dades, lowerThres, upperThres, target, idDiv) {
+function drawLineChart(text, ids, dades, idDiv) {
 
     console.log("**********************lineChart.js:drawLineChart()***************************");
 

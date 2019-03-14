@@ -135,8 +135,7 @@
                     var from = '2015-01-01';
                     var to = getToday();
 
-                    var uri = "http://gessi3.cs.upc.edu/QRapids-Dashboard";
-                    var urlApiCalls = encodeURIComponent(uri);
+                    var encodedURL;
 
                     function buildDivView(currentProject) {
 
@@ -309,29 +308,29 @@
                         divView.item(0).append(div_TopNav);
                         divView.item(0).append(div_TabContent);
 
-
-                        $(document).on('click', '#id_spanFrom', function(){
-                            console.log("id_spanFrom");
-                            var config = getConfig();
-                            console.log("getConfig: " + config);
-                            $(document).find('#datepickerFrom').datepicker(config);
-                            alert("hey");
-                        });
-
-                        $(document).on('click', '#id_spanTo', function(){
-                            alert("id_spanTo");
-                        });
-
                     }
 
                     function getAllData(enc) {
+                        console.log("getAllData: " + enc);
+                        // SI Current Evaluation
                         AJS.$.ajax({
-                            url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation/url="+enc+".json",
+                            url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation/url="+ enc +".json",
                             type: 'get',
                             dataType: 'json',
                             async: false,
                             success: function(data){
                                dataCurrentSI = data;
+                            }
+                        });
+
+                        // SI Historical Data
+                        AJS.$.ajax({
+                            url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/StrategicIndicators/HistoricalData/url="+ enc +"/from="+ from +"&to="+ to +".json",
+                            type: 'get',
+                            dataType: 'json',
+                            async: false,
+                            success: function(data){
+                               dataHistoricalSI = data;
                             }
                         });
                     }
@@ -353,8 +352,7 @@
 
                                console.log(" \\\\\\\\\\\\\\ gadget-config ///////////// ");
                                console.log(args);
-
-                               //document.getElementById('urlDashboardApiCallsPref').innerHTML += "<span class='aui-icon icon-required'> required</span>";
+                               encodedURL = gadget.getPref("selectProjectUserPref");
 
 
                                return {
@@ -407,7 +405,9 @@
 
                                 console.log(" \\\\\\\\\\\\\\ gadget-view ///////////// ");
                                 console.log(args);
-
+                                console.log(encodedURL);
+                                console.log(dataCurrentSI);
+                                console.log(dataHistoricalSI);
 
 
                                 var gadget = this;
@@ -420,11 +420,11 @@
                                 //console.log("urlDashboardApi: " + urlDashboardApi);
                                 //console.log("enc: " + enc);
                                 //console.log("dec: " + dec);
+
                                 getAllData(enc)
+                                console.log(dataCurrentSI);
+                                console.log(dataHistoricalSI);
 
-
-                                //console.log("uri: " + uri);
-                                //console.log("urlApiCalls: " + urlApiCalls);
 
                                 if ($('#id_tab_project').length == 0) {
                                     currentProject = projectSelected;
@@ -444,7 +444,7 @@
                                 }
 
                                 //dataCurrentSI = args.dtoCSI;
-                                dataHistoricalSI  = args.dtoHSI;
+                                //dataHistoricalSI  = args.dtoHSI;
 
                                 dataCurrentDSI  = args.dtoCDSI;
                                 dataHistoricalDSI  = args.dtoHDSI;
@@ -630,7 +630,7 @@
                                     key: "dtoCSI",
                                     ajaxOptions: function() {
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation.json"
+                                            url: "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation/url="+ window.btoa(encodedURL) +".json"
                                         };
                                     }
                                 },*/
@@ -682,14 +682,14 @@
                                         };
                                     }
                                 },
-                                {
+                                /*{
                                     key: "dtoHSI",
                                     ajaxOptions: function() {
                                         return {
                                             url: "/rest/qrapids-gadget/1.0/StrategicIndicators/HistoricalData/from="+ from +"&to="+ to +".json"
                                         };
                                     }
-                                },
+                                },*/
                                 {
                                     key: "dtoQR",
                                     ajaxOptions: function() {
