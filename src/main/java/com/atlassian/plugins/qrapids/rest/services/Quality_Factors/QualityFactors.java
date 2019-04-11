@@ -1,5 +1,6 @@
 package com.atlassian.plugins.qrapids.rest.services.Quality_Factors;
 
+import com.atlassian.plugins.qrapids.config.URIRestApi;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 
 import javax.ws.rs.*;
@@ -10,9 +11,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Base64;
 
 @Path("/QualityFactors")
 public class QualityFactors {
+
+    private URIRestApi uriRestApi = URIRestApi.getInstance();
 
     private String getResponseResult(String url) throws IOException {
         URL obj = new URL(url);
@@ -31,21 +35,26 @@ public class QualityFactors {
         return response.toString();
     }
 
-    @Path("/CurrentEvaluation")
+    private String getDecodeURI(String encodedURL) {
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedURL);
+        return new String(decodedBytes);
+    }
+
+    @Path("/CurrentEvaluation/url={url}/prj={prj}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getQualityFactorsCurrentEvaluation() throws IOException {
-        String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/QualityFactors/CurrentEvaluation";
+    public Response getQualityFactorsCurrentEvaluation(@PathParam("url") String encodedURL, @PathParam("prj") String prj) throws IOException {
+        String url =  getDecodeURI(encodedURL) + uriRestApi.getURIQFCurrentEvaluation() + "?prj=" + prj ;
         return Response.ok(getResponseResult(url)).build();
     }
 
-    @Path("/HistoricalData/from={from}&to={to}")
+    @Path("/HistoricalData/url={url}/prj={prj}/from={from}&to={to}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getQualityFactorsHistoricalData(@PathParam("from") String from, @PathParam("to") String to) throws IOException {
-        String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/QualityFactors/HistoricalData?from=" + from + "&to=" + to;
+    public Response getQualityFactorsHistoricalData(@PathParam("url") String encodedURL, @PathParam("prj") String prj, @PathParam("from") String from, @PathParam("to") String to) throws IOException {
+        String url = getDecodeURI(encodedURL) + uriRestApi.getURIQFHistoricalData() + "?prj=" + prj + "&from=" + from + "&to=" + to ;
         return Response.ok(getResponseResult(url)).build();
     }
 }

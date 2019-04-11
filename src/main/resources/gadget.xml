@@ -5,11 +5,12 @@
     <!-- screenshot: direccion de la imagen que un container o directory pueden usar para ilustrar el gadget -->
     <!-- thumbnail: direccion de la imagen en miniatura (120x60 px) que un container o directory pueden usar para ilustrar el gadget-->
 
+    <!-- title_url="http://groups.google.com/group/Google-Gadgets-API" -->
     <ModulePrefs title="__MSG_gadget.title__"
                  directory_title="__MSG_gadget.title__"
                  description="__MSG_gadget.description__"
-                 author="Surname Name"
-                 author_email="author@email.com"
+                 author="Mora Macías Germán Eduardo"
+                 author_email="german.eduardo.mora@est.fib.upc.edu"
                  screenshot="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/qrapids_logo.png"
                  thumbnail="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/images/qrapids_logo.png">
 
@@ -130,16 +131,24 @@
                     var dataQR  = [];
 
                     var viewItemText = ["Graphical","Table","Current","Historical"];
-                    var currentProject;
+                    var currentProject = "default";
 
                     var from = '2015-01-01';
                     var to = getToday();
 
-                    var encodedURL;
+                    var listProjects = [];
 
-                    function buildDivView(currentProject) {
+                    function buildDivView(prj) {
 
                         console.log("####################### buildDivView #######################");
+                        console.log(prj);
+                        var nav = document.getElementById("id_TopNav");
+                        var content = document.getElementById("id_TabContent");
+
+                        if (nav != null && content != null) {
+                            nav.remove();
+                            content.remove();
+                        }
 
                         var divView = document.getElementsByClassName('view');
 
@@ -266,8 +275,8 @@
                         tab = document.createElement('span');
                         tab.setAttribute("id","id_tab_project");
                         tab.setAttribute("class","current-project-style navbar-text");
-                        console.log(currentProject);
-                        tab.append(currentProject);
+                        console.log(prj);
+                        tab.append(prj);
                         div_TopNav.appendChild(tab);
 
                         //TabContent
@@ -310,31 +319,6 @@
 
                     }
 
-                    function getAllData(enc) {
-                        console.log("getAllData: " + enc);
-                        // SI Current Evaluation
-                        AJS.$.ajax({
-                            url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation/url="+ enc +".json",
-                            type: 'get',
-                            dataType: 'json',
-                            async: false,
-                            success: function(data){
-                               dataCurrentSI = data;
-                            }
-                        });
-
-                        // SI Historical Data
-                        AJS.$.ajax({
-                            url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/StrategicIndicators/HistoricalData/url="+ enc +"/from="+ from +"&to="+ to +".json",
-                            type: 'get',
-                            dataType: 'json',
-                            async: false,
-                            success: function(data){
-                               dataHistoricalSI = data;
-                            }
-                        });
-                    }
-
                     //  AJS (Atlassian JavaScipt)
                     var gadgetQRAPID = AJS.Gadget({
                         baseUrl: "__ATLASSIAN_BASE_URL__",
@@ -342,24 +326,13 @@
                         config: {
                            descriptor: function(args) {
                                var gadget = this;
-
-                               var listProjects = [];
-
-                               args.projectSelected.forEach(function(item) {
-                                    var currentItem = {label: item, value: item};
-                                    listProjects.push(currentItem);
-                               });
-
                                console.log(" \\\\\\\\\\\\\\ gadget-config ///////////// ");
-                               console.log(args);
-                               encodedURL = gadget.getPref("selectProjectUserPref");
-
 
                                return {
                                     action: "/rest/gadget/1.0/currentUser",
                                     theme : function () {
                                         if (gadgets.window.getViewportDimensions().width < 450) {
-                                            return "gdt top-label";
+                                            return "gdt top-label sol";
                                         } else {
                                            return "gdt";
                                         }
@@ -385,17 +358,7 @@
 
                                    ]
                                };
-                           },
-                           args: [
-                                {
-                                    key: "projectSelected",
-                                    ajaxOptions: function() {
-                                        return {
-                                            url: "/rest/qrapids-gadget/1.0/Projects/AssessedProjects.json"
-                                        };
-                                    }
-                                }
-                           ]
+                           }
                         },
                         view: {
                             enableReload: false,
@@ -403,37 +366,28 @@
                             onResizeAdjustHeight: true,
                             template: function(args) {
 
-                                console.log(" \\\\\\\\\\\\\\ gadget-view ///////////// ");
-                                console.log(args);
-                                console.log(encodedURL);
-                                console.log(dataCurrentSI);
-                                console.log(dataHistoricalSI);
-
+                                var error = document.getElementById("ag-sys-msg");
+                                if (error != null || error != " ")
+                                    error.style.display = null;
 
                                 var gadget = this;
-                                var projectSelected = gadget.getPref("selectProjectUserPref");
-                                var urlDashboardApi = gadget.getPref("urlDashboardApiCallsPref");
-                                var enc = window.btoa(urlDashboardApi);
-                                var dec = window.atob(enc);
+                                console.log(" \\\\\\\\\\\\\\ gadget-view ///////////// ");
+                                console.log(args);
 
-                                //console.log("projectSelected: " + projectSelected);
-                                //console.log("urlDashboardApi: " + urlDashboardApi);
-                                //console.log("enc: " + enc);
-                                //console.log("dec: " + dec);
-
-                                getAllData(enc)
-                                console.log(dataCurrentSI);
-                                console.log(dataHistoricalSI);
-
+                                if (listProjects.length == 0)
+                                    args.projects.forEach(function(item) {
+                                        var currentItem = {label: item, value: item};
+                                        listProjects.push(currentItem);
+                                    });
 
                                 if ($('#id_tab_project').length == 0) {
-                                    currentProject = projectSelected;
-                                    buildDivView(currentProject);
+                                    if (currentProject != gadget.getPref("selectProjectUserPref") && gadget.getPref("selectProjectUserPref") != "")
+                                        currentProject = gadget.getPref("selectProjectUserPref");
                                     gadget.savePref("selectProjectUserPref",currentProject);
                                 }
                                 else {
-                                    if (currentProject != projectSelected) {
-                                        currentProject = projectSelected;
+                                    if (currentProject != gadget.getPref("selectProjectUserPref") && gadget.getPref("selectProjectUserPref") != "") {
+                                        currentProject = gadget.getPref("selectProjectUserPref");
                                         document.getElementById("id_tab_project").innerHTML = currentProject;
                                         $("#id_Table").removeClass('active');
                                         $("#id_Historical").removeClass('active');
@@ -442,9 +396,10 @@
                                         gadget.savePref("selectProjectUserPref",currentProject);
                                     }
                                 }
+                                buildDivView(currentProject);
 
-                                //dataCurrentSI = args.dtoCSI;
-                                //dataHistoricalSI  = args.dtoHSI;
+                                dataCurrentSI = args.dtoCSI;
+                                dataHistoricalSI  = args.dtoHSI;
 
                                 dataCurrentDSI  = args.dtoCDSI;
                                 dataHistoricalDSI  = args.dtoHDSI;
@@ -452,7 +407,7 @@
                                 dataCurrentQF  = args.dtoCQF;
                                 dataHistoricalQF  = args.dtoHQF;
 
-                                dataCurrentM;
+                                dataCurrentM = args.dtoCM;
                                 dataHistoricalM  = args.dtoHM;
 
                                 dataQR = args.dtoQR;
@@ -621,88 +576,117 @@
                                     }
                                 });
 
+                                // New dates
                                 $(document).on('click', '#id_applyDates', function(){
                                     alert("id_applyDates");
                                 });
                             },
-                            args: [/*
+                            args: [
                                 {
                                     key: "dtoCSI",
                                     ajaxOptions: function() {
+                                        var gadget = this;
+                                        var encodedURL = window.btoa(gadget.getPref("urlDashboardApiCallsPref"));
+                                        var prj = gadget.getPref("selectProjectUserPref") != "" ? gadget.getPref("selectProjectUserPref") : currentProject;
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation/url="+ window.btoa(encodedURL) +".json"
+                                            url: "/rest/qrapids-gadget/1.0/StrategicIndicators/CurrentEvaluation/url="+ encodedURL + "/prj=" + prj +".json"
                                         };
                                     }
-                                },*/
+                                },
                                 {
                                     key: "dtoCDSI",
                                     ajaxOptions: function() {
+                                        var gadget = this;
+                                        var encodedURL = window.btoa(gadget.getPref("urlDashboardApiCallsPref"));
+                                        var prj = gadget.getPref("selectProjectUserPref") != "" ? gadget.getPref("selectProjectUserPref") : currentProject;
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/CurrentEvaluation.json"
+                                            url: "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/CurrentEvaluation/url="+ encodedURL + "/prj=" + prj +".json"
                                         };
                                     }
                                 },
                                 {
                                     key: "dtoCQF",
                                     ajaxOptions: function() {
+                                        var gadget = this;
+                                        var encodedURL = window.btoa(gadget.getPref("urlDashboardApiCallsPref"));
+                                        var prj = gadget.getPref("selectProjectUserPref") != "" ? gadget.getPref("selectProjectUserPref") : currentProject;
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/QualityFactors/CurrentEvaluation.json"
+                                            url: "/rest/qrapids-gadget/1.0/QualityFactors/CurrentEvaluation/url="+ encodedURL + "/prj=" + prj +".json"
                                         };
                                     }
                                 },
-                                /*{
+                                {
                                     key: "dtoCM",
                                     ajaxOptions: function() {
+                                        var gadget = this;
+                                        var encodedURL = window.btoa(gadget.getPref("urlDashboardApiCallsPref"));
+                                        var prj = gadget.getPref("selectProjectUserPref") != "" ? gadget.getPref("selectProjectUserPref") : currentProject;
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/Metrics/CurrentEvaluation.json"
-                                        };
-                                    }
-                                },*/
-                                {
-                                    key: "dtoHM",
-                                    ajaxOptions: function() {
-                                        return {
-                                            url: "/rest/qrapids-gadget/1.0/Metrics/HistoricalData/from="+ from +"&to="+ to +".json"
+                                            url: "/rest/qrapids-gadget/1.0/Metrics/CurrentEvaluation/url="+ encodedURL + "/prj=" + prj +".json"
                                         };
                                     }
                                 },
                                 {
-                                    key: "dtoHQF",
+                                    key: "dtoHSI",
                                     ajaxOptions: function() {
+                                        var gadget = this;
+                                        var encodedURL = window.btoa(gadget.getPref("urlDashboardApiCallsPref"));
+                                        var prj = gadget.getPref("selectProjectUserPref") != "" ? gadget.getPref("selectProjectUserPref") : currentProject;
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/QualityFactors/HistoricalData/from="+ from +"&to="+ to +".json"
+                                            url: "/rest/qrapids-gadget/1.0/StrategicIndicators/HistoricalData/url="+ encodedURL + "/prj=" + prj + "/from="+ from +"&to="+ to +".json"
                                         };
                                     }
                                 },
                                 {
                                     key: "dtoHDSI",
                                     ajaxOptions: function() {
+                                        var gadget = this;
+                                        var encodedURL = window.btoa(gadget.getPref("urlDashboardApiCallsPref"));
+                                        var prj = gadget.getPref("selectProjectUserPref") != "" ? gadget.getPref("selectProjectUserPref") : currentProject;
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/HistoricalData/from="+ from +"&to="+ to +".json"
+                                            url: "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/HistoricalData/url="+ encodedURL + "/prj=" + prj + "/from="+ from +"&to="+ to +".json"
                                         };
                                     }
                                 },
-                                /*{
-                                    key: "dtoHSI",
+                                {
+                                    key: "dtoHQF",
                                     ajaxOptions: function() {
+                                        var gadget = this;
+                                        var encodedURL = window.btoa(gadget.getPref("urlDashboardApiCallsPref"));
+                                        var prj = gadget.getPref("selectProjectUserPref") != "" ? gadget.getPref("selectProjectUserPref") : currentProject;
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/StrategicIndicators/HistoricalData/from="+ from +"&to="+ to +".json"
+                                            url: "/rest/qrapids-gadget/1.0/QualityFactors/HistoricalData/url="+ encodedURL + "/prj=" + prj + "/from="+ from +"&to="+ to +".json"
                                         };
                                     }
-                                },*/
+                                },
+                                {
+                                    key: "dtoHM",
+                                    ajaxOptions: function() {
+                                        var gadget = this;
+                                        var encodedURL = window.btoa(gadget.getPref("urlDashboardApiCallsPref"));
+                                        var prj = gadget.getPref("selectProjectUserPref") != "" ? gadget.getPref("selectProjectUserPref") : currentProject;
+                                        return {
+                                            url: "/rest/qrapids-gadget/1.0/Metrics/HistoricalData/url="+ encodedURL + "/prj=" + prj + "/from="+ from +"&to="+ to +".json"
+                                        };
+                                    }
+                                }/*,
                                 {
                                     key: "dtoQR",
                                     ajaxOptions: function() {
+                                        var gadget = this;
+                                        var encodedURL = window.btoa(gadget.getPref("urlDashboardApiCallsPref"));
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/QualityRequirements/Alerts.json"
+                                            url: "/rest/qrapids-gadget/1.0/Alerts/url="+ encodedURL + ".json"
                                         };
                                     }
-                                },
+                                }*/,
                                 {
                                     key: "projects",
                                     ajaxOptions: function() {
+                                        var gadget = this;
+                                        var encodedURL = window.btoa(gadget.getPref("urlDashboardApiCallsPref"));
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/Projects.json"
+                                            url: "/rest/qrapids-gadget/1.0/Projects/AssessedProjects/url="+ encodedURL + ".json"
                                         };
                                     }
                                 }

@@ -1,3 +1,5 @@
+//Todo: Remove from, to and config
+
 var from = '2015-01-01';
 var to = getToday();
 var config = getConfig();
@@ -8,7 +10,7 @@ function printCurrentChartSI(dataSI) {
     console.log("**********************print_Current_Chart_SI***************************");
     console.log(dataSI);
     $("#si").empty();
-    drawGaugeChart(dataSI, 'si', 175, 175);
+    drawGaugeChartSI(dataSI, 'si', 175, 175);
 }
 
 function printHistoricalChartSI(dataHSI){
@@ -75,17 +77,17 @@ function printCurrentTableSI(dataSI) {
     rowHead.appendChild(cell);
 
     cell = document.createElement("th");
+    cellText = document.createTextNode("Description");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
     cellText = document.createTextNode("Current Value");
     cell.appendChild(cellText);
     rowHead.appendChild(cell);
 
     cell = document.createElement("th");
     cellText = document.createTextNode("Category");
-    cell.appendChild(cellText);
-    rowHead.appendChild(cell);
-
-    cell = document.createElement("th");
-    cellText = document.createTextNode("Description");
     cell.appendChild(cellText);
     rowHead.appendChild(cell);
 
@@ -101,23 +103,27 @@ function printCurrentTableSI(dataSI) {
         var row = document.createElement("tr");
         row.setAttribute("class","th-name-si");
 
+        //Strategic Indicator
         var cell = document.createElement("td");
         var cellText = document.createTextNode(dataSI[i].name);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
+        //Description
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataSI[i].description);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        //Current Value
         cell = document.createElement("td");
         cellText = document.createTextNode(dataSI[i].value.first.toFixed(2));
         cell.appendChild(cellText);
         row.appendChild(cell);
 
+        //Category
         cell = document.createElement("td");
         cellText = document.createTextNode(dataSI[i].value.second);
-        cell.appendChild(cellText);
-        row.appendChild(cell);
-
-        cell = document.createElement("td");
-        cellText = document.createTextNode(dataSI[i].description);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
@@ -159,7 +165,17 @@ function printHistoricalTableSI(dataHSI) {
     rowHead.appendChild(cell);
 
     cell = document.createElement("th");
+    cellText = document.createTextNode("Description");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
     cellText = document.createTextNode("Value");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Category");
     cell.appendChild(cellText);
     rowHead.appendChild(cell);
 
@@ -175,18 +191,33 @@ function printHistoricalTableSI(dataHSI) {
         var row = document.createElement("tr");
         row.setAttribute("class","th-name-si");
 
+        //Date
         var cell = document.createElement("td");
         var cellText = document.createTextNode(dataHSI[i].date.year + "-" + dataHSI[i].date.monthValue + "-" + dataHSI[i].date.dayOfMonth);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
+        //Strategic Indicator
         cell = document.createElement("td");
         cellText = document.createTextNode(dataHSI[i].name);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
+        //Description
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataHSI[i].description);
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        //Value
         cell = document.createElement("td");
         cellText = document.createTextNode(dataHSI[i].value.first.toFixed(2));
+        cell.appendChild(cellText);
+        row.appendChild(cell);
+
+        //Category
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataHSI[i].value.second);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
@@ -213,17 +244,17 @@ function printCurrentChartDSI(dataDSI) {
     var values = [];
     for (i = 0; i < dataDSI.length; ++i) {
         //for each dsi save name to titles vector and id to ids vector
-        titles.push(dataDSI[i].strategicIndicatorName);
-        ids.push(dataDSI[i].strategicIndicator_ID);
+        titles.push(dataDSI[i].name);
+        ids.push(dataDSI[i].id);
         labels.push([]);
         values.push([]);
         for (j = 0; j < dataDSI[i].factors.length; ++j) {
             //for each factor save name to labels vector and value to values vector
-            if (dataDSI[i].factors[j].factorName.length < 27)
-                labels[i].push(dataDSI[i].factors[j].factorName);
+            if (dataDSI[i].factors[j].name.length < 27)
+                labels[i].push(dataDSI[i].factors[j].name);
             else
-                labels[i].push(dataDSI[i].factors[j].factorName.slice(0, 23) + "...");
-            values[i].push(dataDSI[i].factors[j].evaluationValue);
+                labels[i].push(dataDSI[i].factors[j].name.slice(0, 23) + "...");
+            values[i].push(dataDSI[i].factors[j].value);
         }
     }
     //console.log(titles);
@@ -341,7 +372,7 @@ function printCurrentTableDSI(dataDSI) {
             row.appendChild(cell);
 
             cell = document.createElement("td");
-            cellText = document.createTextNode(dataDSI[i].factors[j].evaluationValue.toFixed(2));
+            cellText = document.createTextNode(dataDSI[i].factors[j].value.toFixed(2));
             cell.appendChild(cellText);
             row.appendChild(cell);
 
@@ -451,17 +482,17 @@ function printCurrentChartQF(dataQF) {
     var values = [];
     for (i = 0; i < dataQF.length; ++i) {
         //for each dsi save name to titles vector and id to ids vector
-        titles.push(dataQF[i].factorName);
-        ids.push(dataQF[i].factor_ID);
+        titles.push(dataQF[i].name);
+        ids.push(dataQF[i].id);
         labels.push([]);
         values.push([]);
         for (j = 0; j < dataQF[i].metrics.length; ++j) {
             //for each factor save name to labels vector and value to values vector
-            if (dataQF[i].metrics[j].metricName.length < 27)
-                labels[i].push(dataQF[i].metrics[j].metricName);
+            if (dataQF[i].metrics[j].name.length < 27)
+                labels[i].push(dataQF[i].metrics[j].name);
             else
-                labels[i].push(dataQF[i].metrics[j].metricName.slice(0, 23) + "...");
-            values[i].push(dataQF[i].metrics[j].evaluationValue);
+                labels[i].push(dataQF[i].metrics[j].name.slice(0, 23) + "...");
+            values[i].push(dataQF[i].metrics[j].value);
         }
     }
     //console.log(titles);
@@ -575,7 +606,7 @@ function printCurrentTableQF(dataQF) {
             row.appendChild(cell);
 
             cell = document.createElement("td");
-            cellText = document.createTextNode(dataQF[i].metrics[j].evaluationValue.toFixed(2));
+            cellText = document.createTextNode(dataQF[i].metrics[j].value.toFixed(2));
             cell.appendChild(cellText);
             row.appendChild(cell);
 
@@ -680,7 +711,7 @@ function printHistoricalTableQF(dataHQF) {
 function printCurrentChartM(dataM) {
     console.log("**********************print_Current_Chart_M***************************");
     $("#m").empty();
-    document.getElementById("m").innerHTML = "CURRENT CHART M";
+    drawGaugeChartM(dataM, 'm', 175, 175);
 }
 
 function printHistoricalChartM(dataHM) {
@@ -730,7 +761,68 @@ function printHistoricalChartM(dataHM) {
 function printCurrentTableM(dataM) {
     console.log("**********************print_Current_Table_M**********************");
     $("#m").empty();
-    document.getElementById("m").innerHTML = "CURRENT TABLE M";
+
+        //body reference
+        var body = document.getElementById('m');
+
+        // create elements <table> and a <tbody>
+        var tbl = document.createElement('table');
+        tbl.setAttribute("class","table table-hover");
+
+        var tblhead = document.createElement("thead");
+        var rowHead = document.createElement("tr");
+
+        var cell = document.createElement("th");
+        var cellText = document.createTextNode("Metric");
+        cell.appendChild(cellText);
+        rowHead.appendChild(cell);
+
+        cell = document.createElement("th");
+        cellText = document.createTextNode("Description");
+        cell.appendChild(cellText);
+        rowHead.appendChild(cell);
+
+        cell = document.createElement("th");
+        cellText = document.createTextNode("Current Value");
+        cell.appendChild(cellText);
+        rowHead.appendChild(cell);
+
+
+        tblhead.appendChild(rowHead);
+        tbl.appendChild(tblhead);
+
+        var tblBody = document.createElement("tbody");
+
+
+        // cells creation
+        for (var i = 0; i < dataSI.length; ++i) {
+            // table row creation
+            var row = document.createElement("tr");
+            row.setAttribute("class","th-name-m");
+
+            var cell = document.createElement("td");
+            var cellText = document.createTextNode(dataM[i].name);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(dataM[i].description);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            cell = document.createElement("td");
+            cellText = document.createTextNode(dataM[i].value.toFixed(2));
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            //row added to end of table body
+            tblBody.appendChild(row);
+        }
+
+        // append the <tbody> inside the <table>
+        tbl.appendChild(tblBody);
+        // put <table> in the <body>
+        body.appendChild(tbl);
 }
 
 function printHistoricalTableM(dataHM) {
@@ -951,6 +1043,8 @@ function printTableQR(dataQR, dataIssues, atlassianBaseUrl) {
 }
 
 // Date picker
+
+//todo: change name function to printDatePicker(Date, Date)
 function addDatePickerDiv(idDIV){
 
     var body = document.getElementById(idDIV);
@@ -1065,6 +1159,7 @@ function addDatePickerDiv(idDIV){
 
     formInline.appendChild(divFrom);
     formInline.appendChild(divTo);
+
     formInline.appendChild(applyButton);
 
     divDate.appendChild(formInline);

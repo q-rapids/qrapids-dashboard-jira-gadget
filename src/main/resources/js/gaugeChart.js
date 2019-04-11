@@ -8,7 +8,7 @@ var target;
 var tau = Math.PI / 2;
 var urlLink;
 
-function drawGaugeChart(data, container, width, height) {
+function drawGaugeChartSI(data, container, width, height) {
 
     //sortDataAlphabetically(data);
     var someSIhasBN = false;
@@ -175,6 +175,87 @@ function drawGaugeChart(data, container, width, height) {
                 .style("font-size", "14px");
         }
     }
+}
 
+function drawGaugeChartM(data, container, width, height) {
+    for (i = 0; i < data.length; ++i) {
+        var div = document.createElement('div');
+        div.id = container + "DivChart" + i;
+        div.style.display = "inline-block";
+        div.style.margin = "10px";
+        document.getElementById(container).appendChild(div);
 
+        //0 to 1 values to angular values
+        angle = data[i].value * 180 + 90;
+        upperThresh = 0.66 * Math.PI - Math.PI / 2;
+        lowThresh = 0.33 * Math.PI - Math.PI / 2;
+
+        var arc = d3.arc()      //create arc starting at -90 degreees
+            .innerRadius(70*width/250)
+            .outerRadius(110*width/250)
+            .startAngle(-tau);
+
+        //create chart svg with hyperlink
+        var svg = d3.select('#'+div.id).append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("class", "chart")
+            .append("g")
+            .attr("transform",
+                "translate(" + width / 2 + "," + height / 2 + ")");
+
+        //draw blue background for charts
+        svg.append("path")
+            .datum({endAngle: Math.PI / 2})
+            .style("fill", "#0579A8")
+            .attr("d", arc);
+
+        //create needle
+        var arc2 = d3.arc()
+            .innerRadius(0)
+            .outerRadius(100*width/250)
+            .startAngle(-0.05)
+            .endAngle(0.05);
+
+        //draw needle in correct position depending on it's angle
+        svg.append("path")
+            .style("fill", "#000")
+            .attr("d", arc2)
+            .attr("transform", "translate(" + -100*width/250 * Math.cos((angle - 90) / 180 * Math.PI) + "," + -100*width/250 * Math.sin((angle - 90) / 180 * Math.PI) + ") rotate(" + angle + ")");
+
+        //create small circle at needle base
+        var arc3 = d3.arc()
+            .innerRadius(0)
+            .outerRadius(10*width/250)
+            .startAngle(0)
+            .endAngle(Math.PI * 2);
+
+        //draw needle base
+        svg.append("path")
+            .style("fill", "#000")
+            .attr("d", arc3);
+
+        //add text under the gauge
+        svg.append("text")
+            .attr("x", 0)
+            .attr("y", 50*width/250)
+            .attr("text-anchor", "middle")
+            .attr("font-family", "sans-serif")
+            .attr("fill", "#000")
+            .style("font-size", "12px")
+            .style("font-weight", "bold")
+            .style("color","rgb(1, 119, 166)")
+            .text(data[i].name);
+
+        //add label under the text
+        svg.append("text")
+            .attr("x", 0)
+            .attr("y", 50*width/250 + 30)
+            .attr("text-anchor", "middle")
+            .attr("font-family", "sans-serif")
+            .attr("fill", "#000")
+            .style("font-size", "14px")
+            .style("font-weight", "bold")
+            .text(data[i].value.toFixed(2));
+    }
 }

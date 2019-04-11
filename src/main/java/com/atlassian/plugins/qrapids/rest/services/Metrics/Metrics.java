@@ -1,5 +1,6 @@
 package com.atlassian.plugins.qrapids.rest.services.Metrics;
 
+import com.atlassian.plugins.qrapids.config.URIRestApi;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 
 import javax.ws.rs.*;
@@ -10,9 +11,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Base64;
 
 @Path("/Metrics")
 public class Metrics {
+
+    private URIRestApi uriRestApi = URIRestApi.getInstance();
 
     private String getResponseResult(String url) throws IOException {
         URL obj = new URL(url);
@@ -31,21 +35,26 @@ public class Metrics {
         return response.toString();
     }
 
-    @Path("/CurrentEvaluation")
+    private String getDecodeURI(String encodedURL) {
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedURL);
+        return new String(decodedBytes);
+    }
+
+    @Path("/CurrentEvaluation/url={url}/prj={prj}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getMetricsCurrentEvaluation() throws IOException {
-        String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/Metrics/CurrentEvaluation";
+    public Response getMetricsCurrentEvaluation(@PathParam("url") String encodedURL, @PathParam("prj") String prj) throws IOException {
+        String url = getDecodeURI(encodedURL) + uriRestApi.getURIMCurrentEvaluation() + "?prj=" + prj ;
         return Response.ok(getResponseResult(url)).build();
     }
 
-    @Path("/HistoricalData/from={from}&to={to}")
+    @Path("/HistoricalData/url={url}/prj={prj}/from={from}&to={to}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getMetricsHistoricalData(@PathParam("from") String from, @PathParam("to") String to) throws IOException {
-        String url = "http://gessi3.cs.upc.edu/QRapids-Dashboard/api/Metrics/HistoricalData?from=" + from + "&to=" + to;
+    public Response getMetricsHistoricalData(@PathParam("url") String encodedURL, @PathParam("prj") String prj, @PathParam("from") String from, @PathParam("to") String to) throws IOException {
+        String url = getDecodeURI(encodedURL) + uriRestApi.getURIMHistoricalData() + "?prj=" + prj + "&from=" + from + "&to=" + to ;
         return Response.ok(getResponseResult(url)).build();
     }
 }

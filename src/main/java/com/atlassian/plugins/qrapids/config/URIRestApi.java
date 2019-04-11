@@ -3,14 +3,16 @@ package com.atlassian.plugins.qrapids.config;
 public class URIRestApi {
 
     private static URIRestApi single_instance;
-    private static String URISICurrentEvaluation = "/SICurrent";//"/api/StrategicIndicators/CurrentEvaluation";
-    private static String URISIHistoricalData = "/SIHistorical";//"api/StrategicIndicators/HistoricalData";
-    private static String URIDSICurrentEvaluation = "/DSICurrent";//"/api/DetailedStrategicIndicators/CurrentEvaluation";
+    private static String URIAssessedProjects = "/api/assessedProjects";
+    private static String URISICurrentEvaluation = "/api/StrategicIndicators/CurrentEvaluation";
+    private static String URISIHistoricalData = "/api/StrategicIndicators/HistoricalData";
+    private static String URIDSICurrentEvaluation = "/api/DetailedStrategicIndicators/CurrentEvaluation";
     private static String URIDSIHistoricalData = "/api/DetailedStrategicIndicators/HistoricalData";
     private static String URIQFCurrentEvaluation = "/api/QualityFactors/CurrentEvaluation";
     private static String URIQFHistoricalData = "/api/QualityFactors/HistoricalData";
     private static String URIMCurrentEvaluation = "/api/Metrics/CurrentEvaluation";
     private static String URIMHistoricalData = "/api/Metrics/HistoricalData";
+    private static String URIAlerts = "/api/alerts/new";
 
     public static URIRestApi getInstance() {
         if (single_instance == null)
@@ -20,6 +22,10 @@ public class URIRestApi {
     }
 
     private URIRestApi() {
+    }
+
+    public static String getURIAssessedProjects() {
+        return URIAssessedProjects;
     }
 
     public static String getURISICurrentEvaluation() {
@@ -52,5 +58,9 @@ public class URIRestApi {
 
     public static String getURIMHistoricalData() {
         return URIMHistoricalData;
+    }
+
+    public static String getURIAlerts() {
+        return URIAlerts;
     }
 }

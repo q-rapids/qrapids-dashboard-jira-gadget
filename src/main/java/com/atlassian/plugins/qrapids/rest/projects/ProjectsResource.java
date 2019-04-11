@@ -6,6 +6,7 @@ import com.atlassian.jira.security.JiraAuthenticationContext;
 import com.atlassian.jira.security.PermissionManager;
 import com.atlassian.jira.user.ApplicationUser;
 import com.atlassian.plugin.spring.scanner.annotation.imports.ComponentImport;
+import com.atlassian.plugins.qrapids.config.URIRestApi;
 import com.atlassian.plugins.rest.common.security.AnonymousAllowed;
 
 import java.io.BufferedReader;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Base64;
 import java.util.Collection;
 import java.util.LinkedList;
 import javax.inject.Inject;
@@ -20,6 +22,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -37,6 +40,8 @@ public class ProjectsResource {
     @ComponentImport
     private JiraAuthenticationContext authenticationContext;
 
+    private URIRestApi uriRestApi = URIRestApi.getInstance();
+
     private String getResponseResult(String url) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -52,6 +57,11 @@ public class ProjectsResource {
         in.close();
 
         return response.toString();
+    }
+
+    private String getDecodeURI(String encodedURL) {
+        byte[] decodedBytes = Base64.getDecoder().decode(encodedURL);
+        return new String(decodedBytes);
     }
 
     /**
@@ -94,12 +104,12 @@ public class ProjectsResource {
         return Response.ok(allProjects).build();
     }
 
-    @Path("/AssessedProjects")
+    @Path("/AssessedProjects/url={url}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getAssessedProjects() throws IOException {
-        String url = "http://localhost:3000/AssessedProjects";
+    public Response getAssessedProjects(@PathParam("url") String encodedURL) throws IOException {
+        String url = getDecodeURI(encodedURL) + uriRestApi.getURIAssessedProjects();
         return Response.ok(getResponseResult(url)).build();
     }
 }

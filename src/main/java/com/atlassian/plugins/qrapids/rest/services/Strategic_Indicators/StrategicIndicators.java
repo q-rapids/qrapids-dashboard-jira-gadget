@@ -44,21 +44,21 @@ public class StrategicIndicators {
         return new String(decodedBytes);
     }
 
-    @Path("/CurrentEvaluation/url={url}")
+    @Path("/CurrentEvaluation/url={url}/prj={prj}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getStrategicIndicatorsCurrentEvaluation(@PathParam("url") String encodedURL) throws IOException {
-        String url = getDecodeURI(encodedURL) + uriRestApi.getURISICurrentEvaluation();
+    public Response getStrategicIndicatorsCurrentEvaluation(@PathParam("url") String encodedURL, @PathParam("prj") String prj) throws IOException {
+        String url = getDecodeURI(encodedURL) + uriRestApi.getURISICurrentEvaluation() + "?prj=" + prj ;
         return Response.ok(getResponseResult(url)).build();
     }
 
-    @Path("/HistoricalData/url={url}/from={from}&to={to}")
+    @Path("/HistoricalData/url={url}/prj={prj}/from={from}&to={to}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getStrategicIndicatorsHistoricalData(@PathParam("url") String encodedURL, @PathParam("from") String from, @PathParam("to") String to) throws IOException {
-        String url = getDecodeURI(encodedURL) + uriRestApi.getURISIHistoricalData() + "?from=" + from + "&to=" + to ;
+    public Response getStrategicIndicatorsHistoricalData(@PathParam("url") String encodedURL, @PathParam("prj") String prj, @PathParam("from") String from, @PathParam("to") String to) throws IOException {
+        String url = getDecodeURI(encodedURL) + uriRestApi.getURISIHistoricalData() + "?prj=" + prj + "&from=" + from + "&to=" + to ;
         return Response.ok(getResponseResult(url)).build();
     }
 }
