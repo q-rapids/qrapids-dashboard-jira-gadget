@@ -280,28 +280,28 @@ function printHistoricalChartDSI(dataHDSI) {
     for (i = 0; i < dataHDSI.length; ++i) {
         //for each dsi save name to texts vector and id to ids vector
         if (dataHDSI[i].factors.length > 0) {
-            texts.push(dataHDSI[i].strategicIndicatorName);
-            ids.push(dataHDSI[i].strategicIndicator_ID);
+            texts.push(dataHDSI[i].name);
+            ids.push(dataHDSI[i].id);
 
             value.push([[]]);
-            last = dataHDSI[i].factors[0].factorName;
-            labels.push([dataHDSI[i].factors[0].factorName]);
+            last = dataHDSI[i].factors[0].name;
+            labels.push([dataHDSI[i].factors[0].name]);
             k = 0;
             for (j = 0; j < dataHDSI[i].factors.length; ++j) {
                 //check if we are still on the same factor
-                if (last != dataHDSI[i].factors[j].factorName) {
-                    labels[i].push(dataHDSI[i].factors[j].factorName);
-                    last = dataHDSI[i].factors[j].factorName;
+                if (last != dataHDSI[i].factors[j].name) {
+                    labels[i].push(dataHDSI[i].factors[j].name);
+                    last = dataHDSI[i].factors[j].name;
                     ++k;
                     value[i].push([]);
                 }
                 //push date and value to values vector
-                if (!isNaN(dataHDSI[i].factors[j].evaluationValue))
+                if (!isNaN(dataHDSI[i].factors[j].value))
                 {
                     value[i][k].push(
                         {
-                            x: dataHDSI[i].factors[j].evaluationDate,
-                            y: dataHDSI[i].factors[j].evaluationValue
+                            x: dataHDSI[i].factors[j].formattedDate,
+                            y: dataHDSI[i].factors[j].value
                         }
                     );
                 }
@@ -362,12 +362,12 @@ function printCurrentTableDSI(dataDSI) {
             row.setAttribute("class","th-name-si");
 
             var cell = document.createElement("td");
-            var cellText = document.createTextNode(dataDSI[i].strategicIndicatorName);
+            var cellText = document.createTextNode(dataDSI[i].name);
             cell.appendChild(cellText);
             row.appendChild(cell);
 
             cell = document.createElement("td");
-            cellText = document.createTextNode(dataDSI[i].factors[j].factorName);
+            cellText = document.createTextNode(dataDSI[i].factors[j].name);
             cell.appendChild(cellText);
             row.appendChild(cell);
 
@@ -422,7 +422,7 @@ function printHistoricalTableDSI(dataHDSI) {
     rowHead.appendChild(cell);
 
     cell = document.createElement("th");
-    cellText = document.createTextNode("Value");
+    cellText = document.createTextNode("Current Value");
     cell.appendChild(cellText);
     rowHead.appendChild(cell);
 
@@ -439,23 +439,27 @@ function printHistoricalTableDSI(dataHDSI) {
             var row = document.createElement("tr");
             row.setAttribute("class","th-name-si");
 
+            //Evaluation Date
             var cell = document.createElement("td");
-            var cellText = document.createTextNode(dataHDSI[i].factors[j].evaluationDate);
+            var cellText = document.createTextNode(dataHDSI[i].factors[j].formattedDate);
             cell.appendChild(cellText);
             row.appendChild(cell);
 
+            //Strategic Indicators
             cell = document.createElement("td");
-            cellText = document.createTextNode(dataHDSI[i].strategicIndicatorName);
+            cellText = document.createTextNode(dataHDSI[i].name);
             cell.appendChild(cellText);
             row.appendChild(cell);
 
+            //Factor
             cell = document.createElement("td");
-            cellText = document.createTextNode(dataHDSI[i].factors[j].factorName);
+            cellText = document.createTextNode(dataHDSI[i].factors[j].name);
             cell.appendChild(cellText);
             row.appendChild(cell);
 
+            //Value
             cell = document.createElement("td");
-            cellText = document.createTextNode(dataHDSI[i].factors[j].evaluationValue.toFixed(2));
+            cellText = document.createTextNode(dataHDSI[i].factors[j].value.toFixed(2));
             cell.appendChild(cellText);
             row.appendChild(cell);
 
@@ -517,27 +521,27 @@ function printHistoricalChartQF(dataHQF) {
     for (i = 0; i < dataHQF.length; ++i) {
         //for each qf save name to texts vector and id to ids vector
         if (dataHQF[i].metrics.length > 0) {
-            texts.push(dataHQF[i].factorName);
-            ids.push(dataHQF[i].factor_ID);
+            texts.push(dataHQF[i].name);
+            ids.push(dataHQF[i].id);
 
             value.push([[]]);
-            last = dataHQF[i].metrics[0].metricName;
-            labels.push([dataHQF[i].metrics[0].metricName]);
+            last = dataHQF[i].metrics[0].name;
+            labels.push([dataHQF[i].metrics[0].name]);
             k = 0;
             for (j = 0; j < dataHQF[i].metrics.length; ++j) {
                 //check if we are still on the same metric
-                if (last != dataHQF[i].metrics[j].metricName) {
-                    labels[i].push(dataHQF[i].metrics[j].metricName);
-                    last = dataHQF[i].metrics[j].metricName;
+                if (last != dataHQF[i].metrics[j].name) {
+                    labels[i].push(dataHQF[i].metrics[j].name);
+                    last = dataHQF[i].metrics[j].name;
                     ++k;
                     value[i].push([]);
                 }
                 //push date and value to values vector
-                if (!isNaN(dataHQF[i].metrics[j].evaluationValue)){
+                if (!isNaN(dataHQF[i].metrics[j].value)){
                     value[i][k].push(
                         {
-                            x: dataHQF[i].metrics[j].evaluationDate,
-                            y: dataHQF[i].metrics[j].evaluationValue
+                            x: dataHQF[i].metrics[j].date.year + "-" + dataHQF[i].metrics[j].date.monthValue + "-" + dataHQF[i].metrics[j].date.dayOfMonth,
+                            y: dataHQF[i].metrics[j].value
                         }
                     );
                 }
@@ -578,6 +582,11 @@ function printCurrentTableQF(dataQF) {
     rowHead.appendChild(cell);
 
     cell = document.createElement("th");
+    cellText = document.createTextNode("Description");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
     cellText = document.createTextNode("Current Value");
     cell.appendChild(cellText);
     rowHead.appendChild(cell);
@@ -595,16 +604,25 @@ function printCurrentTableQF(dataQF) {
             var row = document.createElement("tr");
             row.setAttribute("class","th-name-si");
 
+            //Factor
             var cell = document.createElement("td");
-            var cellText = document.createTextNode(dataQF[i].factorName);
+            var cellText = document.createTextNode(dataQF[i].name);
             cell.appendChild(cellText);
             row.appendChild(cell);
 
+            //Metric
             cell = document.createElement("td");
-            cellText = document.createTextNode(dataQF[i].metrics[j].metricName);
+            cellText = document.createTextNode(dataQF[i].metrics[j].name);
             cell.appendChild(cellText);
             row.appendChild(cell);
 
+            //Description
+            cell = document.createElement("td");
+            cellText = document.createTextNode(dataQF[i].metrics[j].description);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+
+            //Current Value
             cell = document.createElement("td");
             cellText = document.createTextNode(dataQF[i].metrics[j].value.toFixed(2));
             cell.appendChild(cellText);
@@ -674,23 +692,27 @@ function printHistoricalTableQF(dataHQF) {
             var row = document.createElement("tr");
             row.setAttribute("class","th-name-si");
 
+            //Date
             var cell = document.createElement("td");
-            var cellText = document.createTextNode(dataHQF[i].metrics[j].evaluationDate);
+            var cellText = document.createTextNode(dataHQF[i].metrics[j].date.year + "-" + dataHQF[i].metrics[j].date.monthValue + "-" + dataHQF[i].metrics[j].date.dayOfMonth);
             cell.appendChild(cellText);
             row.appendChild(cell);
 
+            //Factor
             cell = document.createElement("td");
-            cellText = document.createTextNode(dataHQF[i].factorName);
+            cellText = document.createTextNode(dataHQF[i].name);
             cell.appendChild(cellText);
             row.appendChild(cell);
 
+            //Metric
             cell = document.createElement("td");
-            cellText = document.createTextNode(dataHQF[i].metrics[j].metricName);
+            cellText = document.createTextNode(dataHQF[i].metrics[j].name);
             cell.appendChild(cellText);
             row.appendChild(cell);
 
+            //Value
             cell = document.createElement("td");
-            cellText = document.createTextNode(dataHQF[i].metrics[j].evaluationValue.toFixed(2));
+            cellText = document.createTextNode(dataHQF[i].metrics[j].value.toFixed(2));
             cell.appendChild(cellText);
             row.appendChild(cell);
 
@@ -795,7 +817,7 @@ function printCurrentTableM(dataM) {
 
 
         // cells creation
-        for (var i = 0; i < dataSI.length; ++i) {
+        for (var i = 0; i < dataM.length; ++i) {
             // table row creation
             var row = document.createElement("tr");
             row.setAttribute("class","th-name-m");

@@ -254,7 +254,7 @@ function drawGaugeChartM(data, container, width, height) {
             .attr("text-anchor", "middle")
             .attr("font-family", "sans-serif")
             .attr("fill", "#000")
-            .style("font-size", "14px")
+            .style("font-size", "12px")
             .style("font-weight", "bold")
             .text(data[i].value.toFixed(2));
     }
