@@ -14,6 +14,6 @@
     <msg name="gadget.common.cumulative.label">Project: </msg>
     <msg name="gadget.common.cumulative.description">Select project</msg>
 
-    <msg name="gadget.common.error.500">The dashboard deploy can't be found or not exist in this URL.</msg>
+    <msg name="gadget.common.error.500">The dashboard deploy can not be found or not exist in this URL.</msg>
     <msg name="gadget.common.error.404">Incorrect path/URL.</msg>
 </messagebundle>

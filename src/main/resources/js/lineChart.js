@@ -78,4 +78,3 @@ function drawLineChart(text, ids, dades, idDiv) {
         window.myLine = new Chart(ctx, config);
     }
 }
-
