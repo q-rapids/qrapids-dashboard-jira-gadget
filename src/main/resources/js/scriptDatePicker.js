@@ -1,8 +1,5 @@
 var today = new Date();
 
-//var from = getParameterByName('from');
-//var to = getParameterByName('to');
-
 var config = {
     format: 'yyyy-mm-dd',
     weekStartDay: 1,
@@ -34,4 +31,17 @@ function getToday() {
 
 function getConfig(){
     return config;
+}
+
+function isValidDate(date) {
+    var temp = date.split('-');
+    var d = new Date(temp);
+    var year = (d.getFullYear() == temp[0]);
+    var month =  ((d.getMonth() + 1) == Number(temp[1]));
+    var day = (d.getDate() == Number(temp[2]));
+    return (d && year && month && day);
+}
+
+function isFromLesserEqualThanTo(from, to) {
+    return from <= to;
 }

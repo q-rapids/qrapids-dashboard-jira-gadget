@@ -25,6 +25,10 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * @author: German Mora Macias.
+ */
+
 @Path("/Issues")
 public class IssuesResources {
 

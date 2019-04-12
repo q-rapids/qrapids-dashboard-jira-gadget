@@ -29,8 +29,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * REST resource that provides a list of projects in JSON format.
+ * @author: German Mora Macias.
  */
+
 @Path("/Projects")
 @Named
 public class ProjectsResource {
@@ -42,6 +43,9 @@ public class ProjectsResource {
 
     private URIRestApi uriRestApi = URIRestApi.getInstance();
 
+    /**
+     * @param url of the dashboard deployment
+     */
     private String getResponseResult(String url) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -59,6 +63,9 @@ public class ProjectsResource {
         return response.toString();
     }
 
+    /**
+     * @param encodedURL URL encoded in base64 of the dashboard deployment
+     */
     private String getDecodeURI(String encodedURL) {
         byte[] decodedBytes = Base64.getDecoder().decode(encodedURL);
         return new String(decodedBytes);
@@ -104,6 +111,9 @@ public class ProjectsResource {
         return Response.ok(allProjects).build();
     }
 
+    /**
+     * @param encodedURL URL encoded in base64 of the dashboard deployment
+     */
     @Path("/AssessedProjects/url={url}")
     @GET
     @AnonymousAllowed

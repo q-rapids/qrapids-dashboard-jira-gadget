@@ -1,24 +1,17 @@
-//Todo: Remove from, to and config
 
-var from = '2019-01-01';
-var to = getToday();
-var config = getConfig();
 
 // SI
 function printCurrentChartSI(dataSI) {
-
     console.log("**********************print_Current_Chart_SI***************************");
-    console.log(dataSI);
     $("#si").empty();
     drawGaugeChartSI(dataSI, 'si', 175, 175);
 }
 
-function printHistoricalChartSI(dataHSI){
+function printHistoricalChartSI(dataHSI, from, to){
     console.log("**********************print_Historical_Chart_SI***************************");
-    console.log(dataHSI);
     $("#si").empty();
 
-    addDatePickerDiv("si");
+    printDatePicker("si", from, to);
 
     var text = [];
     var dades = [];
@@ -52,13 +45,12 @@ function printHistoricalChartSI(dataHSI){
     if (dataHSI[i - 1])
         dades.push(line);
 
-    drawLineChart(text, ids, dades, "si");
+    drawLineChartM(text, ids, dades, "si");
 
 }
 
 function printCurrentTableSI(dataSI) {
     console.log("#######################print_Current_Table_SI#######################") ;
-
     $("#si").empty();
 
     //body reference
@@ -131,18 +123,16 @@ function printCurrentTableSI(dataSI) {
         tblBody.appendChild(row);
     }
 
-    // append the <tbody> inside the <table>
     tbl.appendChild(tblBody);
-    // put <table> in the <body>
     body.appendChild(tbl);
 }
 
-function printHistoricalTableSI(dataHSI) {
+function printHistoricalTableSI(dataHSI, from, to) {
     console.log("#######################print_Historical_Table_SI#######################");
     $("#si").empty();
-    //document.getElementById("si").innerHTML = "HISTORICAL TABLE SI";
 
-    addDatePickerDiv('si');
+
+    printDatePicker('si', from, to);
 
     //body reference
     var body = document.getElementById('si');
@@ -257,19 +247,15 @@ function printCurrentChartDSI(dataDSI) {
             values[i].push(dataDSI[i].factors[j].value);
         }
     }
-    //console.log(titles);
-    //console.log(ids);
-    //console.log(labels);
-    //console.log(values);
     drawRadarChart(titles, ids, labels, values, "dsi", true);
 
 }
 
-function printHistoricalChartDSI(dataHDSI) {
+function printHistoricalChartDSI(dataHDSI, from, to) {
     console.log("**********************print_Historical_Chart_DSI***************************");
     $("#dsi").empty();
 
-    addDatePickerDiv('dsi');
+    printDatePicker('dsi', from, to);
 
     //initialize data vectors
     var texts = [];
@@ -316,11 +302,7 @@ function printHistoricalChartDSI(dataHDSI) {
 }
 
 function printCurrentTableDSI(dataDSI) {
-
     console.log("#######################print_Current_Table_DSI#######################");
-
-    //console.log(dataDSI);
-
     $("#dsi").empty();
 
     //body reference
@@ -389,12 +371,11 @@ function printCurrentTableDSI(dataDSI) {
     body.appendChild(tbl);
 }
 
-function printHistoricalTableDSI(dataHDSI) {
+function printHistoricalTableDSI(dataHDSI, from, to) {
     console.log("#######################print_Historical_Table_DSI#######################");
     $("#dsi").empty();
-    //document.getElementById("dsi").innerHTML = "HISTORICAL TABLE DSI";
 
-    addDatePickerDiv('dsi');
+    printDatePicker('dsi', from, to);
 
     //body reference
     var body = document.getElementById('dsi');
@@ -499,18 +480,14 @@ function printCurrentChartQF(dataQF) {
             values[i].push(dataQF[i].metrics[j].value);
         }
     }
-    //console.log(titles);
-    //console.log(ids);
-    //console.log(labels);
-    //console.log(values);
     drawRadarChart(titles, ids, labels, values, "qf", false);
 }
 
-function printHistoricalChartQF(dataHQF) {
+function printHistoricalChartQF(dataHQF, from, to) {
     console.log("**********************print_Historical_Chart_QF***************************");
     $("#qf").empty();
 
-    addDatePickerDiv('qf');
+    printDatePicker('qf', from, to);
 
     //initialize data vectors
     var texts = [];
@@ -556,9 +533,7 @@ function printHistoricalChartQF(dataHQF) {
 }
 
 function printCurrentTableQF(dataQF) {
-
     console.log("#######################print_Current_Table_QF#######################");
-
     $("#qf").empty();
 
      //body reference
@@ -642,12 +617,11 @@ function printCurrentTableQF(dataQF) {
 
 }
 
-function printHistoricalTableQF(dataHQF) {
+function printHistoricalTableQF(dataHQF, from, to) {
     console.log("#######################print_Historical_Table_QF#######################");
     $("#qf").empty();
-    //document.getElementById("qf").innerHTML = "HISTORICAL TABLE QF";
 
-    addDatePickerDiv('qf');
+    printDatePicker('qf');
 
     //body reference
     var body = document.getElementById('qf');
@@ -736,11 +710,11 @@ function printCurrentChartM(dataM) {
     drawGaugeChartM(dataM, 'm', 175, 175);
 }
 
-function printHistoricalChartM(dataHM) {
+function printHistoricalChartM(dataHM, from, to) {
     console.log("**********************print_Historical_Chart_M***************************");
     $("#m").empty();
 
-    addDatePickerDiv('m');
+    printDatePicker('m', from, to);
 
     var lowerThres = [];
     var upperThres = [];
@@ -777,82 +751,81 @@ function printHistoricalChartM(dataHM) {
     if (dataHM[i - 1])
         dades.push(line);
 
-    drawLineChart(text, ids, dades, "m");
+    drawLineChartM(text, ids, dades, "m");
 }
 
 function printCurrentTableM(dataM) {
     console.log("**********************print_Current_Table_M**********************");
     $("#m").empty();
 
-        //body reference
-        var body = document.getElementById('m');
+    //body reference
+    var body = document.getElementById('m');
 
-        // create elements <table> and a <tbody>
-        var tbl = document.createElement('table');
-        tbl.setAttribute("class","table table-hover");
+    // create elements <table> and a <tbody>
+    var tbl = document.createElement('table');
+    tbl.setAttribute("class","table table-hover");
 
-        var tblhead = document.createElement("thead");
-        var rowHead = document.createElement("tr");
+    var tblhead = document.createElement("thead");
+    var rowHead = document.createElement("tr");
 
-        var cell = document.createElement("th");
-        var cellText = document.createTextNode("Metric");
+    var cell = document.createElement("th");
+    var cellText = document.createTextNode("Metric");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Description");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+    cell = document.createElement("th");
+    cellText = document.createTextNode("Current Value");
+    cell.appendChild(cellText);
+    rowHead.appendChild(cell);
+
+
+    tblhead.appendChild(rowHead);
+    tbl.appendChild(tblhead);
+
+    var tblBody = document.createElement("tbody");
+
+
+    // cells creation
+    for (var i = 0; i < dataM.length; ++i) {
+        // table row creation
+        var row = document.createElement("tr");
+        row.setAttribute("class","th-name-m");
+
+        var cell = document.createElement("td");
+        var cellText = document.createTextNode(dataM[i].name);
         cell.appendChild(cellText);
-        rowHead.appendChild(cell);
+        row.appendChild(cell);
 
-        cell = document.createElement("th");
-        cellText = document.createTextNode("Description");
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataM[i].description);
         cell.appendChild(cellText);
-        rowHead.appendChild(cell);
+        row.appendChild(cell);
 
-        cell = document.createElement("th");
-        cellText = document.createTextNode("Current Value");
+        cell = document.createElement("td");
+        cellText = document.createTextNode(dataM[i].value.toFixed(2));
         cell.appendChild(cellText);
-        rowHead.appendChild(cell);
+        row.appendChild(cell);
 
+        //row added to end of table body
+        tblBody.appendChild(row);
+    }
 
-        tblhead.appendChild(rowHead);
-        tbl.appendChild(tblhead);
-
-        var tblBody = document.createElement("tbody");
-
-
-        // cells creation
-        for (var i = 0; i < dataM.length; ++i) {
-            // table row creation
-            var row = document.createElement("tr");
-            row.setAttribute("class","th-name-m");
-
-            var cell = document.createElement("td");
-            var cellText = document.createTextNode(dataM[i].name);
-            cell.appendChild(cellText);
-            row.appendChild(cell);
-
-            cell = document.createElement("td");
-            cellText = document.createTextNode(dataM[i].description);
-            cell.appendChild(cellText);
-            row.appendChild(cell);
-
-            cell = document.createElement("td");
-            cellText = document.createTextNode(dataM[i].value.toFixed(2));
-            cell.appendChild(cellText);
-            row.appendChild(cell);
-
-            //row added to end of table body
-            tblBody.appendChild(row);
-        }
-
-        // append the <tbody> inside the <table>
-        tbl.appendChild(tblBody);
-        // put <table> in the <body>
-        body.appendChild(tbl);
+    // append the <tbody> inside the <table>
+    tbl.appendChild(tblBody);
+    // put <table> in the <body>
+    body.appendChild(tbl);
 }
 
-function printHistoricalTableM(dataHM) {
+function printHistoricalTableM(dataHM, from, to) {
     console.log("**********************print_Historical_Table_M**********************");
     $("#m").empty();
-    //document.getElementById("m").innerHTML = "HISTORICAL TABLE M";
 
-    addDatePickerDiv('m');
+    printDatePicker('m', from, to);
 
     //body reference
     var body = document.getElementById('m');
@@ -935,11 +908,7 @@ function printHistoricalTableM(dataHM) {
 
 //QR
 function printTableQR(dataQR, dataIssues, atlassianBaseUrl) {
-
     console.log("**********************print_Table_QR**********************");
-    console.log(dataQR);
-    console.log(dataIssues);
-
     $("#qr").empty();
 
      //body reference
@@ -1003,21 +972,25 @@ function printTableQR(dataQR, dataIssues, atlassianBaseUrl) {
         var row = document.createElement("tr");
         row.setAttribute("class","th-name-si");
 
+        //Date
         var cell = document.createElement("td");
         var cellText = document.createTextNode(dataQR[i].date);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
+        //Name
         cell = document.createElement("td");
         cellText = document.createTextNode(dataQR[i].name);
         cell.appendChild(cellText);
         row.appendChild(cell);
 
+        //Value
         cell = document.createElement("td");
         cellText = document.createTextNode(dataQR[i].value.toFixed(2));
         cell.appendChild(cellText);
         row.appendChild(cell);
 
+        //Type
         cell = document.createElement("td");
         cellText = document.createTextNode(dataQR[i].type);
         cell.appendChild(cellText);
@@ -1078,11 +1051,8 @@ function printTableQR(dataQR, dataIssues, atlassianBaseUrl) {
 
 }
 
-// Date picker
-
-//todo: change name function to printDatePicker(Date, Date)
-function addDatePickerDiv(idDIV){
-
+function printDatePicker(idDIV, from, to){
+    console.log("**********************printDatePicker**********************");
     var body = document.getElementById(idDIV);
 
     var divDate = document.createElement('div');
@@ -1115,7 +1085,7 @@ function addDatePickerDiv(idDIV){
     inputFrom.setAttribute("data-type","datepicker");
     inputFrom.setAttribute("data-datepicker","true");
     inputFrom.setAttribute("role","input");
-    inputFrom.setAttribute("disabled","disabled");
+    inputFrom.setAttribute("placeholder","yyyy-mm-dd");
     inputFrom.setAttribute("style","font-size: 12px; z-index: auto; background: white");
     // SPAN
     var spanFrom = document.createElement('span');
@@ -1160,7 +1130,7 @@ function addDatePickerDiv(idDIV){
     inputTo.setAttribute("data-type","datepicker");
     inputTo.setAttribute("data-datepicker","true");
     inputTo.setAttribute("role","input");
-    inputTo.setAttribute("disabled","disabled");
+    inputTo.setAttribute("placeholder","yyyy-mm-dd");
     inputTo.setAttribute("style","font-size: 12px; z-index: auto; background: white");
     // SPAN
     var spanTo = document.createElement('span');
@@ -1202,17 +1172,3 @@ function addDatePickerDiv(idDIV){
 
     body.appendChild(divDate);
 }
-
-
-$('#id_spanFrom').on('click', function(){
-    console.log("id_spanFrom");
-    console.log("getConfig: " + config);
-    $('#datepickerFrom').datepicker(config);
-    alert("hey");
-});
-
-$('#id_spanTo').on('click', function(){
-    console.log("id_spanTo");
-    console.log("getConfig: " + config);
-    $('#datepickerTo').datepicker(config);
-});

@@ -13,11 +13,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
 
+/**
+ * @author: German Mora Macias.
+ */
+
 @Path("/Metrics")
 public class Metrics {
 
     private URIRestApi uriRestApi = URIRestApi.getInstance();
 
+    /**
+     * @param url of the dashboard deployment
+     */
     private String getResponseResult(String url) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -35,11 +42,18 @@ public class Metrics {
         return response.toString();
     }
 
+    /**
+     * @param encodedURL URL encoded in base64 of the dashboard deployment
+     */
     private String getDecodeURI(String encodedURL) {
         byte[] decodedBytes = Base64.getDecoder().decode(encodedURL);
         return new String(decodedBytes);
     }
 
+    /**
+     * @param encodedURL URL encoded in base64 of the dashboard deployment
+     * @param prj The name of the current project
+     */
     @Path("/CurrentEvaluation/url={url}/prj={prj}")
     @GET
     @AnonymousAllowed
@@ -49,6 +63,12 @@ public class Metrics {
         return Response.ok(getResponseResult(url)).build();
     }
 
+    /**
+     * @param encodedURL URL encoded in base64 of the dashboard deployment
+     * @param prj The name of the current project
+     * @param from The start date to obtain the data information
+     * @param to The end date to obtain the data information
+     */
     @Path("/HistoricalData/url={url}/prj={prj}/from={from}&to={to}")
     @GET
     @AnonymousAllowed

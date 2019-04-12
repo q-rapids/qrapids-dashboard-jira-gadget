@@ -9,6 +9,7 @@ import net.jcip.annotations.Immutable;
 /**
  * JAXB representation of a group of projects.
  */
+
 @Immutable
 @SuppressWarnings("UnusedDeclaration")
 @XmlRootElement

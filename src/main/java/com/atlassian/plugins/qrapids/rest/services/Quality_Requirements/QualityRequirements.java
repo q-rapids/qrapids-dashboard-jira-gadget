@@ -16,11 +16,18 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Base64;
 
+/**
+ * @author: German Mora Macias.
+ */
+
 @Path("/QualityRequirements")
 public class QualityRequirements {
 
     private URIRestApi uriRestApi = URIRestApi.getInstance();
 
+    /**
+     * @param url of the dashboard deployment
+     */
     private String getResponseResult(String url) throws IOException {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -38,18 +45,23 @@ public class QualityRequirements {
         return response.toString();
     }
 
+    /**
+     * @param encodedURL URL encoded in base64 of the dashboard deployment
+     */
     private String getDecodeURI(String encodedURL) {
         byte[] decodedBytes = Base64.getDecoder().decode(encodedURL);
         return new String(decodedBytes);
     }
 
-    @Path("/Alerts/url={url}/prj={prj}/")
+    /**
+     * @param encodedURL URL encoded in base64 of the dashboard deployment
+     */
+    @Path("/Alerts/url={url}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getQualityFactorsCurrentEvaluation(@PathParam("url") String encodedURL, @PathParam("prj") String prj) throws Exception {
-        String resultRequest = getDecodeURI(encodedURL) + uriRestApi.getURIAlerts() + "?prj=" + prj ;
-        return Response.ok(resultRequest).build();
-
+    public Response getQualityFactorsCurrentEvaluation(@PathParam("url") String encodedURL) throws Exception {
+        String url = getDecodeURI(encodedURL) + uriRestApi.getURIAlerts();
+        return Response.ok(getResponseResult(url)).build();
     }
 }

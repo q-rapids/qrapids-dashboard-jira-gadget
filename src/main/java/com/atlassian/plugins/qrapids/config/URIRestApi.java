@@ -1,5 +1,9 @@
 package com.atlassian.plugins.qrapids.config;
 
+/**
+ * @author: German Mora Macias.
+ */
+
 public class URIRestApi {
 
     private static URIRestApi single_instance;
@@ -12,7 +16,7 @@ public class URIRestApi {
     private static String URIQFHistoricalData = "/api/QualityFactors/HistoricalData";
     private static String URIMCurrentEvaluation = "/api/Metrics/CurrentEvaluation";
     private static String URIMHistoricalData = "/api/Metrics/HistoricalData";
-    private static String URIAlerts = "/api/alerts/new";
+    private static String URIAlerts = "/api/alerts";
 
     public static URIRestApi getInstance() {
         if (single_instance == null)
