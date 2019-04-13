@@ -1,4 +1,4 @@
-## JIRA commands (atlas):
+## The JIRA commands (atlas):
 ```console
 atlas-clean -- removes files generated during the build-time in a project's directory (runs mvn clean)
 ```
