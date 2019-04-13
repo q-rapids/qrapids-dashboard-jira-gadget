@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module>
 
-    <!-- Especifiaciones del Gadget (nombre, autor, ) -->
-    <!-- screenshot: direccion de la imagen que un container o directory pueden usar para ilustrar el gadget -->
-    <!-- thumbnail: direccion de la imagen en miniatura (120x60 px) que un container o directory pueden usar para ilustrar el gadget-->
-
     <!-- title_url="http://groups.google.com/group/Google-Gadgets-API" -->
     <ModulePrefs title="__MSG_gadget.title__"
                  directory_title="__MSG_gadget.title__"
@@ -40,11 +36,11 @@
     </ModulePrefs>
 
     <!--
-    Esta sección le permite a los usuarios una forma de proporcionar sus preferencias "preferencias del usuario".
-    Estos campos de entrada del usuario se convierten en controles de interfaz de usuario cuando se ejecuta el gadget.
-    Cuando se muestra el gadget en iGoogle, se puede acceder a las preferencias del usuario desde el menú desplegable "Editar".
+        This section allows users a way to provide their preferences "user preferences".
+        These user input fields are converted into user interface controls when the gadget is run.
+        When the gadget is displayed on iGoogle, you can access the user's preferences from the "Edit" drop-down menu.
 
-    El contenedor maneja la generación de la IU de configuración, guarda la configuración y proporciona una API para acceder a la configuración en JavaScript.
+        The container handles the generation of the configuration UI, saves the configuration and provides an API to access the configuration in JavaScript.
     -->
 
     <UserPref name="isConfigured" datatype="hidden" default_value="false" />
@@ -53,24 +49,24 @@
 
 
     <!--
-    En esta sección, definirá el tipo de contenido, e incluirá el contenido en sí mismo o proporcionará una URL para extraer el contenido de una fuente externa.
-    Combinará los atributos y las preferencias del usuario y la información.
+        In this section, you will define the content type and include the content itself or provide a URL to extract the content from an external source.
+        It will combine the attributes and preferences of the user and the information.
 
-    Hay dos tipos principales de contenido de gadget, que se distinguen por el atributo type del elemento <Content>.
+        There are two main types of gadget content, which are distinguished by the type attribute of the <Content> element.
 
-    - URL: incluyen contenido de un sitio remoto, pero no tienen acceso completo a las características del contenedor.
-           Este tipo de gadget es compatible con la compatibilidad con los gadgets de iGoogle heredados existentes,
-           pero se considera obsoleto y debe evitarse al crear nuevos gadgets.
 
-    - HTML: incluyen el contenido directamente dentro del elemento <Content>. Esto incluye el codigo HTML, CSS y JavaScript que el contenedor representará en el iframe del gadget.
-     Este contenido debe incluirse en una sección CDATA para evitar que el analizador de especificaciones del gadget interprete el marcado HTML incrustado como XML.
+        - URL: include content from a remote site, but do not have full access to the characteristics of the container.
+               This type of gadget supports compatibility with existing legacy iGoogle gadgets, but it is considered obsolete and should be avoided when creating new gadgets.
 
-    Los gadgets pueden definir múltiples secciones de contenido, cada una con una vista diferente.
-    Las vistas admitidas por los contenedores de Atlassian son predeterminadas para la vista estándar de un gadget en una página junto con otros gadgets y contenido,
-    y canvas para la vista maximizada de un solo gadget en una página por sí solo. Otros contenedores pueden admitir tipos de vista adicionales.
-    Si la misma sección de contenido debe mostrarse en más de una vista, puede especificar varias vistas, separadas por comas.
+             - HTML: include content directly within the <Content> element. This includes the HTML, CSS and JavaScript code that the container will represent in the iframe of the gadget.
+              This content must be included in a CDATA section to prevent the gadget's parser from interpreting the HTML markup embedded as XML.
 
-    href="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/html/jira-gadget-qrapids-plugin.html"
+        Gadgets can define multiple sections of content, each with a different view.
+        The views supported by the Atlassian containers are predetermined for the standard view of a gadget on a page along with other gadgets and content,
+        and canvas for the maximized view of a single gadget on a page by itself. Other containers can support additional view types.
+        If the same content section should be displayed in more than one view, you can specify multiple views, separated by commas.
+
+        href="__ATLASSIAN_BASE_URL__/download/resources/com.atlassian.plugins.qrapids.jira-gadget-qrapids-plugin/html/jira-gadget-qrapids-plugin.html"
     -->
 
     <Content type="html" view="canvas,profile" >

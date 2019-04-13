@@ -20,48 +20,29 @@ atlas-help  -- prints description for all commands in the SDK
 ## Q-Rapids:
 - [QRapids-Dashboard](http://gessi3.cs.upc.edu/QRapids-Dashboard/)
 - [Q-Rapids: Quality-aware rapid software development](http://www.q-rapids.eu/)
-- [Llamada API: Current Evaluation](http://gessi3.cs.upc.edu/QRapids-Dashboard/api/StrategicIndicators/CurrentEvaluation)
+- [Example of REST API calls: Current Evaluation](http://gessi3.cs.upc.edu/QRapids-Dashboard/api/StrategicIndicators/CurrentEvaluation)
 - [GitLab](http://193.142.112.102/)
 
 ## Jira Tutorials:
 - [Set up the Atlassian Plugin SDK and build a project](https://developer.atlassian.com/server/framework/atlassian-sdk/set-up-the-atlassian-plugin-sdk-and-build-a-project/)
 - [Oracle Java SE Development Kit 8 (JDK) installed on your system](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 - [Install the Atlassian SDK](https://developer.atlassian.com/server/framework/atlassian-sdk/install-the-atlassian-sdk-on-a-windows-system/)
-- [Crear un plugin](https://developer.atlassian.com/server/framework/atlassian-sdk/create-a-helloworld-plugin-project/)
-- [Crear un Gadget](https://developer.atlassian.com/server/jira/platform/writing-gadgets-for-jira/)
+- [Build Gadget](https://developer.atlassian.com/server/jira/platform/writing-gadgets-for-jira/)
 - [Developing a REST service plugin](https://developer.atlassian.com/server/framework/atlassian-sdk/developing-a-rest-service-plugin/)
 - [Writing Gadgets](https://developers.google.com/gadgets/docs/gs)
 - [Gadget developer documentation](https://developer.atlassian.com/server/framework/gadgets/)
-- [Factoria del constructor AJS.Gadget(...). Gadget Object API](https://developer.atlassian.com/server/framework/gadgets/gadget-object-api/)
 - [Fields definitions](https://developer.atlassian.com/server/framework/gadgets/field-definitions/)
 - [Interface IssueConstant](https://docs.atlassian.com/software/jira/docs/api/7.1.2/com/atlassian/jira/issue/IssueConstant.html)
 - [Issue](https://docs.atlassian.com/DAC/javadoc/jira/reference/com/atlassian/jira/issue/Issue.html)
 - [Making Ajax calls](https://developer.atlassian.com/server/framework/gadgets/making-ajax-calls/)
 
 ## Otras paginas de interes:
-- [J-Tricks. Little JIRA Tricks](https://www.j-tricks.com/tutorials/invoking-rest-services-from-gadgets)
-- [Ejemplo Widget](https://github.com/jbossorg/jira-jenkins-gadget/blob/master/src/main/resources/gadget.xml)
 - [Google Charts](https://google-developers.appspot.com/chart/)
 - [jQuery Ajax options](http://api.jquery.com/jQuery.ajax/#options)
 - [Google gadgets](https://developers.google.com/gadgets/)
 - [D3 Data-Driven Documents](https://d3js.org/)
 - [Charts.js](https://www.chartjs.org/)
 - [MavenRepository](https://mvnrepository.com/)
-- [Ejemplo Chart.js Jira Gadget](https://github.com/andnyb/chartjs-multifilter-jira-plugin)
 
 ## Book
 - [JIRA Development cookbook](http://file.allitebooks.com/20180506/JIRA%20Development%20Cookbook%20-%20Third%20Edition.pdf)
-
-## Debug Web Browser
-- Images: Sources/localhost:2990/jira/download/resources/...
-
-## Q-Rapids Dashboard Code
-- Path file to print charts: \q-rapids-dashboard\src\main\resources\static\js\gaugeChart.js
-- Path file Request: \q-rapids-dashboard\src\main\java\com\upc\gessi\qrapids\app\domain\services\StrategicIndicators.java
-```java
-@RequestMapping("/api/StrategicIndicators/CurrentEvaluation")
-    public List<DTOStrategicIndicatorEvaluation> getStrategicIndicatorsEvaluation(@RequestParam(value = "prj", required=false) String prj, HttpServletRequest request, HttpServletResponse response) {
-...
-}
-```
-- DTO paht file: \q-rapids-dashboard\src\main\java\com\upc\gessi\qrapids\app\dto\DTOStrategicIndicatorEvaluation.java
