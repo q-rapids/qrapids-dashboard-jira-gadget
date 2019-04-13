@@ -1,4 +1,4 @@
-## Comando JIRA (atlas):
+## JIRA commands (atlas):
 ```console
 atlas-clean -- removes files generated during the build-time in a project's directory (runs mvn clean)
 ```
@@ -36,7 +36,7 @@ atlas-help  -- prints description for all commands in the SDK
 - [Issue](https://docs.atlassian.com/DAC/javadoc/jira/reference/com/atlassian/jira/issue/Issue.html)
 - [Making Ajax calls](https://developer.atlassian.com/server/framework/gadgets/making-ajax-calls/)
 
-## Otras paginas de interes:
+## Other sites of interest:
 - [Google Charts](https://google-developers.appspot.com/chart/)
 - [jQuery Ajax options](http://api.jquery.com/jQuery.ajax/#options)
 - [Google gadgets](https://developers.google.com/gadgets/)
