@@ -1,4 +1,4 @@
-## The JIRA commands (atlas):
+## The JIRA commands (atlas) ![](https://img.shields.io/badge/License-Apache2.0-blue.svg)
 ```console
 atlas-clean -- removes files generated during the build-time in a project's directory (runs mvn clean)
 ```
