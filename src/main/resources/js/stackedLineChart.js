@@ -77,4 +77,3 @@ function drawStackedLineChart(texts, ids, labels, value, idDIV) {
         window.myLine = new Chart(ctx, config[i]);  //draw chart
     }
 }
-

@@ -1,7 +1,4 @@
 function drawRadarChart(titles, ids, labels, values, idDiv, isDSI) {
-
-    console.log("**********************radarChart.drawChart()***************************");
-
     for (i = 0; i < titles.length; ++i) {
         var div = document.createElement('div');
         div.style.display = "inline-block";
@@ -14,7 +11,7 @@ function drawRadarChart(titles, ids, labels, values, idDiv, isDSI) {
         var ctx = document.createElement('canvas');
         ctx.id = 'canvas' + i;
         ctx.width = 300;
-        //ctx.height = 350;
+        ctx.height = 300;
         ctx.style.display = "inline";
         div.appendChild(p);
         document.getElementById(idDiv).appendChild(div).appendChild(ctx);

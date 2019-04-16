@@ -79,6 +79,7 @@
             #requireResource("confluence.web.resources:ajs")
             #requireResource("com.atlassian.auiplugin:ajs")
             #supportedLocales("gadget.common")
+            #requireResource("jira.webresources:calendar")
             #includeResources()
 
 
@@ -112,32 +113,36 @@
 
                     console.clear();
 
+                    var viewItemText = ["Graphical","Table","Current","Historical"];
+                    var currentProject = "default";
+                    var from = '2019-01-01';
+                    var to = getToday();
+
                     var dataCurrentSI = [];
                     var dataHistoricalSI  = [];
+                    var fromSI = from;
+                    var toSI = to;
 
                     var dataCurrentDSI  = [];
                     var dataHistoricalDSI  = [];
+                    var fromDSI = from;
+                    var toDSI = to;
 
                     var dataCurrentQF  = [];
                     var dataHistoricalQF  = [];
+                    var fromQF = from;
+                    var toQF = to;
 
                     var dataCurrentM  = [];
                     var dataHistoricalM  = [];
+                    var fromM = from;
+                    var toM = to;
 
                     var dataQR  = [];
-
-                    var viewItemText = ["Graphical","Table","Current","Historical"];
-                    var currentProject = "default";
-                    var URL = "";
-
-                    var from = '2019-01-01';
-                    var to = getToday();
 
                     var listProjects = [];
 
                     function buildDivView(prj) {
-
-                        console.log("####################### buildDivView #######################");
 
                         var nav = document.getElementById("id_TopNav");
                         var content = document.getElementById("id_TabContent");
@@ -315,76 +320,6 @@
 
                     }
 
-                    function getAllHistoricalDataFromNewDate(newFrom, newTo) {
-                        // si & Chart
-                        // si & Table
-                        if ($("#id_tab_si").hasClass('active')) {
-                            //Get HSI
-                            AJS.$.ajax({
-                                url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/StrategicIndicators/HistoricalData/url="+ URL + "/prj=" + currentProject + "/from="+ newFrom +"&to="+ newTo +".json",
-                                type: 'get',
-                                dataType: 'json',
-                                async: false,
-                                success: function(data){
-                                   dataHistoricalSI = data;
-                                }
-                            });
-                            if ($('#id_Graphical').hasClass('active')) printHistoricalChartSI(dataHistoricalSI, newFrom, newTo);
-                            else printHistoricalTableSI(dataHistoricalSI, newFrom, newTo);
-                        }
-
-                        //DSI & Chart
-                        //DSI & Table
-                        else if ($("#id_tab_dsi").hasClass('active')) {
-                            //Get HDSI
-                            AJS.$.ajax({
-                                url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/HistoricalData/url="+ URL + "/prj=" + currentProject + "/from="+ newFrom +"&to="+ newTo +".json",
-                                type: 'get',
-                                dataType: 'json',
-                                async: false,
-                                success: function(data){
-                                   dataHistoricalDSI = data;
-                                }
-                            });
-                            if ($('#id_Graphical').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI, newFrom, newTo);
-                            else printHistoricalTableDSI(dataHistoricalDSI, newFrom, newTo);
-                        }
-
-                        //QF & Chart
-                        //QF & Table
-                        else if ($("#id_tab_qf").hasClass('active')) {
-                            //Get HQF
-                            AJS.$.ajax({
-                                url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/QualityFactors/HistoricalData/url="+ URL + "/prj=" + currentProject + "/from="+ newFrom +"&to="+ newTo +".json",
-                                type: 'get',
-                                dataType: 'json',
-                                async: false,
-                                success: function(data){
-                                   dataHistoricalQF = data;
-                                }
-                            });
-                            if ($('#id_Graphical').hasClass('active')) printHistoricalChartQF(dataHistoricalQF, newFrom, newTo);
-                            else printHistoricalTableQF(dataHistoricalQF, newFrom, newTo);
-                        }
-
-                        //M & Chart
-                        //M & Table
-                        else if ($("#id_tab_m").hasClass('active')) {
-                            //Get HM
-                            AJS.$.ajax({
-                                url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/Metrics/HistoricalData/url="+ URL + "/prj=" + currentProject + "/from="+ newFrom +"&to="+ newTo +".json",
-                                type: 'get',
-                                dataType: 'json',
-                                async: false,
-                                success: function(data){
-                                   dataHistoricalM = data;
-                                }
-                            });
-                            if ($('#id_Graphical').hasClass('active')) printHistoricalChartM(dataHistoricalM, newFrom, newTo);
-                            else printHistoricalTableM(dataHistoricalM, newFrom, newTo);
-                        }
-                    }
-
                     //  AJS (Atlassian JavaScipt)
                     var gadgetQRAPID = AJS.Gadget({
                         baseUrl: "__ATLASSIAN_BASE_URL__",
@@ -437,7 +372,6 @@
                                     error.style.display = null;
 
                                 var gadget = this;
-                                URL = window.btoa(gadget.getPref("urlDashboardApiCallsPref"));
                                 console.log(" \\\\\\\\\\\\\\ gadget-view ///////////// ");
                                 console.log(args);
 
@@ -447,11 +381,13 @@
                                         listProjects.push(currentItem);
                                     });
 
+                                // First time to show currentProject
                                 if ($('#id_tab_project').length == 0) {
                                     if (currentProject != gadget.getPref("selectProjectUserPref") && gadget.getPref("selectProjectUserPref") != "")
                                         currentProject = gadget.getPref("selectProjectUserPref");
                                     gadget.savePref("selectProjectUserPref",currentProject);
                                 }
+                                // New currentProject selected to show
                                 else {
                                     if (currentProject != gadget.getPref("selectProjectUserPref") && gadget.getPref("selectProjectUserPref") != "") {
                                         currentProject = gadget.getPref("selectProjectUserPref");
@@ -460,6 +396,14 @@
                                         $("#id_Historical").removeClass('active');
                                         $('#id_Graphical').addClass('active');
                                         $('#id_Current').addClass('active');
+                                        fromSI = from;
+                                        toSI = to;
+                                        fromDSI = from;
+                                        toDSI = to;
+                                        fromQF = from;
+                                        toQF = to;
+                                        fromM = from;
+                                        toM = to;
                                         gadget.savePref("selectProjectUserPref",currentProject);
                                     }
                                 }
@@ -494,9 +438,9 @@
                                     $('#id_tab_si').addClass('active');
 
                                     if ($('#id_Graphical').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentChartSI(dataCurrentSI);
-                                    else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartSI(dataHistoricalSI, from, to);
+                                    else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartSI(dataHistoricalSI, fromSI, toSI);
                                     else if ($('#id_Table').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentTableSI(dataCurrentSI);
-                                    else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableSI(dataHistoricalSI, from, to);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableSI(dataHistoricalSI, fromSI, toSI);
                                 });
 
                                 $('#id_tab_dsi').on('click', function(){
@@ -504,9 +448,9 @@
                                     $('#id_tab_dsi').addClass('active');
 
                                     if ($('#id_Graphical').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentChartDSI(dataCurrentDSI);
-                                    else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI, from, to);
+                                    else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI, fromDSI, toDSI);
                                     else if ($('#id_Table').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentTableDSI(dataCurrentDSI);
-                                    else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI, from, to);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI, fromDSI, toDSI);
                                 });
 
                                 $('#id_tab_qf').on('click', function(){
@@ -514,9 +458,9 @@
                                     $('#id_tab_qf').addClass('active');
 
                                     if ($('#id_Graphical').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentChartQF(dataCurrentQF);
-                                    else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartQF(dataHistoricalQF, from, to);
+                                    else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartQF(dataHistoricalQF, fromQF, toQF);
                                     else if ($('#id_Table').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentTableQF(dataCurrentQF);
-                                    else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableQF(dataHistoricalQF, from, to);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableQF(dataHistoricalQF, fromQF, toQF);
                                 });
 
                                 $('#id_tab_m').on('click', function(){
@@ -524,9 +468,9 @@
                                     $('#id_tab_m').addClass('active');
 
                                     if ($('#id_Graphical').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentChartM(dataCurrentM);
-                                    else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartM(dataHistoricalM, from, to);
+                                    else if ($('#id_Graphical').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalChartM(dataHistoricalM, fromM, toM);
                                     else if ($('#id_Table').hasClass('active') && $('#id_Current').hasClass('active')) printCurrentTableM(dataCurrentM);
-                                    else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableM(dataHistoricalM, from, to);
+                                    else if ($('#id_Table').hasClass('active') && $('#id_Historical').hasClass('active')) printHistoricalTableM(dataHistoricalM, fromM, toM);
                                 });
 
                                 $('#id_tab_qr').on('click', function(){
@@ -564,10 +508,10 @@
                                     // -> H
                                     else {
                                         console.log(" ________________________ G -> H ________________________ ");
-                                        if ($('#id_tab_si').hasClass('active')) printHistoricalChartSI(dataHistoricalSI, from, to);
-                                        else if ($('#id_tab_dsi').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI, from, to);
-                                        else if ($('#id_tab_qf').hasClass('active')) printHistoricalChartQF(dataHistoricalQF, from, to);
-                                        else if ($('#id_tab_m').hasClass('active')) printHistoricalChartM(dataHistoricalM, from, to);
+                                        if ($('#id_tab_si').hasClass('active')) printHistoricalChartSI(dataHistoricalSI, fromSI, toSI);
+                                        else if ($('#id_tab_dsi').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI, fromDSI, toDSI);
+                                        else if ($('#id_tab_qf').hasClass('active')) printHistoricalChartQF(dataHistoricalQF, fromQF, toQF);
+                                        else if ($('#id_tab_m').hasClass('active')) printHistoricalChartM(dataHistoricalM, fromM, toM);
                                     }
                                 });
 
@@ -588,10 +532,10 @@
                                     // -> H
                                     else {
                                         console.log(" ________________________ T -> H ________________________ ");
-                                        if ($('#id_tab_si').hasClass('active')) printHistoricalTableSI(dataHistoricalSI, from, to);
-                                        else if ($('#id_tab_dsi').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI, from, to);
-                                        else if ($('#id_tab_qf').hasClass('active')) printHistoricalTableQF(dataHistoricalQF, from, to);
-                                        else if ($('#id_tab_m').hasClass('active')) printHistoricalTableM(dataHistoricalM, from, to);
+                                        if ($('#id_tab_si').hasClass('active')) printHistoricalTableSI(dataHistoricalSI, fromSI, toSI);
+                                        else if ($('#id_tab_dsi').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI, fromDSI, toDSI);
+                                        else if ($('#id_tab_qf').hasClass('active')) printHistoricalTableQF(dataHistoricalQF, fromQF, toQF);
+                                        else if ($('#id_tab_m').hasClass('active')) printHistoricalTableM(dataHistoricalM, fromM, toM);
                                     }
                                 });
 
@@ -627,30 +571,137 @@
                                     // G
                                     if ($('#id_Graphical').hasClass('active')) {
                                         console.log(" ________________________ G <- H ________________________ ");
-                                        if ($('#id_tab_si').hasClass('active')) printHistoricalChartSI(dataHistoricalSI, from, to);
-                                        else if ($('#id_tab_dsi').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI, from, to);
-                                        else if ($('#id_tab_qf').hasClass('active')) printHistoricalChartQF(dataHistoricalQF, from, to);
-                                        else if ($('#id_tab_m').hasClass('active')) printHistoricalChartM(dataHistoricalM, from, to);
+                                        if ($('#id_tab_si').hasClass('active')) printHistoricalChartSI(dataHistoricalSI, fromSI, toSI);
+                                        else if ($('#id_tab_dsi').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI, fromDSI, toDSI);
+                                        else if ($('#id_tab_qf').hasClass('active')) printHistoricalChartQF(dataHistoricalQF, fromQF, toQF);
+                                        else if ($('#id_tab_m').hasClass('active')) printHistoricalChartM(dataHistoricalM, fromM, toM);
                                     }
 
                                     // T
                                     else {
                                         console.log(" ________________________ T <- H ________________________ ");
-                                        if ($('#id_tab_si').hasClass('active')) printHistoricalTableSI(dataHistoricalSI, from, to);
-                                        else if ($('#id_tab_dsi').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI, from, to);
-                                        else if ($('#id_tab_qf').hasClass('active')) printHistoricalTableQF(dataHistoricalQF, from, to);
-                                        else if ($('#id_tab_m').hasClass('active')) printHistoricalTableM(dataHistoricalM, from, to);
+                                        if ($('#id_tab_si').hasClass('active')) printHistoricalTableSI(dataHistoricalSI, fromSI, toSI);
+                                        else if ($('#id_tab_dsi').hasClass('active')) printHistoricalTableDSI(dataHistoricalDSI, fromDSI, toDSI);
+                                        else if ($('#id_tab_qf').hasClass('active')) printHistoricalTableQF(dataHistoricalQF, fromQF, toQF);
+                                        else if ($('#id_tab_m').hasClass('active')) printHistoricalTableM(dataHistoricalM, fromM, toM);
                                     }
                                 });
 
                                 // New dates
                                 $(document).on('click', '#id_applyDates', function(){
-                                    var newFrom = document.getElementById("datepickerFrom").value;
-                                    var newTo = document.getElementById("datepickerTo").value;
-                                    if (isValidDate(newFrom) && isValidDate(newTo) && isFromLesserEqualThanTo(newFrom, newTo)) {
-                                        getAllHistoricalDataFromNewDate(newFrom, newTo);
+                                    if ($('#id_tab_si').hasClass('active')) {
+                                        var newFrom = document.getElementById("id_DatePickerFrom-si").value;
+                                        var newTo = document.getElementById("id_DatePickerTo-si").value;
+                                        if (isValidDate(newFrom) && isValidDate(newTo) && isFromLesserEqualThanTo(newFrom, newTo)) {
+                                            console.log("id_applyDates [SI]--->  " + "newFrom: " + newFrom + ", newTo: " + newTo);
+                                            getAllHistoricalDataFromNewDate(newFrom, newTo);
+                                        }
+                                    }
+                                    else if ($('#id_tab_dsi').hasClass('active')) {
+                                        var newFrom = document.getElementById("id_DatePickerFrom-dsi").value;
+                                        var newTo = document.getElementById("id_DatePickerTo-dsi").value;
+                                        if (isValidDate(newFrom) && isValidDate(newTo) && isFromLesserEqualThanTo(newFrom, newTo)) {
+                                            console.log("id_applyDates [DSI]--->  " + "newFrom: " + newFrom + ", newTo: " + newTo);
+                                            getAllHistoricalDataFromNewDate(newFrom, newTo);
+                                        }
+                                    }
+                                    else if ($('#id_tab_qf').hasClass('active')) {
+                                        var newFrom = document.getElementById("id_DatePickerFrom-qf").value;
+                                        var newTo = document.getElementById("id_DatePickerTo-qf").value;
+                                        if (isValidDate(newFrom) && isValidDate(newTo) && isFromLesserEqualThanTo(newFrom, newTo)) {
+                                            console.log("id_applyDates [QF] --->  " + "newFrom: " + newFrom + ", newTo: " + newTo);
+                                            getAllHistoricalDataFromNewDate(newFrom, newTo);
+                                        }
+                                    }
+                                    else if ($('#id_tab_m').hasClass('active')) {
+                                        var newFrom = document.getElementById("id_DatePickerFrom-m").value;
+                                        var newTo = document.getElementById("id_DatePickerTo-m").value;
+                                        if (isValidDate(newFrom) && isValidDate(newTo) && isFromLesserEqualThanTo(newFrom, newTo)) {
+                                            console.log("id_applyDates [M] --->  " + "newFrom: " + newFrom + ", newTo: " + newTo);
+                                            getAllHistoricalDataFromNewDate(newFrom, newTo);
+                                        }
                                     }
                                 });
+
+                                function getAllHistoricalDataFromNewDate(newFrom, newTo) {
+                                    var encodedURL = window.btoa(gadget.getPref("urlDashboardApiCallsPref"));
+                                    // SI & Chart
+                                    // SI & Table
+                                    if ($("#id_tab_si").hasClass('active')) {
+                                        fromSI = newFrom;
+                                        toSI = newTo;
+                                        //Get HSI
+                                        AJS.$.ajax({
+                                            url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/StrategicIndicators/HistoricalData/url="+ encodedURL + "/prj=" + currentProject + "/from="+ fromSI +"&to="+ toSI +".json",
+                                            type: 'get',
+                                            dataType: 'json',
+                                            async: false,
+                                            success: function(data){
+                                               dataHistoricalSI = data;
+                                            }
+                                        });
+                                        if ($('#id_Graphical').hasClass('active')) printHistoricalChartSI(dataHistoricalSI, fromSI, toSI);
+                                        else printHistoricalTableSI(dataHistoricalSI, fromSI, toSI);
+                                    }
+
+                                    //DSI & Chart
+                                    //DSI & Table
+                                    else if ($("#id_tab_dsi").hasClass('active')) {
+                                        //Get HDSI
+                                        fromDSI = newFrom;
+                                        toDSI = newTo;
+                                        AJS.$.ajax({
+                                            url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/DetailedStrategicIndicators/HistoricalData/url="+ encodedURL + "/prj=" + currentProject + "/from="+ fromDSI +"&to="+ toDSI +".json",
+                                            type: 'get',
+                                            dataType: 'json',
+                                            async: false,
+                                            success: function(data){
+                                               dataHistoricalDSI = data;
+                                            }
+                                        });
+                                        if ($('#id_Graphical').hasClass('active')) printHistoricalChartDSI(dataHistoricalDSI, fromDSI, toDSI);
+                                        else printHistoricalTableDSI(dataHistoricalDSI, fromDSI, toDSI);
+                                    }
+
+                                    //QF & Chart
+                                    //QF & Table
+                                    else if ($("#id_tab_qf").hasClass('active')) {
+                                        //Get HQF
+                                        fromQF = newFrom;
+                                        toQF = newTo;
+                                        AJS.$.ajax({
+                                            url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/QualityFactors/HistoricalData/url="+ encodedURL + "/prj=" + currentProject + "/from="+ fromQF +"&to="+ toQF +".json",
+                                            type: 'get',
+                                            dataType: 'json',
+                                            async: false,
+                                            success: function(data){
+                                               dataHistoricalQF = data;
+                                            }
+                                        });
+                                        if ($('#id_Graphical').hasClass('active')) printHistoricalChartQF(dataHistoricalQF, fromQF, toQF);
+                                        else printHistoricalTableQF(dataHistoricalQF, fromQF, toQF);
+                                    }
+
+                                    //M & Chart
+                                    //M & Table
+                                    else if ($("#id_tab_m").hasClass('active')) {
+                                        //Get HM
+                                        fromM = newFrom;
+                                        toM = newTo;
+                                        AJS.$.ajax({
+                                            url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/Metrics/HistoricalData/url="+ encodedURL + "/prj=" + currentProject + "/from="+ fromM +"&to="+ toM +".json",
+                                            type: 'get',
+                                            dataType: 'json',
+                                            async: false,
+                                            success: function(data){
+                                               dataHistoricalM = data;
+                                            }
+                                        });
+                                        if ($('#id_Graphical').hasClass('active')) printHistoricalChartM(dataHistoricalM, fromM, toM);
+                                        else printHistoricalTableM(dataHistoricalM, fromM, toM);
+                                    }
+                                }
+
                             },
                             args: [
                                 {

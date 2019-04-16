@@ -1,14 +1,14 @@
 
-
 // SI
 function printCurrentChartSI(dataSI) {
-    console.log("**********************print_Current_Chart_SI***************************");
+    console.log("<<<<<<< print_Current_Chart_SI");
+    console.log(" ");
     $("#si").empty();
     drawGaugeChartSI(dataSI, 'si', 175, 175);
 }
 
 function printHistoricalChartSI(dataHSI, from, to){
-    console.log("**********************print_Historical_Chart_SI***************************");
+    console.log(">>>>>>> print_Historical_Chart_SI");
     $("#si").empty();
 
     printDatePicker("si", from, to);
@@ -50,7 +50,8 @@ function printHistoricalChartSI(dataHSI, from, to){
 }
 
 function printCurrentTableSI(dataSI) {
-    console.log("#######################print_Current_Table_SI#######################") ;
+    console.log("<<<<<<< print_Current_Table_SI") ;
+    console.log(" ");
     $("#si").empty();
 
     //body reference
@@ -128,7 +129,7 @@ function printCurrentTableSI(dataSI) {
 }
 
 function printHistoricalTableSI(dataHSI, from, to) {
-    console.log("#######################print_Historical_Table_SI#######################");
+    console.log(">>>>>>> print_Historical_Table_SI");
     $("#si").empty();
 
 
@@ -224,7 +225,8 @@ function printHistoricalTableSI(dataHSI, from, to) {
 
 // DSI
 function printCurrentChartDSI(dataDSI) {
-    console.log("**********************print_Current_Chart_DSI***************************");
+    console.log("<<<<<<< print_Current_Chart_DSI");
+    console.log(" ");
     $("#dsi").empty();
 
     //initialize data vectors
@@ -252,7 +254,7 @@ function printCurrentChartDSI(dataDSI) {
 }
 
 function printHistoricalChartDSI(dataHDSI, from, to) {
-    console.log("**********************print_Historical_Chart_DSI***************************");
+    console.log(">>>>>>> print_Historical_Chart_DSI");
     $("#dsi").empty();
 
     printDatePicker('dsi', from, to);
@@ -270,14 +272,14 @@ function printHistoricalChartDSI(dataHDSI, from, to) {
             ids.push(dataHDSI[i].id);
 
             value.push([[]]);
-            last = dataHDSI[i].factors[0].name;
+            last = dataHDSI[i].factors[0].id;
             labels.push([dataHDSI[i].factors[0].name]);
             k = 0;
             for (j = 0; j < dataHDSI[i].factors.length; ++j) {
                 //check if we are still on the same factor
-                if (last != dataHDSI[i].factors[j].name) {
+                if (last != dataHDSI[i].factors[j].id) {
                     labels[i].push(dataHDSI[i].factors[j].name);
-                    last = dataHDSI[i].factors[j].name;
+                    last = dataHDSI[i].factors[j].id;
                     ++k;
                     value[i].push([]);
                 }
@@ -302,7 +304,8 @@ function printHistoricalChartDSI(dataHDSI, from, to) {
 }
 
 function printCurrentTableDSI(dataDSI) {
-    console.log("#######################print_Current_Table_DSI#######################");
+    console.log("<<<<<<< print_Current_Table_DSI");
+    console.log(" ");
     $("#dsi").empty();
 
     //body reference
@@ -372,7 +375,7 @@ function printCurrentTableDSI(dataDSI) {
 }
 
 function printHistoricalTableDSI(dataHDSI, from, to) {
-    console.log("#######################print_Historical_Table_DSI#######################");
+    console.log(">>>>>>> print_Historical_Table_DSI");
     $("#dsi").empty();
 
     printDatePicker('dsi', from, to);
@@ -459,7 +462,8 @@ function printHistoricalTableDSI(dataHDSI, from, to) {
 
 // QF
 function printCurrentChartQF(dataQF) {
-    console.log("**********************print_Current_Chart_QF***************************");
+    console.log("<<<<<<< print_Current_Chart_QF");
+    console.log(" ");
     $("#qf").empty();
     var titles = [];
     var ids = [];
@@ -484,7 +488,7 @@ function printCurrentChartQF(dataQF) {
 }
 
 function printHistoricalChartQF(dataHQF, from, to) {
-    console.log("**********************print_Historical_Chart_QF***************************");
+    console.log(">>>>>>> print_Historical_Chart_QF");
     $("#qf").empty();
 
     printDatePicker('qf', from, to);
@@ -502,14 +506,14 @@ function printHistoricalChartQF(dataHQF, from, to) {
             ids.push(dataHQF[i].id);
 
             value.push([[]]);
-            last = dataHQF[i].metrics[0].name;
+            last = dataHQF[i].metrics[0].id;
             labels.push([dataHQF[i].metrics[0].name]);
             k = 0;
             for (j = 0; j < dataHQF[i].metrics.length; ++j) {
                 //check if we are still on the same metric
-                if (last != dataHQF[i].metrics[j].name) {
+                if (last != dataHQF[i].metrics[j].id) {
                     labels[i].push(dataHQF[i].metrics[j].name);
-                    last = dataHQF[i].metrics[j].name;
+                    last = dataHQF[i].metrics[j].id;
                     ++k;
                     value[i].push([]);
                 }
@@ -533,7 +537,8 @@ function printHistoricalChartQF(dataHQF, from, to) {
 }
 
 function printCurrentTableQF(dataQF) {
-    console.log("#######################print_Current_Table_QF#######################");
+    console.log("<<<<<<< print_Current_Table_QF");
+    console.log(" ");
     $("#qf").empty();
 
      //body reference
@@ -618,10 +623,10 @@ function printCurrentTableQF(dataQF) {
 }
 
 function printHistoricalTableQF(dataHQF, from, to) {
-    console.log("#######################print_Historical_Table_QF#######################");
+    console.log(">>>>>>> print_Historical_Table_QF");
     $("#qf").empty();
 
-    printDatePicker('qf');
+    printDatePicker('qf', from, to);
 
     //body reference
     var body = document.getElementById('qf');
@@ -705,13 +710,14 @@ function printHistoricalTableQF(dataHQF, from, to) {
 
 // M
 function printCurrentChartM(dataM) {
-    console.log("**********************print_Current_Chart_M***************************");
+    console.log("<<<<<<< print_Current_Chart_M");
+    console.log(" ");
     $("#m").empty();
     drawGaugeChartM(dataM, 'm', 175, 175);
 }
 
 function printHistoricalChartM(dataHM, from, to) {
-    console.log("**********************print_Historical_Chart_M***************************");
+    console.log(">>>>>>> print_Historical_Chart_M");
     $("#m").empty();
 
     printDatePicker('m', from, to);
@@ -725,16 +731,16 @@ function printHistoricalChartM(dataHM, from, to) {
     i = 0;
     var line = [];
     if (dataHM[i]) {
-        last = dataHM[i].metricName;
-        text.push(last);
+        last = dataHM[i].id;
+        text.push(dataHM[i].name);
     }
     while (dataHM[i]) {
         //check if we are still on the same metric
-        if (dataHM[i].name != last) {
+        if (dataHM[i].id != last) {
             dades.push(line);
             line = [];
-            last = dataHM[i].name;
-            text.push(last);
+            last = dataHM[i].id;
+            text.push(dataHM[i].name);
         }
         //push date and value to line vector
         if (!isNaN(dataHM[i].value))
@@ -755,7 +761,8 @@ function printHistoricalChartM(dataHM, from, to) {
 }
 
 function printCurrentTableM(dataM) {
-    console.log("**********************print_Current_Table_M**********************");
+    console.log("<<<<<<< print_Current_Table_M");
+    console.log(" ");
     $("#m").empty();
 
     //body reference
@@ -822,7 +829,7 @@ function printCurrentTableM(dataM) {
 }
 
 function printHistoricalTableM(dataHM, from, to) {
-    console.log("**********************print_Historical_Table_M**********************");
+    console.log(">>>>>>> print_Historical_Table_M");
     $("#m").empty();
 
     printDatePicker('m', from, to);
@@ -908,7 +915,7 @@ function printHistoricalTableM(dataHM, from, to) {
 
 //QR
 function printTableQR(dataQR, dataIssues, atlassianBaseUrl) {
-    console.log("**********************print_Table_QR**********************");
+    console.log("<<<<<<< print_Table_QR >>>>>>>");
     $("#qr").empty();
 
      //body reference
@@ -1052,16 +1059,19 @@ function printTableQR(dataQR, dataIssues, atlassianBaseUrl) {
 }
 
 function printDatePicker(idDIV, from, to){
-    console.log("**********************printDatePicker**********************");
+    console.log("<<<<<<< printDatePicker >>>>>>>");
+    console.log(" ");
     var body = document.getElementById(idDIV);
 
     var divDate = document.createElement('div');
     divDate.setAttribute("class","pull-right");
+    divDate.setAttribute("style","width: 100%; padding-right: 1em; padding-left: 1em;");
 
     var formInline = document.createElement('form');
     formInline.setAttribute("class", "form-inline well");
+    formInline.setAttribute("style", "float: right");
 
-    // 1
+    // 1 (Date From)
     // FORM
     var divFrom = document.createElement('div');
     divFrom.setAttribute("class","form-group");
@@ -1079,13 +1089,9 @@ function printDatePicker(idDIV, from, to){
     // INPUT
     var inputFrom = document.createElement('input');
     inputFrom.setAttribute("class","form-control");
-    inputFrom.setAttribute("id","datepickerFrom");
-    inputFrom.setAttribute("name","dateFrom");
-    inputFrom.setAttribute("value",from);
-    inputFrom.setAttribute("data-type","datepicker");
-    inputFrom.setAttribute("data-datepicker","true");
-    inputFrom.setAttribute("role","input");
+    inputFrom.setAttribute("id","id_DatePickerFrom-" + idDIV);
     inputFrom.setAttribute("placeholder","yyyy-mm-dd");
+    inputFrom.setAttribute("type","text");
     inputFrom.setAttribute("style","font-size: 12px; z-index: auto; background: white");
     // SPAN
     var spanFrom = document.createElement('span');
@@ -1106,7 +1112,7 @@ function printDatePicker(idDIV, from, to){
     divFrom.appendChild(labelFrom);
     divFrom.appendChild(divWrapperFrom);
 
-    // 2
+    // 2 (Date To)
     // FORM
     var divTo = document.createElement('div');
     divTo.setAttribute("class","form-group");
@@ -1124,13 +1130,9 @@ function printDatePicker(idDIV, from, to){
     // INPUT
     var inputTo = document.createElement('input');
     inputTo.setAttribute("class","form-control");
-    inputTo.setAttribute("id","datepickerTo");
-    inputTo.setAttribute("name","dateTo");
-    inputTo.setAttribute("value",to);
-    inputTo.setAttribute("data-type","datepicker");
-    inputTo.setAttribute("data-datepicker","true");
-    inputTo.setAttribute("role","input");
+    inputTo.setAttribute("id","id_DatePickerTo-" + idDIV);
     inputTo.setAttribute("placeholder","yyyy-mm-dd");
+    inputTo.setAttribute("type","text");
     inputTo.setAttribute("style","font-size: 12px; z-index: auto; background: white");
     // SPAN
     var spanTo = document.createElement('span');
@@ -1171,4 +1173,9 @@ function printDatePicker(idDIV, from, to){
     divDate.appendChild(formInline);
 
     body.appendChild(divDate);
+
+    var idActiveFrom = "id_DatePickerFrom-" + idDIV;
+    var idActiveTo = "id_DatePickerTo-" + idDIV;
+    document.getElementById(idActiveFrom).value = from;
+    document.getElementById(idActiveTo).value = to;
 }

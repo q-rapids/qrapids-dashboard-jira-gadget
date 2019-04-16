@@ -1,9 +1,6 @@
 var timeFormat = 'MMM-DD';
 
 function drawLineChartSI(text, ids, dades, idDiv) {
-
-    console.log("**********************lineChart.js:drawLineChartSI()***************************");
-
     for (i = 0; i < dades.length; ++i) {
         var div = document.createElement('div');
         div.style.display = "inline-block";
@@ -80,9 +77,6 @@ function drawLineChartSI(text, ids, dades, idDiv) {
 }
 
 function drawLineChartM(text, ids, dades, idDiv) {
-
-    console.log("**********************lineChart.js:drawLineChartM()***************************");
-
     for (i = 0; i < dades.length; ++i) {
         if (text[i] != null) {
             var div = document.createElement('div');
