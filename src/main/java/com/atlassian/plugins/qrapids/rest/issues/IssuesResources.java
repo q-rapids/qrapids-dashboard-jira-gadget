@@ -54,20 +54,33 @@ public class IssuesResources {
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    @Path("/{currentProject}")
-    public Response getIssues(@PathParam("currentProject") String keyCurrentProject) throws Exception {
+    @Path("/prj={prj}")
+    public Response getIssues(@PathParam("prj") String CurrentProject) throws Exception {
         ApplicationUser user = authenticationContext.getLoggedInUser();
         Collection<IssueRepresentation> issueRepresentation = new LinkedList<>();
         Collection<Project> projects = permissionManager.getProjects(ProjectPermissions.BROWSE_PROJECTS, user);
+
+        //System.out.println("*************************** CurrentProject: " + CurrentProject);
+        //System.out.println("*************************** projects: " + projects);
+
         Long idProject = null;
-        for (Project p : projects)
-            if (p.getKey().equals(keyCurrentProject)) idProject = p.getId();
-        List<Long> listIssuesId = (List<Long>) issueManager.getIssueIdsForProject(idProject);
-        Collections.sort(listIssuesId);
-        for (Long longId : listIssuesId) {
-            Issue issue = issueManager.getIssueObject(longId);
-            IssueRepresentation issueR = new IssueRepresentation(issue);
-            issueRepresentation.add(issueR);
+        for (Project p : projects) {
+            //System.out.println("*************************** prj.name: " + p.getName());
+            //System.out.println("*************************** url: " + p.getKey());
+            //System.out.println("*************************** id: " + p.getId());
+            //System.out.println("*************************** p.getName().equals(CurrentProject): " + p.getName().equals(CurrentProject));
+            if (p.getName().equals(CurrentProject)) idProject = p.getId();
+        }
+        if (idProject != null) {
+            List<Long> listIssuesId = (List<Long>) issueManager.getIssueIdsForProject(idProject);
+            //System.out.println("*************************** listIssuesId: " + listIssuesId);
+            Collections.sort(listIssuesId);
+            for (Long longId : listIssuesId) {
+                Issue issue = issueManager.getIssueObject(longId);
+                //System.out.println("*************************** issue: " + issue);
+                IssueRepresentation issueR = new IssueRepresentation(issue);
+                issueRepresentation.add(issueR);
+            }
         }
         return Response.ok(issueRepresentation).build();
     }

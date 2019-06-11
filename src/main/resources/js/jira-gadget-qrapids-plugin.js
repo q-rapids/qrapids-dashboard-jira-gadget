@@ -916,6 +916,9 @@ function printHistoricalTableM(dataHM, from, to) {
 //QR
 function printTableQR(dataQR, dataIssues, atlassianBaseUrl) {
     console.log("<<<<<<< print_Table_QR >>>>>>>");
+
+    console.log("dataQR: " + dataQR);
+    console.log("dataIssues: " + dataIssues)
     $("#qr").empty();
 
      //body reference
@@ -974,7 +977,7 @@ function printTableQR(dataQR, dataIssues, atlassianBaseUrl) {
     var tblBody = document.createElement("tbody");
 
     // cells creation
-    for (var i = 0; i < dataQR.length; ++i) {
+    for (var i = 0; i < dataQR.length && dataQR.length; ++i) {
         // table row creation
         var row = document.createElement("tr");
         row.setAttribute("class","th-name-si");
@@ -1004,7 +1007,7 @@ function printTableQR(dataQR, dataIssues, atlassianBaseUrl) {
         row.appendChild(cell);
 
         // Data Issues Information
-        if (i < dataIssues.length) {
+        if (i < dataIssues.length && dataIssues.length != 0) {
             cell = document.createElement("td");
             var p = document.createElement('p');
             var a = document.createElement('a');
@@ -1055,7 +1058,6 @@ function printTableQR(dataQR, dataIssues, atlassianBaseUrl) {
     tbl.appendChild(tblBody);
     // put <table> in the <body>
     body.appendChild(tbl);
-
 }
 
 function printDatePicker(idDIV, from, to){

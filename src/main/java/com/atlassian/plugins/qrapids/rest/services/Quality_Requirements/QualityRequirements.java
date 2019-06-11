@@ -56,12 +56,12 @@ public class QualityRequirements {
     /**
      * @param encodedURL URL encoded in base64 of the dashboard deployment
      */
-    @Path("/Alerts/url={url}")
+    @Path("/Alerts/url={url}/prj={prj}")
     @GET
     @AnonymousAllowed
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-    public Response getQualityFactorsCurrentEvaluation(@PathParam("url") String encodedURL) throws Exception {
-        String url = getDecodeURI(encodedURL) + uriRestApi.getURIAlerts();
+    public Response getQualityFactorsCurrentEvaluation(@PathParam("url") String encodedURL, @PathParam("prj") String prj) throws Exception {
+        String url = getDecodeURI(encodedURL) + uriRestApi.getURIAlerts() + "?prj=" + prj;
         return Response.ok(getResponseResult(url)).build();
     }
 }

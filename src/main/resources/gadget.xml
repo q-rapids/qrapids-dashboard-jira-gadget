@@ -479,7 +479,7 @@
 
                                     var dtoIssues = [];
                                     AJS.$.ajax({
-                                        url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/Issues/QP.json",
+                                        url: AJS.contextPath() + "/rest/qrapids-gadget/1.0/Issues"+ "/prj=" + currentProject +".json",
                                         type: 'get',
                                         dataType: 'json',
                                         async: false,
@@ -797,8 +797,9 @@
                                     ajaxOptions: function() {
                                         var gadget = this;
                                         var encodedURL = window.btoa(gadget.getPref("urlDashboardApiCallsPref"));
+                                        var prj = gadget.getPref("selectProjectUserPref") != "" ? gadget.getPref("selectProjectUserPref") : currentProject;
                                         return {
-                                            url: "/rest/qrapids-gadget/1.0/QualityRequirements/Alerts/url="+ encodedURL + ".json"
+                                            url: "/rest/qrapids-gadget/1.0/QualityRequirements/Alerts/url="+ encodedURL + "/prj=" + prj + ".json"
                                         };
                                     }
                                 },
