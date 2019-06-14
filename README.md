@@ -18,7 +18,7 @@ atlas-help  -- prints description for all commands in the SDK
 - [Full documentation](https://developer.atlassian.com/display/DOCS/Introduction+to+the+Atlassian+Plugin+SDK)
 
 ## Q-Rapids:
-- [QRapids-Dashboard](http://gessi3.cs.upc.edu/QRapids-Dashboard/)
+- [QRapids-Dashboard (proof-of-concept version)](http://gessi3.cs.upc.edu/QRapids-Dashboard/)
 - [Q-Rapids: Quality-aware rapid software development](http://www.q-rapids.eu/)
 - [Example of REST API calls: Current Evaluation](http://gessi3.cs.upc.edu/QRapids-Dashboard/api/StrategicIndicators/CurrentEvaluation)
 - [GitLab](http://193.142.112.102/)
