@@ -17,12 +17,7 @@ atlas-help  -- prints description for all commands in the SDK
 ```
 - [Full documentation](https://developer.atlassian.com/display/DOCS/Introduction+to+the+Atlassian+Plugin+SDK)
 
-## Q-Rapids:
-- [QRapids-Dashboard (proof-of-concept version)](http://gessi3.cs.upc.edu/QRapids-Dashboard/)
-- [Q-Rapids: Quality-aware rapid software development](http://www.q-rapids.eu/)
-- [Example of REST API calls: Current Evaluation](http://gessi3.cs.upc.edu/QRapids-Dashboard/api/StrategicIndicators/CurrentEvaluation)
-
-## Jira Tutorials:
+## Jira Tutorials
 - [Set up the Atlassian Plugin SDK and build a project](https://developer.atlassian.com/server/framework/atlassian-sdk/set-up-the-atlassian-plugin-sdk-and-build-a-project/)
 - [Oracle Java SE Development Kit 8 (JDK) installed on your system](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 - [Install the Atlassian SDK](https://developer.atlassian.com/server/framework/atlassian-sdk/install-the-atlassian-sdk-on-a-windows-system/)
@@ -35,7 +30,7 @@ atlas-help  -- prints description for all commands in the SDK
 - [Issue](https://docs.atlassian.com/DAC/javadoc/jira/reference/com/atlassian/jira/issue/Issue.html)
 - [Making Ajax calls](https://developer.atlassian.com/server/framework/gadgets/making-ajax-calls/)
 
-## Other sites of interest:
+## Other sites of interest
 - [Google Charts](https://google-developers.appspot.com/chart/)
 - [jQuery Ajax options](http://api.jquery.com/jQuery.ajax/#options)
 - [Google gadgets](https://developers.google.com/gadgets/)
