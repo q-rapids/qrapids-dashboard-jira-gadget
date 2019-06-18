@@ -1,6 +1,8 @@
 ## Documentation
 
-You can find the user documentation in the repository [Wiki](https://github.com/q-rapids/qrapids-dashboard-jira-gadget/wiki)
+You can find the user documentation in the repository [Wiki](https://github.com/q-rapids/qrapids-dashboard-jira-gadget/wiki):
+* [How to Install the Q-Rapids Stratetic Dashboard gadget for Jira](https://github.com/q-rapids/qrapids-dashboard-jira-gadget/wiki/How-to-Install-the-Q-Rapids-Stratetic-Dashboard-gadget-for-Jira)
+* [Q-Rapids Stratetic Dashboard gadget for Jira User's Guide](https://github.com/q-rapids/qrapids-dashboard-jira-gadget/wiki/Q-Rapids-Stratetic-Dashboard-gadget-for-Jira-User-Guide)
 
 ## The JIRA commands (atlas) ![](https://img.shields.io/badge/License-Apache2.0-blue.svg)
 ```console
